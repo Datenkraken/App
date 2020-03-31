@@ -1,0 +1,5 @@
+mutation ArticleAction($list: [createArticleEvent!]!) {
+    submitArticleEvent(input: $list) {
+        timestamp
+    }
+}

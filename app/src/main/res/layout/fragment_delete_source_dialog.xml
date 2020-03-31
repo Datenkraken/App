@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/custom_dialog">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/delete_source_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="9dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="2dp"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:text="@string/default_unknown"
+        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/delete_cancel_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/custom_button_left"
+        android:text="@string/button_cancel"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toStartOf="@id/delete_accept_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/delete_source_title" />
+
+    <Button
+        android:id="@+id/delete_accept_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/custom_button_right"
+        android:text="@string/button_confirm"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/delete_cancel_button"
+        app:layout_constraintTop_toBottomOf="@id/delete_source_title" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

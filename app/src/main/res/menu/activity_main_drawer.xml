@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_scroll"
+            android:icon="@drawable/ic_icon_newspaper"
+            android:title="@string/menu_scroll" />
+
+        <item
+            android:id="@+id/nav_saved"
+            android:icon="@drawable/ic_bookmark_24px"
+            android:title="@string/menu_saved_articles" />
+
+        <item
+            android:id="@+id/nav_sources"
+            android:icon="@drawable/ic_rss_feed_24px"
+            android:title="@string/menu_sources" />
+
+        <item
+            android:id="@+id/nav_imprint"
+            android:icon="@drawable/ic_info_24px"
+            android:title="@string/menu_imprint" />
+
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_star_24px"
+            android:title="@string/about_the_app" />
+
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/nav_scroll_source" />
+
+</menu>

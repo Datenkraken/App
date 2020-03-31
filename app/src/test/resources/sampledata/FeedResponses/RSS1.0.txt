@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet href="http://www.w3.org/2000/08/w3c-synd/style.css" type="text/css"?>
+<!-- generator="FeedCreator 1.6" -->
+<rdf:RDF
+    xmlns="http://purl.org/rss/1.0/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/"
+    xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+    xmlns:content="http://purl.org/rss/1.0/modules/content/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel rdf:about="https://rss.test.de/rss.php?feed=RSS1.0">
+        <title>test.de</title>
+        <description>IT-News fuer Profis</description>
+        <link>https://www.test.de/</link>
+        <atom:link rel="self" href="https://rss.test.de/rss.php?feed=RSS1.0" />
+        <image rdf:resource="https://www.test.de/staticrl/images/test-rss.png" />
+        <dc:date>2019-12-01T18:24:01+01:00</dc:date>
+        <items>
+            <rdf:Seq>
+                <rdf:li rdf:resource="https://www.test.de"/>
+            </rdf:Seq>
+        </items>
+    </channel>
+    <image rdf:about="https://www.test.de/staticrl/images/test-rss.png">
+        <title>test.de</title>
+        <link>https://www.test.de/</link>
+        <url>https://www.test.de/staticrl/images/test-rss.png</url>
+    </image>
+    <item rdf:about="https://www.test.de/">
+        <dc:format>text/html</dc:format>
+        <dc:date>2019-12-01T15:05:00+01:00</dc:date>
+        <dc:source>https://www.test.de</dc:source>
+        <dc:creator>Daniel Thoma</dc:creator>
+        <title>Title</title>
+        <link>https://www.test.de/</link>
+        <description>Description</description>
+        <slash:comments>7</slash:comments>
+        <content:encoded>Content</content:encoded>
+    </item>
+</rdf:RDF>

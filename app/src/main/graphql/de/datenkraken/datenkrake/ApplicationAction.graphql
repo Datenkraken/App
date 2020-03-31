@@ -1,0 +1,5 @@
+mutation ApplicatonAction($list: [createAppEvent!]!) {
+    submitAppEvent(input: $list) {
+        timestamp
+    }
+}

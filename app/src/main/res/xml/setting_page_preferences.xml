@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/mainBackground">
+
+    <PreferenceCategory android:title="@string/settings_network_title">
+
+        <ListPreference
+            android:defaultValue="600000"
+            android:entries="@array/settings_time"
+            android:entryValues="@array/settings_time_values"
+            android:key="@string/preference_settings_network_update_interval"
+            android:title="@string/settings_network_update_interval_title" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:background="@android:color/background_light"
+        app:key="cache_clear_category"
+        app:title="@string/settings_cache_title">
+
+        <ListPreference
+            android:defaultValue="86400000"
+            android:entries="@array/settings_time"
+            android:entryValues="@array/settings_time_values"
+            android:key="@string/preference_settings_cache_article_lifetime"
+            android:title="@string/settings_cache_article_lifetime_title" />
+
+        <Preference
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/background_light"
+            android:key="@string/preference_settings_clear_cache_button"
+            android:summary="@string/settings_cache_clear_summary"
+            android:title="@string/settings_cache_clear_button" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:background="@android:color/background_light"
+        app:key="account_settings_category"
+        app:title="@string/settings_account_title">
+
+        <Preference
+            android:id="@+id/settings_logout_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/background_light"
+            android:key="@string/preference_settings_logout_button"
+            android:title="@string/settings_logout_text_button" />
+
+        <Preference
+            android:id="@+id/delete_data_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/background_light"
+            android:key="@string/preference_settings_delete_data_button_key"
+            android:title="@string/settings_delete_data_button"
+            android:summary="@string/settings_delete_data_summary"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:background="@android:color/background_light"
+        app:key="category_setting"
+        app:title="@string/settings_category_search">
+
+        <Preference
+            android:id="@+id/settings_categories"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/background_light"
+            android:key="categories_button"
+            android:title="@string/settings_category_button" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:background="@android:color/background_light"
+        app:key="about_the_app_category"
+        app:title="@string/about_the_app">
+
+        <Preference
+            android:id="@+id/settings_privacy_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/background_light"
+            android:key="@string/preference_settings_privacy_policy_button"
+            android:title="@string/privacy_policy_button" />
+
+    </PreferenceCategory>
+    
+</PreferenceScreen>

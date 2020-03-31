@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:background="@color/colorPrimary"
+app:layout_constraintHorizontal_weight="10"
+android:orientation="vertical">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/category_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="3dp"
+        android:layout_weight="8"
+        android:background="@drawable/custom_recyclerview" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/submit_sources"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/categories_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/custom_button"
+            android:textColor="@color/white"
+            android:text="@string/button_confirm" />
+
+        <Button
+            android:id="@+id/categories_back"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@id/submit_sources"
+            app:layout_constraintStart_toEndOf="@id/sources_cancel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/custom_button"
+            android:textColor="@color/white"
+            android:text="@string/back" />
+
+        <Button
+            android:id="@+id/sources_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/categories_back"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@drawable/custom_button"
+            android:textColor="@color/white"
+            android:text="@string/skip" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>

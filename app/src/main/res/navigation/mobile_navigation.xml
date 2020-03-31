@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/nav_scroll">
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="de.datenkraken.datenkrake.ui.settings.SettingsPageFragment"
+        android:label="@string/settings_title"
+        tools:layout="@layout/settings_page_main" />
+
+    <action
+        android:id="@+id/action_global_to_nav_settings"
+        app:destination="@id/nav_settings"
+        app:launchSingleTop="true" />
+
+    <fragment
+        android:id="@+id/nav_scroll"
+        android:name="de.datenkraken.datenkrake.ui.scroll.ScrollFragment"
+        android:label=" "
+        tools:layout="@layout/fragment_scroll" >
+        <argument
+            android:name="show_saved"
+            android:defaultValue="false"
+            app:argType="boolean" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_scroll_source"
+        android:name="de.datenkraken.datenkrake.ui.scroll.ScrollFragment"
+        android:label="@string/menu_scroll"
+        tools:layout="@layout/fragment_scroll">
+        <argument
+            android:name="show_saved"
+            android:defaultValue="false"
+            app:argType="boolean" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_saved"
+        android:name="de.datenkraken.datenkrake.ui.scroll.ScrollFragment"
+        android:label="@string/menu_saved_articles"
+        tools:layout="@layout/fragment_scroll">
+        <argument
+            android:name="show_saved"
+            android:defaultValue="true"
+            app:argType="boolean" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_sources"
+        android:name="de.datenkraken.datenkrake.ui.sources.SourcesFragment"
+        android:label="@string/menu_sources"
+        tools:layout="@layout/fragment_sources" />
+
+    <fragment
+        android:id="@+id/nav_imprint"
+        android:name="de.datenkraken.datenkrake.ui.imprint.ImprintFragment"
+        android:label="@string/menu_imprint"
+        tools:layout="@layout/fragment_imprint" />
+
+    <fragment
+        android:id="@+id/nav_single_article"
+        android:name="de.datenkraken.datenkrake.ui.singlearticle.ArticleViewFragment"
+        android:label="@string/empty"
+        tools:layout="@layout/fragment_single_article">
+        <argument
+            android:name="article_id"
+            app:argType="long" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_recomm"
+        android:name="de.datenkraken.datenkrake.ui.recommendation.source.SourceRecommFragment"
+        android:label="@string/cat_recommendation"
+        tools:layout="@layout/source_recomm_fragment" />
+
+    <fragment
+        android:id="@+id/nav_cat_recomm"
+        android:name="de.datenkraken.datenkrake.ui.recommendation.category.CategoryRecommFragment"
+        android:label="@string/menu_recommendation"
+        tools:layout="@layout/category_recomm_fragment" />
+
+    <fragment
+        android:id="@+id/nav_about"
+        android:name="com.mikepenz.aboutlibraries.ui.LibsSupportFragment"
+        android:label="@string/menu_about">
+        <argument android:name="data" app:argType="com.mikepenz.aboutlibraries.LibsBuilder"/>
+    </fragment>
+
+
+</navigation>

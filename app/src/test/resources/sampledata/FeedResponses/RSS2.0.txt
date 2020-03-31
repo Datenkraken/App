@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- generator="FeedCreator 1.6" -->
+<rss xmlns:content="http://purl.org/rss/1.0/modules/content/"
+    xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+    xmlns:atom="http://www.w3.org/2005/Atom"
+    version="2.0">
+    <channel>
+        <title>test.de</title>
+        <description>IT-News fuer Datenkraken</description>
+        <link>https://www.test.de/</link>
+        <atom:link rel="self" href="https://rss.test.de/rss.php?feed=RSS2.0" />
+        <lastBuildDate>Sun, 01 Dec 2019 18:24:01 +0100</lastBuildDate>
+        <generator>FeedCreator 1.6</generator>
+        <image>
+            <url>https://www.test.de/staticrl/images/test-rss.png</url>
+            <title>test.de</title>
+            <link>https://www.test.de/</link>
+            <description>test.de News Feed</description>
+        </image>
+        <language>de</language>
+        <atom:link rel="hub" href="http://test.superfeedr.com/" />
+        <item>
+            <title>Title</title>
+            <link>https://www.test.de/</link>
+            <description>Description</description>
+            <comments>Comment</comments>
+            <pubDate>Sun, 01 Dec 2019 15:05:00 +0100</pubDate>
+            <guid>https://www.test.de/1912/145290-rss.html</guid>
+            <content:encoded>Content</content:encoded>
+            <slash:comments>7</slash:comments>
+        </item>
+    </channel>
+</rss>

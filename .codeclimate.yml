@@ -1,0 +1,18 @@
+---
+version: "2"
+plugins:
+  fixme:
+    enabled: true
+  pmd:
+    enabled: true
+    config:
+      file: "pmd-rules.xml"
+  checkstyle:
+    enabled: true
+    config:
+      file: "checkstyle.xml"
+exclude_patterns:
+  - "**/test/"
+  - "**/androidTest/"
+  - "**/build/"
+  - "**/gradle/"

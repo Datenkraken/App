@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="data_delete_warning_text">
+        Hiermit wirst du alle Daten, die über dich gesammelt wurden, löschen.
+        Deine Daten könnten jedoch immer noch anonym in Statistiken auftauchen.
+        Dein Account wird gelöscht.
+    </string>
+</resources>

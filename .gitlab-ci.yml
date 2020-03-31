@@ -1,0 +1,129 @@
+stages:
+  - building
+  - testing
+
+image: jangrewe/gitlab-ci-android:29
+
+variables:
+  SAST_ANALYZER_IMAGES: "registry.gitlab.com/saibotk/spotbugs-analyzer-android"
+  SAST_DEFAULT_ANALYZERS: "secrets"
+  SAST_DISABLE_DIND: "true"
+  GRADLE_PATH: "/tmp/app/gradlew"
+
+.before_script_template: &default_before_script
+  before_script:
+    - export GRADLE_USER_HOME=$(pwd)/.gradle
+    - chmod +x ./gradlew
+
+.only_default: &only_default
+  only:
+    - master
+    - merge_requests
+
+include:
+  - template: SAST.gitlab-ci.yml
+#  - template: License-Management.gitlab-ci.yml
+  - template: Code-Quality.gitlab-ci.yml
+  - template: Dependency-Scanning.gitlab-ci.yml
+
+assembleDebug:
+  stage: building
+  <<: *default_before_script
+  <<: *only_default
+  script:
+    - ./gradlew assembleDebug
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: push
+    paths:
+      - build
+      - app/build
+      - .gradle
+#  artifacts:
+#    paths:
+#      -  app/build/outputs/apk/debug/app-debug.apk
+
+lintDebug:
+  stage: testing
+  <<: *default_before_script
+  <<: *only_default
+  script:
+    - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - app/build
+      - .gradle
+  artifacts:
+    expose_as: 'Android Lint'
+    paths:
+      - app/lint/reports/lint-results-debug.html
+      - app/lint/reports/lint-results-debug.xml
+
+debugTests:
+  stage: testing
+  <<: *default_before_script
+  <<: *only_default
+  script:
+    - ./gradlew -Pci --console=plain :app:testDebug
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - app/build
+      - .gradle
+  artifacts:
+    reports:
+      junit: app/build/test-results/testDebugUnitTest/TEST-*.xml
+
+sast:
+  stage: testing
+  <<: *only_default
+
+secrets-sast:
+  stage: testing
+  <<: *only_default
+
+spotbugs-android-sast:
+  stage: testing
+  <<: *only_default
+  image:
+    name: "registry.gitlab.com/saibotk/spotbugs-analyzer-android:latest"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - app/build
+      - .gradle
+  dependencies:
+    - assembleDebug
+  script:
+    - /analyzer run -compile=false
+  artifacts:
+    reports:
+      sast: gl-sast-report.json
+
+dependency_scanning:
+  stage: testing
+  <<: *only_default
+
+code_quality:
+  stage: testing
+  <<: *only_default
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - app/build
+      - .gradle
+  dependencies:
+    - assembleDebug
+
+#license_management:
+#  stage: testing
+#  <<: *only_default

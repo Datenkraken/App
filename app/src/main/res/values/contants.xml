@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    // feedupdater
+    <integer name="feedupdater_update_inervall">10000</integer> // 2h in ms 7200000
+    <integer name="feedupdater_article_max_age">86400000</integer> // 24h in ms
+
+    // surveillance
+    <integer name="packet_runtime_limit">100</integer>
+    <integer name="event_processor_pool">10</integer>
+    <integer name="event_queue_soft_cap">2000</integer>
+    <integer name="event_queue_hard_cap">3000</integer>
+
+    // Cache
+    // Android has a maximal path length if 127 Character, so lets try to be under this limit
+    <integer name="packet_cache_max_path_length">117</integer>
+    <integer name="packet_cache_limit_bytes">1048576</integer> // 100 MB
+    <integer name="packet_cache_files_per_mutation">5</integer>
+</resources>

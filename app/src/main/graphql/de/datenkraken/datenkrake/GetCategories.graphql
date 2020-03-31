@@ -1,0 +1,13 @@
+query GetCategories($id: String) {
+    categories(id: $id) {
+        id
+        name
+        description
+        rssSources {
+            id
+            name
+            description
+            url
+        }
+    }
+   }

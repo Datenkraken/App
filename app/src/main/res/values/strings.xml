@@ -1,0 +1,106 @@
+<resources>
+    <string name="app_name">Datenkrake</string>
+
+    // Useful default strings
+    <string name="default_unknown">Unknown</string>
+    <string name="button_ok">OK</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="button_delete">Delete</string>
+    <string name="button_accept">Accept</string>
+    <string name="button_bookmark_description">Bookmarks this article.</string>
+    <string name="app_subtitle">Just read your news</string>
+    <string name="button_confirm">Confirm</string>
+    <string name="empty" translatable="false">" "</string>
+    <string name="about_the_app">About the app</string>
+    <string name="skip">Skip</string>
+    <string name="back">Back</string>
+
+    // Navigation
+    <string name="nav_header_desc">The application logo image</string>
+    <string name="nav_header_subtitle">A datasniffing challenge</string>
+    <string name="nav_sub_menu_sources">Sources</string>
+
+    // Menu entries (top right)
+    <string name="action_menu_settings">Settings</string>
+
+    // Menu entries (left)
+    <string name="menu_sources">Your Sources</string>
+    <string name="menu_scroll">Your feeds</string>
+    <string name="menu_saved_articles">Saved Articles</string>
+    <string name="menu_imprint">Imprint</string>
+    <string name="menu_recommendation">Categories</string>
+    <string name="menu_about">About us</string>
+
+    // Source page
+    <string name="source_add">Add Source</string>
+    <string name="source_name_loading">Loading…</string>
+    <string name="source_url_wrong_format">Wrong format, please enter a valid URL.</string>
+    <string name="source_icon_description">Icon of the source</string>
+    <string name="source_delete_before">"Delete "</string>
+    <string name="source_delete_after">"?"</string>
+
+    // Settings page
+    <string name="settings_title">Settings</string>
+    <string name="settings_network_title">Network settings</string>
+    <string name="settings_network_update_interval_title">Update Interval</string>
+    <string name="settings_cache_title">Cache settings</string>
+    <string name="settings_cache_clear_button">Clear cache</string>
+    <string name="settings_cache_clear_summary">Clears the cache of the app</string>
+    <string name="settings_cache_clear_success">Cache was cleared successfully</string>
+    <string name="settings_cache_clear_failure">Cache could not be cleared.</string>
+    <string name="settings_cache_article_lifetime_title">Feeds lifetime</string>
+    <string name="settings_account_title">Account Settings</string>
+    <string name="settings_logout_text_button">Logout</string>
+    <string name="settings_category_search">Category search</string>
+    <string name="settings_category_button">Categories</string>
+    <string name="settings_delete_data_button">Delete all Data</string>
+    <string name="settings_delete_data_summary">Deletes all saved Data</string>
+    <string name="settings_data_delete_failure">Data could not be deleted</string>
+    <string name="settings_data_delete_success">Data and Account were successfully deleted</string>
+
+    // Single article view
+    <string name="article_from_author">"by: "</string>
+    <string name="article_image_content_description">Image of the article</string>
+    <string name="article_source_content_description">Open the article source in a webbrowser</string>
+    <string name="article_share_button_description">Share Article</string>
+    <string name="toast_no_articles_warning"> No more articles this way</string>
+    <string name="article_no_source_found">Found no Source to Share</string>
+    <string name="article_not_found_warning">No article found</string>
+    <string name="article_share_button_title">Share</string>
+    <string name="article_no_website_found">No Website found</string>
+
+    // Data Collection Window
+    <string name="data_collection_popup_warning">Warning</string>
+    <string name="data_collection_alert_decline">You have to accept to continue</string>
+
+    //Strings for Search Bar
+    <string name="search_bar_title">Search</string>
+
+    // Permant Delete Article
+    <string name="article_delete_permantly_title">Warning</string>
+    <string name="article_delete_permantly_message">This will delete the article permanently</string>
+
+    //Strings for Login Page
+    <string name="login_title">Login</string>
+    <string name="login_screen_login_button">Login</string>
+    <string name="login_screen_register_button">Register</string>
+    <string name="login_screen_login_failure">Login not possible</string>
+    <string name="login_screen_login_success">Logged in successfully</string>
+    <string name="login_dik_content_description">DiK Logo</string>
+    <string name="login_tud_content_description">TUD Logo</string>
+    <string name="privacy_policy_button">Privacy Policy</string>
+
+    //Strings for Category RecommendationPage
+    <string name="button_add_sources">Add Categories</string>
+    <string name="button_categories">More categories  </string>
+    <string name="toast_no_cat_selected">No Categories selected!</string>
+
+    //Strings for Source RecommendationPage
+    <string name="toast_sources_successfully_added">"Sources added!   "</string>
+    <string name="toast_sources__added_error">There was an issue with adding your sources</string>
+    <string name="cat_recommendation">Add Sources</string>
+    <string name="button_submit_sources">Submit Sources</string>
+    <string name="pick_sources">Pick Sources</string>
+    <string name="notification_no_sources">No new sources for this category</string>
+
+</resources>

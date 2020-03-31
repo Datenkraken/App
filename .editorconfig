@@ -1,0 +1,30 @@
+# .editorconfig
+
+# see http://EditorConfig.org
+
+# This is the file in the root of the project.
+# For sub folders you can have other files that override only some settings.
+# For these, this settings should be false.
+root=true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+
+[*.properties]
+# Exception for Java properties files should be encoded latin1 (aka iso8859-1)
+charset=latin1
+
+[*.{cmd,bat}]
+# batch files on Windows should stay with CRLF
+end_of_line=crlf
+
+[*.md]
+trim_trailing_whitespace=false
+
+[*.{yml,yaml}]
+indent_size = 2

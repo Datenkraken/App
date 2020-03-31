@@ -1,0 +1,9 @@
+{
+    "data": {
+        "test": {
+            "__typename": "test",
+            "data": ["Test", "run", "successful", "!"],
+            "end": "hoorray!"
+        }
+    }
+}

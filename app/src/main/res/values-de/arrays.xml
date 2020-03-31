@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="settings_time">
+        <item>10m</item>
+        <item>30m</item>
+        <item>1h</item>
+        <item>2h</item>
+        <item>6h</item>
+        <item>24h</item></string-array>
+</resources>

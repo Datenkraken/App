@@ -1,0 +1,5 @@
+mutation SourceAction($list: [createSourceEvent!]!) {
+    submitSourceEvent(input: $list) {
+        timestamp
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "name": "Default GraphQL Schema",
+    "schemaPath": "./schema.json",
+    "includes": ["*"],
+    "extensions": {
+        "endpoints": {
+            "Default GraphQL Endpoint": {
+                "url": "http://localhost:5454/graphql",
+                "headers": {
+                    "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI1ZTcxZGYxMmYzZGM0ODNkMzQyZDZiNzIiLCJqdGkiOiI2ODM3YTg1YmYwNjdiZDVkZmVhZTQ0MGFmZWI3MWExNzc3MDVhMjAwYjRjYTk3NGQ4MTFmOTIwNGU3YmM5ZTA2NjVlNDIyZDUyZjYxN2M1OCIsImlhdCI6MTU4NDUyMDk5MiwibmJmIjoxNTg0NTIwOTkyLCJleHAiOjE2MTYwNTY5OTIsInN1YiI6IjVlNzFkZTE3NjRlZjAzMGUxODcxNjBkMiIsInNjb3BlcyI6W119.ghuRMztrb9E8qfTGroFZsxHvf2eXxqAruh-zTaHEzvDk7ryy0xRo1srjmPIoYqTvQKuVmfC35eB8UU3LkpsSZ6xUHmwwUOYVzr3VVIhcYkPhCgL46w0SUHtWflRCB1GLzs53LyVWZVOoQM4e8OG_9F-n8XTjnKDDRzA4pmatTN5VQE_MEqESj2ASiZbs7pxYxzEusdGq-WCHKHQtSk_bOJq3ZGTK-mCt0PGFYU0tZepG0583F184ChGJPnymmXr-78F_y-fkkTMqwY-nr5nY6iwtIQlufGd2BJ_C2T9mX4tEPgnhBUNTxoYTRjwdIgGcjTAE0dNOLW6yC3TcOS4VwJTmlQA3SFZkSzb3gNp8-kczHkRWnpMuukmAo4L7nupn7MdSfk7T-bxLAJ7Tb6_BFaPNnd2ECaFfLygmrYynNelhg9N2JHqyoYNEWqMFcg-z0-zL9TUmHNgxJoLdwwCtmqsz3YeIsAdz5YV7mUBJ0X8_3HiMa5RZ4oayaSxTHuOWtmQhg9FG_K91KYHzOEuPOdU9XDFZUjPw3tCQ0IGaNoor9v3GOHcueXJkgO3QHiVoc5HGyq4ufafzns7PWUYNDSKaCOfpgkvWs-ME2C6gg7nYAgWuAYoYFmlSW93AI3sC_CjtFJc-dkUmY5ItYPhVT7jQjb4OcFKjNlfHjPPPNnw"
+                },
+                "introspect": false
+            }
+        }
+    }
+}

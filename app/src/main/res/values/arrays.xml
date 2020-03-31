@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="settings_time">
+        <item>10m</item>
+        <item>30m</item>
+        <item>1h</item>
+        <item>2h</item>
+        <item>6h</item>
+        <item>24h</item></string-array>
+    <string-array name="settings_time_values">
+        <item>600000</item>
+        <item>1800000</item>
+        <item>3600000</item>
+        <item>7200000</item>
+        <item>21600000</item>
+        <item>86400000</item></string-array>
+</resources>
