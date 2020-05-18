@@ -1,5 +1,6 @@
 package de.datenkraken.datenkrake;
 
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -55,6 +56,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import de.datenkraken.datenkrake.surveillance.broadcast.Receiver;
+import de.datenkraken.datenkrake.surveillance.broadcast.UserActivityReceiver;
 import kotlin.Triple;
 import timber.log.Timber;
 
@@ -400,6 +403,8 @@ public class MainActivity extends AppCompatActivity {
             ExistingPeriodicWorkPolicy.REPLACE,
             request);
 
+        Receiver receiver = new UserActivityReceiver();
+        registerReceiver(receiver, receiver.getNonManifestIntentsFilter());
     }
 
     /**

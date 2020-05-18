@@ -9,6 +9,7 @@ import de.datenkraken.datenkrake.surveillance.processors.event.SourceActionProce
 import de.datenkraken.datenkrake.surveillance.sender.ApplicationActionSender;
 import de.datenkraken.datenkrake.surveillance.sender.ArticleActionSender;
 import de.datenkraken.datenkrake.surveillance.sender.SourceActionSender;
+import de.datenkraken.datenkrake.surveillance.sender.UserActivitySender;
 import de.datenkraken.datenkrake.surveillance.sender.WifiConnectionSender;
 
 /**
@@ -64,7 +65,8 @@ public final class ProcessorProvider {
             new WifiConnectionSender(),
             new ApplicationActionSender(),
             new ArticleActionSender(),
-            new SourceActionSender()
+            new SourceActionSender(),
+            new UserActivitySender()
         };
     }
 }
