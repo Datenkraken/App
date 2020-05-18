@@ -1,0 +1,5 @@
+mutation submitOSInformation($list: [createOSInformation!]!) {
+    submitOSInformation(input: $list) {
+        timestamp
+    }
+}

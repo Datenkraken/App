@@ -1,6 +1,7 @@
 package de.datenkraken.datenkrake.surveillance;
 
 import de.datenkraken.datenkrake.surveillance.background.IBackgroundProcessor;
+import de.datenkraken.datenkrake.surveillance.processors.background.OSInformationProcessor;
 import de.datenkraken.datenkrake.surveillance.processors.background.WifiConnectionProcessor;
 import de.datenkraken.datenkrake.surveillance.processors.event.ApplicationActionProcessor;
 import de.datenkraken.datenkrake.surveillance.processors.event.ArticleActionProcessor;
@@ -8,6 +9,7 @@ import de.datenkraken.datenkrake.surveillance.processors.event.LogProcessor;
 import de.datenkraken.datenkrake.surveillance.processors.event.SourceActionProcessor;
 import de.datenkraken.datenkrake.surveillance.sender.ApplicationActionSender;
 import de.datenkraken.datenkrake.surveillance.sender.ArticleActionSender;
+import de.datenkraken.datenkrake.surveillance.sender.OSInformationSender;
 import de.datenkraken.datenkrake.surveillance.sender.SourceActionSender;
 import de.datenkraken.datenkrake.surveillance.sender.WifiConnectionSender;
 
@@ -49,7 +51,8 @@ public final class ProcessorProvider {
      */
     public static IBackgroundProcessor[] getBackgroundProcessors() {
         return new IBackgroundProcessor[] {
-            new WifiConnectionProcessor()
+            new WifiConnectionProcessor(),
+            new OSInformationProcessor()
         };
     }
 
@@ -64,7 +67,8 @@ public final class ProcessorProvider {
             new WifiConnectionSender(),
             new ApplicationActionSender(),
             new ArticleActionSender(),
-            new SourceActionSender()
+            new SourceActionSender(),
+            new OSInformationSender()
         };
     }
 }

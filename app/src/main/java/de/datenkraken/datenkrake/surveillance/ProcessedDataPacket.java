@@ -1,5 +1,7 @@
 package de.datenkraken.datenkrake.surveillance;
 
+import androidx.annotation.NonNull;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -387,5 +389,14 @@ public class ProcessedDataPacket {
         for (int i = 0; i < size; i++) {
             processedDataPacket.values.put((String) stream.readObject(), (Serializable) stream.readObject());
         }
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "{" + "id='" + taskId + "', "
+            + "version=" + VERSION + ", "
+            + "values=" + values.toString()
+            + "}";
     }
 }
