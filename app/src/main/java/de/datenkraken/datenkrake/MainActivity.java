@@ -1,6 +1,5 @@
 package de.datenkraken.datenkrake;
 
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
