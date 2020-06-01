@@ -7,10 +7,6 @@ import com.apollographql.apollo.api.Mutation;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import de.datenkraken.datenkrake.SubmitOSInformationMutation;
 import de.datenkraken.datenkrake.network.ITask;
 import de.datenkraken.datenkrake.network.clients.apollo.ApolloMutation;
@@ -19,13 +15,18 @@ import de.datenkraken.datenkrake.surveillance.ProcessedDataPacket;
 import de.datenkraken.datenkrake.surveillance.util.Callback;
 import de.datenkraken.datenkrake.surveillance.util.FormatUtil;
 import de.datenkraken.datenkrake.type.CreateOSInformation;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import timber.log.Timber;
 
 public class OSInformationSender implements ISendProcessedData {
     @Nullable
     @Override
     public ITask getTask(List<ProcessedDataPacket> packets, Callback callback) {
-        List <CreateOSInformation> list = new ArrayList<>();
+        List<CreateOSInformation> list = new ArrayList<>();
 
         for (ProcessedDataPacket packet : packets) {
 

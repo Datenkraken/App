@@ -41,10 +41,13 @@
 
     // background processor names
     <string name="background_service_sender" translatable="false">datenkrake.backgroundpacketsender</string>
-    <string name="background_service_supervisor" translatable="false">datenkrake.backgroundsuperivso</string>
+    <string name="background_service_supervisor" translatable="false">datenkrake.backgroundsuperivsor</string>
 
     // keys for category recommendation
     <string name="newly_registered" translatable="false">newly_registered</string>
 
+    // keys for surveillance
+    <string name="surv_shared_preference_name" translatable="false">surveillance</string>
+    <string name="surv_shared_preference_os_fingerprint" translatable="false">os_fingerprint</string>
 
 </resources>

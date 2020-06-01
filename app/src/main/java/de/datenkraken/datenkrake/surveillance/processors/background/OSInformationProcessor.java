@@ -28,10 +28,10 @@ public class OSInformationProcessor implements IBackgroundProcessor {
         SharedPreferences pref =
             context.getSharedPreferences(context.getResources()
                 .getString(R.string.surv_shared_preference_name), Context.MODE_PRIVATE);
-        String saved_fingerprint =
+        String savedFingerprint =
             pref.getString(context.getResources().getString(R.string.surv_shared_preference_os_fingerprint), "");
 
-        if (saved_fingerprint.equals(fingerprint)) {
+        if (savedFingerprint.equals(fingerprint)) {
             return;
         }
 
