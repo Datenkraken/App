@@ -7,7 +7,7 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.1'
+        classpath 'com.android.tools.build:gradle:3.6.3'
 
 
         // Android Safe Args gradle plugin (https://developer.android.com/guide/navigation/navigation-pass-data#Safe-args)

@@ -7,26 +7,26 @@
     <string name="preference_settings_cache_article_lifetime" translatable="false">article_lifetime</string>
     <string name="preference_settings_categories_button" translatable="false">categories_button</string>
     <string name="preference_settings_delete_data_button_key" translatable="false">delete_data_button</string>
-    <string name="preference_settings_data_delete_target_url" translatable="false">http://10.0.2.2:8000/api/auth/delete</string>
+    <string name="preference_settings_data_delete_target_url" translatable="false">http://10.0.2.2:5454/api/auth/delete</string>
     <string name="preference_settings_privacy_policy_button" translatable="false">privacy_policy_button</string>
 
     // keys for login
     <string name="preference_login_storage" translatable="false">LOGIN_STORAGE</string>
     <string name="preference_accepted_data_collection" translatable="false">ACCEPTED_DATA_COLLECTION</string>
     <string name="login_authentication_state" translatable="false">AUTH_TOKEN</string>
-    <string name="login_data_collection_privacy_url" translatable="false">http://10.0.2.2:8000/privacy?origin=app</string>
+    <string name="login_data_collection_privacy_url" translatable="false">http://10.0.2.2:5454/privacy?origin=app</string>
 
     // OAuth 2.0 parameters
     <string name="login_redirect_uri" translatable="false">datenkrake://oauthresponse</string>
     <string name="login_redirect_host" translatable="false">oauthresponse</string>
     <string name="login_redirect_scheme" translatable="false">datenkrake</string>
-    <string name="login_registration_endpoint" translatable="false">http://10.0.2.2:8000/register?origin=app</string>
-    <string name="login_authorize_endpoint" translatable="false">http://10.0.2.2:8000/oauth/authorize</string>
-    <string name="login_token_endpoint" translatable="false">http://10.0.2.2:8000/oauth/token</string>
-    <string name="login_client_id" translatable="false">5e764d521ba4aa7d2871bb82</string>
+    <string name="login_registration_endpoint" translatable="false">http://10.0.2.2:5454/register?origin=app</string>
+    <string name="login_authorize_endpoint" translatable="false">http://10.0.2.2:5454/oauth/authorize</string>
+    <string name="login_token_endpoint" translatable="false">http://10.0.2.2:5454/oauth/token</string>
+    <string name="login_client_id" translatable="false">5ec25551cdd86f01b54fde42</string>
 
     // graphql
-    <string name="graphql_endpoint" translatable="false">http://10.0.2.2:8000/graphql</string>
+    <string name="graphql_endpoint" translatable="false">http://10.0.2.2:5454/graphql</string>
     <string name="packet_cache_folder" translatable="false">packet_cache</string>
 
     // key for search value
@@ -37,7 +37,7 @@
     <string name="nav_scroll_source" translatable="false">nav_scroll_source</string>
 
     // keys for imprint
-    <string name="imprint_webview_url" translatable="false">http://10.0.2.2:8000/imprint?origin=app</string>
+    <string name="imprint_webview_url" translatable="false">http://10.0.2.2:5454/imprint?origin=app</string>
 
     // background processor names
     <string name="background_service_sender" translatable="false">datenkrake.backgroundpacketsender</string>
