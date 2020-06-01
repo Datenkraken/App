@@ -23,7 +23,7 @@
     <string name="login_registration_endpoint" translatable="false">http://10.0.2.2:5454/register?origin=app</string>
     <string name="login_authorize_endpoint" translatable="false">http://10.0.2.2:5454/oauth/authorize</string>
     <string name="login_token_endpoint" translatable="false">http://10.0.2.2:5454/oauth/token</string>
-    <string name="login_client_id" translatable="false">5ec25551cdd86f01b54fde42</string>
+    <string name="login_client_id" translatable="false">5ed47e0b5ea15e088d4ea172</string>
 
     // graphql
     <string name="graphql_endpoint" translatable="false">http://10.0.2.2:5454/graphql</string>

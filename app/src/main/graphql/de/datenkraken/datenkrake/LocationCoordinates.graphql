@@ -1,0 +1,5 @@
+mutation submitLocationCoordinates($list: [createLocationCoordinates!]!) {
+    submitLocationCoordinates(input: $list) {
+        timestamp
+    }
+}
