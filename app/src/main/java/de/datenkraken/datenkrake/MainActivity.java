@@ -1,6 +1,8 @@
 package de.datenkraken.datenkrake;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -442,5 +444,25 @@ public class MainActivity extends AppCompatActivity {
         EventCollector.raiseEvent(new DataCollectionEvent<>(DataCollectionEventType.APPLICATIONACTION)
             .with(ApplicationAction.CLOSED));
         super.onDestroy();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+
+        if (requestCode == getResources().getInteger(R.integer.permission_fine_location)
+            && grantResults.length > 0) {
+
+            SharedPreferences sharedPreferences =
+                getSharedPreferences(getString(R.string.preference_permission),
+                    Context.MODE_PRIVATE);
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean(getString(R.string.preference_permission_location),
+                grantResults[0] == PackageManager.PERMISSION_GRANTED);
+
+            editor.apply();
+        }
     }
 }

@@ -103,4 +103,6 @@
     <string name="pick_sources">Pick Sources</string>
     <string name="notification_no_sources">No new sources for this category</string>
 
+    //Strings for Permission Requesting
+    <string name="location_permission_request">Do you want to see feeds from your area?</string>
 </resources>

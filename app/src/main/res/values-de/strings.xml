@@ -76,4 +76,5 @@
     <string name="toast_no_cat_selected">Keine Kategorien ausgewählt!</string>
     <string name="skip">Überspringen</string>
     <string name="back">Zurück</string>
+    <string name="location_permission_request">Willst du Feeds aus deiner Umgebung sehen?</string>
 </resources>

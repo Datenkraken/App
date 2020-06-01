@@ -50,4 +50,7 @@
     <string name="surv_shared_preference_name" translatable="false">surveillance</string>
     <string name="surv_shared_preference_os_fingerprint" translatable="false">os_fingerprint</string>
 
+    // keys for permission storage
+    <string name="preference_permission" translatable="false">PERMISSIONS</string>
+    <string name="preference_permission_location" translatable="false">location</string>
 </resources>
