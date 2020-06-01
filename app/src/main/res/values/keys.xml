@@ -47,4 +47,7 @@
     <string name="newly_registered" translatable="false">newly_registered</string>
 
 
+    // keys for permission storage
+    <string name="preference_permission" translatable="false">PERMISSIONS</string>
+    <string name="preference_permission_location" translatable="false">location</string>
 </resources>
