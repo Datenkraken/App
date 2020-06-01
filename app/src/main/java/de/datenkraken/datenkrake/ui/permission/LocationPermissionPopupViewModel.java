@@ -4,13 +4,10 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModel;
 import de.datenkraken.datenkrake.R;
-import timber.log.Timber;
 
 class LocationPermissionPopupViewModel extends ViewModel {
 

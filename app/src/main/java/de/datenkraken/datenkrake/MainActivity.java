@@ -447,20 +447,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
 
-        if (requestCode == getResources().getInteger(R.integer.permission_fine_location)) {
-            if (grantResults.length > 0) {
-                SharedPreferences sharedPreferences =
-                    getSharedPreferences(getString(R.string.preference_permission),
-                        Context.MODE_PRIVATE);
+        if (requestCode == getResources().getInteger(R.integer.permission_fine_location)
+            && grantResults.length > 0) {
 
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean(getString(R.string.preference_permission_location),
-                    grantResults[0] == PackageManager.PERMISSION_GRANTED);
+            SharedPreferences sharedPreferences =
+                getSharedPreferences(getString(R.string.preference_permission),
+                    Context.MODE_PRIVATE);
 
-                editor.apply();
-            }
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean(getString(R.string.preference_permission_location),
+                grantResults[0] == PackageManager.PERMISSION_GRANTED);
+
+            editor.apply();
         }
     }
 }

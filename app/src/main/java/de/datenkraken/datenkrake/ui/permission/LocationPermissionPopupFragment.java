@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,17 +12,15 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.Arrays;
-import java.util.Objects;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.fragment.app.DialogFragment;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.datenkraken.datenkrake.R;
-import timber.log.Timber;
+
+import java.util.Objects;
 
 public class LocationPermissionPopupFragment extends DialogFragment {
 
@@ -34,7 +31,8 @@ public class LocationPermissionPopupFragment extends DialogFragment {
     @BindView(R.id.location_permission_request_cancel_button)
     Button cancelButton;
 
-    private final LocationPermissionPopupViewModel locationPermissionPopupViewModel = new LocationPermissionPopupViewModel();
+    private final LocationPermissionPopupViewModel locationPermissionPopupViewModel =
+        new LocationPermissionPopupViewModel();
 
     @Nullable
     @Override
