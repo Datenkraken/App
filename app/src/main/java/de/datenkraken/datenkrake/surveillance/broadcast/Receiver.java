@@ -5,9 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import de.datenkraken.datenkrake.surveillance.ProcessedDataCollector;
+
 import java.lang.ref.WeakReference;
 
-import de.datenkraken.datenkrake.surveillance.ProcessedDataCollector;
 
 public abstract class Receiver extends BroadcastReceiver {
 

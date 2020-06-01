@@ -49,14 +49,14 @@ import de.datenkraken.datenkrake.surveillance.EventManager;
 import de.datenkraken.datenkrake.surveillance.actions.ApplicationAction;
 import de.datenkraken.datenkrake.surveillance.background.BackgroundPacketSender;
 import de.datenkraken.datenkrake.surveillance.background.BackgroundSupervisor;
+import de.datenkraken.datenkrake.surveillance.broadcast.Receiver;
+import de.datenkraken.datenkrake.surveillance.broadcast.UserActivityReceiver;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import de.datenkraken.datenkrake.surveillance.broadcast.Receiver;
-import de.datenkraken.datenkrake.surveillance.broadcast.UserActivityReceiver;
 import kotlin.Triple;
 import timber.log.Timber;
 
