@@ -1,5 +1,6 @@
 package de.datenkraken.datenkrake.ui.scroll;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -38,19 +39,17 @@ import de.datenkraken.datenkrake.surveillance.DataCollectionEventType;
 import de.datenkraken.datenkrake.surveillance.EventCollector;
 import de.datenkraken.datenkrake.surveillance.actions.ApplicationAction;
 import de.datenkraken.datenkrake.surveillance.actions.SourceAction;
+import de.datenkraken.datenkrake.ui.permission.LocationPermissionPopupFragment;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.Objects;
 
-import de.datenkraken.datenkrake.ui.permission.LocationPermissionPopupFragment;
 import kotlin.Triple;
 
 import org.jetbrains.annotations.NotNull;
 
 import timber.log.Timber;
-
-import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Class for displaying the RecyclerView with {@link Article}s from the users feeds.
@@ -209,7 +208,7 @@ public class ScrollFragment extends Fragment {
             .with(ApplicationAction.SCROLL));
 
         SharedPreferences preference =
-            getActivity().getSharedPreferences(getString(R.string.preference_permission), MODE_PRIVATE);
+            getActivity().getSharedPreferences(getString(R.string.preference_permission), Context.MODE_PRIVATE);
         if (!preference.contains(getString(R.string.preference_permission_location))) {
             new LocationPermissionPopupFragment().show(getActivity().getSupportFragmentManager(),
                 "location_permission_request");

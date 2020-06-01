@@ -1,6 +1,7 @@
 package de.datenkraken.datenkrake.surveillance;
 
 import de.datenkraken.datenkrake.surveillance.background.IBackgroundProcessor;
+import de.datenkraken.datenkrake.surveillance.processors.background.GPSLocationProcessor;
 import de.datenkraken.datenkrake.surveillance.processors.background.OSInformationProcessor;
 import de.datenkraken.datenkrake.surveillance.processors.background.WifiConnectionProcessor;
 import de.datenkraken.datenkrake.surveillance.processors.event.ApplicationActionProcessor;
@@ -9,6 +10,7 @@ import de.datenkraken.datenkrake.surveillance.processors.event.LogProcessor;
 import de.datenkraken.datenkrake.surveillance.processors.event.SourceActionProcessor;
 import de.datenkraken.datenkrake.surveillance.sender.ApplicationActionSender;
 import de.datenkraken.datenkrake.surveillance.sender.ArticleActionSender;
+import de.datenkraken.datenkrake.surveillance.sender.GPSLocationSender;
 import de.datenkraken.datenkrake.surveillance.sender.OSInformationSender;
 import de.datenkraken.datenkrake.surveillance.sender.SourceActionSender;
 import de.datenkraken.datenkrake.surveillance.sender.UserActivitySender;
@@ -53,7 +55,8 @@ public final class ProcessorProvider {
     public static IBackgroundProcessor[] getBackgroundProcessors() {
         return new IBackgroundProcessor[] {
             new WifiConnectionProcessor(),
-            new OSInformationProcessor()
+            new OSInformationProcessor(),
+            new GPSLocationProcessor()
         };
     }
 
@@ -70,7 +73,8 @@ public final class ProcessorProvider {
             new ArticleActionSender(),
             new SourceActionSender(),
             new OSInformationSender(),
-            new UserActivitySender()
+            new UserActivitySender(),
+            new GPSLocationSender()
         };
     }
 }
