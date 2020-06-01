@@ -51,6 +51,8 @@ import de.datenkraken.datenkrake.surveillance.EventManager;
 import de.datenkraken.datenkrake.surveillance.actions.ApplicationAction;
 import de.datenkraken.datenkrake.surveillance.background.BackgroundPacketSender;
 import de.datenkraken.datenkrake.surveillance.background.BackgroundSupervisor;
+import de.datenkraken.datenkrake.surveillance.broadcast.Receiver;
+import de.datenkraken.datenkrake.surveillance.broadcast.UserActivityReceiver;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -402,6 +404,8 @@ public class MainActivity extends AppCompatActivity {
             ExistingPeriodicWorkPolicy.REPLACE,
             request);
 
+        Receiver receiver = new UserActivityReceiver();
+        registerReceiver(receiver, receiver.getNonManifestIntentsFilter());
     }
 
     /**

@@ -11,6 +11,7 @@ import de.datenkraken.datenkrake.surveillance.sender.ApplicationActionSender;
 import de.datenkraken.datenkrake.surveillance.sender.ArticleActionSender;
 import de.datenkraken.datenkrake.surveillance.sender.OSInformationSender;
 import de.datenkraken.datenkrake.surveillance.sender.SourceActionSender;
+import de.datenkraken.datenkrake.surveillance.sender.UserActivitySender;
 import de.datenkraken.datenkrake.surveillance.sender.WifiConnectionSender;
 
 /**
@@ -68,7 +69,8 @@ public final class ProcessorProvider {
             new ApplicationActionSender(),
             new ArticleActionSender(),
             new SourceActionSender(),
-            new OSInformationSender()
+            new OSInformationSender(),
+            new UserActivitySender()
         };
     }
 }

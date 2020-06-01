@@ -1,51 +1,55 @@
 package de.datenkraken.datenkrake.surveillance.sender;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.apollographql.apollo.api.Mutation;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
 
-import de.datenkraken.datenkrake.SubmitWifiDataMutation;
-import de.datenkraken.datenkrake.WifiDataMutation;
+import de.datenkraken.datenkrake.UserActivityMutation;
 import de.datenkraken.datenkrake.network.ITask;
 import de.datenkraken.datenkrake.network.clients.apollo.ApolloMutation;
 import de.datenkraken.datenkrake.surveillance.ISendProcessedData;
 import de.datenkraken.datenkrake.surveillance.ProcessedDataPacket;
 import de.datenkraken.datenkrake.surveillance.util.Callback;
 import de.datenkraken.datenkrake.surveillance.util.FormatUtil;
-import de.datenkraken.datenkrake.type.CreateWifiData;
+import de.datenkraken.datenkrake.type.Activity;
+import de.datenkraken.datenkrake.type.CreateUserActivity;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
-/**
- * Implements {@link ISendProcessedData} to parse {@link ProcessedDataPacket}s into an {@link ITask}.
- *
- * @author Daniel Thoma - daniel.thoma@stud.tu-darmstadt.de
- */
-public class WifiConnectionSender implements ISendProcessedData {
-
+public class UserActivitySender implements ISendProcessedData {
+    @Nullable
     @Override
     public ITask getTask(List<ProcessedDataPacket> packets, Callback callback) {
-
-        List<CreateWifiData> createWifiDataList = new ArrayList<>();
+        List<CreateUserActivity> userActivities = new ArrayList<>();
         for (ProcessedDataPacket packet : packets) {
-            createWifiDataList.add(CreateWifiData.builder()
-                .timestamp(FormatUtil.formatDate(new Date(packet.getLong("time", 0L))))
-                .ssid(packet.getString("SSID", ""))
-                .bssid(packet.getString("BSSID", ""))
-                .rssi(packet.getInteger("RSSI", 0))
+
+            Boolean userActivity = packet.getBoolean("activity", null);
+            Activity activity;
+
+            if (userActivity == null) {
+                activity = Activity.$UNKNOWN;
+            } else if (userActivity) {
+                activity = Activity.PRESENT;
+            } else {
+                activity = Activity.GONE;
+            }
+
+            userActivities.add(CreateUserActivity.builder()
+                .timestamp(FormatUtil.formatDate(new Date(packet.getLong("timestamp", 0L))))
+                .activity(activity)
                 .build());
         }
 
-        SubmitWifiDataMutation mutation = SubmitWifiDataMutation.builder()
-            .list(createWifiDataList)
+        UserActivityMutation mutation = UserActivityMutation.builder()
+            .list(userActivities)
             .build();
 
-        return new ApolloMutation<SubmitWifiDataMutation.Data>() {
+        return new ApolloMutation<UserActivityMutation.Data>() {
             @Override
             public Mutation getMutation() {
                 return mutation;
@@ -67,6 +71,6 @@ public class WifiConnectionSender implements ISendProcessedData {
 
     @Override
     public String getTaskId() {
-        return WifiDataMutation.OPERATION_ID;
+        return UserActivityMutation.OPERATION_ID;
     }
 }
