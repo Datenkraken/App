@@ -31,8 +31,8 @@ public class BluetoothDeviceFound extends Receiver {
 
         if (intent.getAction().equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)
             || (intent.getAction().equals(BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED)
-                && intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1) ==
-                    BluetoothAdapter.STATE_OFF)) {
+                && intent.getIntExtra(BluetoothAdapter.EXTRA_CONNECTION_STATE, BluetoothAdapter.STATE_ON)
+                    == BluetoothAdapter.STATE_OFF)) {
             BluetoothAdapter adapter = BluetoothUtil.getAdapter(context);
             if (adapter != null) {
                 adapter.disable();
@@ -48,7 +48,7 @@ public class BluetoothDeviceFound extends Receiver {
         if (device == null) {
             return;
         }
-        Timber.d("Found device: %s, with address: %s", device.getName(), device.getAddress());
+
         ProcessedDataPacket packet = new ProcessedDataPacket(SubmitBluetoothDeviceScanMutation.OPERATION_ID);
         packet.putLong("timestamp", System.currentTimeMillis());
         packet.putString("name", device.getName());

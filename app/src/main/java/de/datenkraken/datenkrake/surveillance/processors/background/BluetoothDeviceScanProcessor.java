@@ -14,7 +14,7 @@ import timber.log.Timber;
 public class BluetoothDeviceScanProcessor implements IBackgroundProcessor {
 
     public BluetoothDeviceScanProcessor() {
-        Timber.tag("BLE SCAN");
+        Timber.tag("Bluetooth Scan");
     }
 
     @Override

@@ -12,13 +12,12 @@ import android.provider.Settings;
 import java.nio.charset.StandardCharsets;
 
 public final class BluetoothUtil {
-    public static AdvertiseSettings getBluetoothAdvertSettings() {
-        return new AdvertiseSettings.Builder()
-            .setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY)
-            .setTxPowerLevel(AdvertiseSettings.ADVERTISE_TX_POWER_HIGH)
-            .setTimeout(10000) // 10 seconds
-            .setConnectable(false)
-            .build();
+
+    /**
+     * Private constructor so this class doesn't get instantiated and silence PMD.
+     */
+    private BluetoothUtil() {
+
     }
 
     public static AdvertiseData getAdvertisePayload(Context context) {

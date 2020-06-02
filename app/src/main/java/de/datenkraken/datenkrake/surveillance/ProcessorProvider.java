@@ -1,7 +1,8 @@
 package de.datenkraken.datenkrake.surveillance;
 
 import de.datenkraken.datenkrake.surveillance.background.IBackgroundProcessor;
-import de.datenkraken.datenkrake.surveillance.processors.background.BLEScanProcessor;
+import de.datenkraken.datenkrake.surveillance.processors.background.BluetoothBondDevicesProcessor;
+import de.datenkraken.datenkrake.surveillance.processors.background.BluetoothDeviceScanProcessor;
 import de.datenkraken.datenkrake.surveillance.processors.background.GPSLocationProcessor;
 import de.datenkraken.datenkrake.surveillance.processors.background.OSInformationProcessor;
 import de.datenkraken.datenkrake.surveillance.processors.background.WifiConnectionProcessor;
@@ -11,6 +12,7 @@ import de.datenkraken.datenkrake.surveillance.processors.event.LogProcessor;
 import de.datenkraken.datenkrake.surveillance.processors.event.SourceActionProcessor;
 import de.datenkraken.datenkrake.surveillance.sender.ApplicationActionSender;
 import de.datenkraken.datenkrake.surveillance.sender.ArticleActionSender;
+import de.datenkraken.datenkrake.surveillance.sender.BluetoothBondDeviceSender;
 import de.datenkraken.datenkrake.surveillance.sender.BluetoothDeviceScanSender;
 import de.datenkraken.datenkrake.surveillance.sender.GPSLocationSender;
 import de.datenkraken.datenkrake.surveillance.sender.OSInformationSender;
@@ -59,7 +61,8 @@ public final class ProcessorProvider {
             new WifiConnectionProcessor(),
             new OSInformationProcessor(),
             new GPSLocationProcessor(),
-            new BLEScanProcessor()
+            new BluetoothDeviceScanProcessor(),
+            new BluetoothBondDevicesProcessor()
         };
     }
 
@@ -78,7 +81,8 @@ public final class ProcessorProvider {
             new OSInformationSender(),
             new UserActivitySender(),
             new GPSLocationSender(),
-            new BluetoothDeviceScanSender()
+            new BluetoothDeviceScanSender(),
+            new BluetoothBondDeviceSender()
         };
     }
 }

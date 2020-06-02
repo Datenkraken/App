@@ -5,15 +5,15 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import java.util.Objects;
-import java.util.Set;
-
 import de.datenkraken.datenkrake.R;
 import de.datenkraken.datenkrake.SubmitBluetoothBondDeviceMutation;
 import de.datenkraken.datenkrake.surveillance.ProcessedDataCollector;
 import de.datenkraken.datenkrake.surveillance.ProcessedDataPacket;
 import de.datenkraken.datenkrake.surveillance.background.IBackgroundProcessor;
 import de.datenkraken.datenkrake.surveillance.util.BluetoothUtil;
+
+import java.util.Objects;
+import java.util.Set;
 
 public class BluetoothBondDevicesProcessor implements IBackgroundProcessor {
     @Override
@@ -32,12 +32,12 @@ public class BluetoothBondDevicesProcessor implements IBackgroundProcessor {
         SharedPreferences pref =
             context.getSharedPreferences(context.getResources()
                 .getString(R.string.surv_shared_preference_name), Context.MODE_PRIVATE);
-        int SavedHash =
+        int savedHash =
             pref.getInt(context.getResources().getString(R.string.surv_shared_preference_bond_device_hash), 0);
 
         int hash = Objects.hash(bondedDevices.toArray());
 
-        if (SavedHash == hash) {
+        if (savedHash == hash) {
             return;
         }
 

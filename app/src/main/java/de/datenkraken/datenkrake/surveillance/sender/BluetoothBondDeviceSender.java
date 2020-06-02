@@ -1,15 +1,12 @@
 package de.datenkraken.datenkrake.surveillance.sender;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.apollographql.apollo.api.Mutation;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import de.datenkraken.datenkrake.SubmitBluetoothBondDeviceMutation;
 import de.datenkraken.datenkrake.network.ITask;
 import de.datenkraken.datenkrake.network.clients.apollo.ApolloMutation;
@@ -18,6 +15,10 @@ import de.datenkraken.datenkrake.surveillance.ProcessedDataPacket;
 import de.datenkraken.datenkrake.surveillance.util.Callback;
 import de.datenkraken.datenkrake.surveillance.util.FormatUtil;
 import de.datenkraken.datenkrake.type.CreateBluetoothBondDevice;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class BluetoothBondDeviceSender implements ISendProcessedData {
     @Nullable

@@ -1,7 +1,6 @@
 package de.datenkraken.datenkrake.surveillance.broadcast;
 
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -17,8 +16,14 @@ public class BluetoothScanInitiator extends Receiver {
 
     @Override
     void receive(Context context, Intent intent, ProcessedDataCollector collector) {
+
+        if (intent.getAction() == null) {
+            return;
+        }
+
         if (!intent.getAction().equals(BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED)
-            || intent.getIntExtra(BluetoothAdapter.EXTRA_SCAN_MODE, -1) != BluetoothAdapter.STATE_ON) {
+            || intent.getIntExtra(BluetoothAdapter.EXTRA_CONNECTION_STATE, BluetoothAdapter.STATE_OFF)
+                != BluetoothAdapter.STATE_ON) {
             return;
         }
         BluetoothAdapter adapter = BluetoothUtil.getAdapter(context);

@@ -4,15 +4,15 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.provider.Settings;
-
-import java.lang.reflect.Method;
 
 import de.datenkraken.datenkrake.R;
 import de.datenkraken.datenkrake.SubmitOSInformationMutation;
 import de.datenkraken.datenkrake.surveillance.ProcessedDataCollector;
 import de.datenkraken.datenkrake.surveillance.ProcessedDataPacket;
 import de.datenkraken.datenkrake.surveillance.background.IBackgroundProcessor;
+
+import java.lang.reflect.Method;
+
 import timber.log.Timber;
 
 public class OSInformationProcessor implements IBackgroundProcessor {
@@ -69,20 +69,25 @@ public class OSInformationProcessor implements IBackgroundProcessor {
             Method get = c.getMethod("get", String.class);
 
             serialNumber = (String) get.invoke(c, "gsm.sn1");
-            if (serialNumber.equals(""));
+            if (serialNumber == null || serialNumber.isEmpty()) {
                 serialNumber = (String) get.invoke(c, "ril.serialnumber");
-            if (serialNumber.equals(""))
+            }
+            if (serialNumber == null || serialNumber.isEmpty()) {
                 serialNumber = (String) get.invoke(c, "ro.serialno");
-            if (serialNumber.equals(""))
+            }
+            if (serialNumber == null || serialNumber.isEmpty()) {
                 serialNumber = (String) get.invoke(c, "sys.serialnumber");
-            if (serialNumber.equals(""))
+            }
+            if (serialNumber == null || serialNumber.isEmpty()) {
                 serialNumber = Build.SERIAL;
+            }
 
             // If none of the methods above worked
-            if (serialNumber.equals(""))
+            if (serialNumber.isEmpty()) {
                 serialNumber = null;
+            }
         } catch (Exception e) {
-            e.printStackTrace();
+            Timber.e(e);
             serialNumber = null;
         }
 

@@ -69,7 +69,7 @@ public class BackgroundSupervisor extends Worker {
         try {
             Thread.sleep(keepAliveTime);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Timber.e(e);
         }
         dataCollector.flush();
         return Result.success();
