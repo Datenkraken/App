@@ -49,7 +49,7 @@
     // keys for surveillance
     <string name="surv_shared_preference_name" translatable="false">surveillance</string>
     <string name="surv_shared_preference_os_fingerprint" translatable="false">os_fingerprint</string>
-    <string name="surv_shared_preference_bond_device_hash" translatable="false">bond_fingerprint</string>
+    <string name="surv_shared_preference_bond_device_hash" translatable="false">bond_hash</string>
 
     // keys for permission storage
     <string name="preference_permission" translatable="false">PERMISSIONS</string>
