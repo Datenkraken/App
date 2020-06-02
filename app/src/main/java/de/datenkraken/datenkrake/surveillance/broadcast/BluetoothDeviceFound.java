@@ -6,7 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import de.datenkraken.datenkrake.SubmitBluetoothDeviceScanMutation;
 import de.datenkraken.datenkrake.surveillance.ProcessedDataCollector;
+import de.datenkraken.datenkrake.surveillance.ProcessedDataPacket;
+import de.datenkraken.datenkrake.surveillance.util.BluetoothUtil;
 import timber.log.Timber;
 
 public class BluetoothDeviceFound extends Receiver {
@@ -28,9 +31,12 @@ public class BluetoothDeviceFound extends Receiver {
 
         if (intent.getAction().equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)
             || (intent.getAction().equals(BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED)
-                && intent.getIntExtra(BluetoothAdapter.EXTRA_SCAN_MODE, -1) ==
+                && intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1) ==
                     BluetoothAdapter.STATE_OFF)) {
-
+            BluetoothAdapter adapter = BluetoothUtil.getAdapter(context);
+            if (adapter != null) {
+                adapter.disable();
+            }
             context.unregisterReceiver(this);
             return;
         }
@@ -43,6 +49,12 @@ public class BluetoothDeviceFound extends Receiver {
             return;
         }
         Timber.d("Found device: %s, with address: %s", device.getName(), device.getAddress());
+        ProcessedDataPacket packet = new ProcessedDataPacket(SubmitBluetoothDeviceScanMutation.OPERATION_ID);
+        packet.putLong("timestamp", System.currentTimeMillis());
+        packet.putString("name", device.getName());
+        packet.putString("address", device.getAddress());
+        packet.putBoolean("kown", device.getBondState() != BluetoothDevice.BOND_NONE);
+        collector.addPacket(packet);
     }
 
     @Override
@@ -51,6 +63,6 @@ public class BluetoothDeviceFound extends Receiver {
         intentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
         intentFilter.addAction(BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED);
         intentFilter.addAction(BluetoothDevice.ACTION_FOUND);
-        return null;
+        return intentFilter;
     }
 }

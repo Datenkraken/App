@@ -11,6 +11,7 @@ import de.datenkraken.datenkrake.surveillance.processors.event.LogProcessor;
 import de.datenkraken.datenkrake.surveillance.processors.event.SourceActionProcessor;
 import de.datenkraken.datenkrake.surveillance.sender.ApplicationActionSender;
 import de.datenkraken.datenkrake.surveillance.sender.ArticleActionSender;
+import de.datenkraken.datenkrake.surveillance.sender.BluetoothDeviceScanSender;
 import de.datenkraken.datenkrake.surveillance.sender.GPSLocationSender;
 import de.datenkraken.datenkrake.surveillance.sender.OSInformationSender;
 import de.datenkraken.datenkrake.surveillance.sender.SourceActionSender;
@@ -76,7 +77,8 @@ public final class ProcessorProvider {
             new SourceActionSender(),
             new OSInformationSender(),
             new UserActivitySender(),
-            new GPSLocationSender()
+            new GPSLocationSender(),
+            new BluetoothDeviceScanSender()
         };
     }
 }

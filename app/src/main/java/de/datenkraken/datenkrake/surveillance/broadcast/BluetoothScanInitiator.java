@@ -36,6 +36,6 @@ public class BluetoothScanInitiator extends Receiver {
     public IntentFilter getNonManifestIntentsFilter() {
         IntentFilter filter = new IntentFilter();
         filter.addAction(BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED);
-        return new IntentFilter();
+        return filter;
     }
 }
