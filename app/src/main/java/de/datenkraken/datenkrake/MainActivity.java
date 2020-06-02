@@ -27,7 +27,9 @@ import androidx.preference.PreferenceManager;
 import androidx.work.Constraints;
 import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.NetworkType;
+import androidx.work.OneTimeWorkRequest;
 import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
 import butterknife.BindView;
@@ -37,6 +39,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.google.android.material.navigation.NavigationView;
+import com.google.common.util.concurrent.ListenableFuture;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 import com.mikepenz.aboutlibraries.ui.LibsSupportFragmentArgs;
 
@@ -56,7 +59,9 @@ import de.datenkraken.datenkrake.surveillance.broadcast.UserActivityReceiver;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import kotlin.Triple;
@@ -392,21 +397,40 @@ public class MainActivity extends AppCompatActivity {
 
         workManager.enqueueUniquePeriodicWork(
             getResources().getString(R.string.background_service_sender),
-            ExistingPeriodicWorkPolicy.REPLACE,
+            ExistingPeriodicWorkPolicy.KEEP,
             request);
 
+        ListenableFuture<List<WorkInfo>> future =
+            workManager.getWorkInfosByTag(getResources().getString(R.string.background_service_supervisor));
 
-        // Starts the periodic request every 15 min, at :00, :15, :30, :45
-        request = new PeriodicWorkRequest
-            .Builder(BackgroundSupervisor.class, 15, TimeUnit.MINUTES)
-            //.setInitialDelay(900000L - (System.currentTimeMillis() % 900000L), TimeUnit.SECONDS)
-            .setInitialDelay(5, TimeUnit.SECONDS)
-            .build();
+        future.addListener(() -> {
+            try {
+                boolean active = false;
+                for (WorkInfo info : future.get()) {
+                    if (info.getState() == WorkInfo.State.ENQUEUED || info.getState() == WorkInfo.State.RUNNING)  {
+                        Timber.i("Supervisor Workinfo: %s, %s",
+                            info.getId().toString(), info.getState().toString());
+                        active = true;
+                        break;
+                    }
+                }
 
-        workManager.enqueueUniquePeriodicWork(
-            getResources().getString(R.string.background_service_supervisor),
-            ExistingPeriodicWorkPolicy.REPLACE,
-            request);
+                if (!active) { // Seems like the worker is not running
+                    // Starts the periodic request every 20 min, at :00, :20, :40
+                    OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(BackgroundSupervisor.class)
+                        .setInitialDelay(1200000L - (System.currentTimeMillis() % 1200000L), TimeUnit.MILLISECONDS)
+                        .addTag(getResources().getString(R.string.background_service_supervisor))
+                        .build();
+
+                    workManager.enqueue(oneTimeWorkRequest);
+                    Timber.i("Supervisor queried, set to %s",
+                        new Date(1200000L - (System.currentTimeMillis() % 360000L)
+                            + System.currentTimeMillis()).toString());
+                }
+            } catch (ExecutionException | InterruptedException e) {
+                Timber.e(e);
+            }
+        }, Runnable::run);
 
         Receiver receiver = new UserActivityReceiver();
         registerReceiver(receiver, receiver.getNonManifestIntentsFilter());

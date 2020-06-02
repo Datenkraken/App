@@ -11,6 +11,7 @@ import de.datenkraken.datenkrake.surveillance.ProcessedDataCollector;
 import de.datenkraken.datenkrake.surveillance.ProcessedDataPacket;
 import de.datenkraken.datenkrake.surveillance.background.IBackgroundProcessor;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import timber.log.Timber;
@@ -86,7 +87,8 @@ public class OSInformationProcessor implements IBackgroundProcessor {
             if (serialNumber.isEmpty()) {
                 serialNumber = null;
             }
-        } catch (Exception e) {
+        } catch (IllegalAccessException | InvocationTargetException
+                | ClassNotFoundException | NoSuchMethodException e) {
             Timber.e(e);
             serialNumber = null;
         }

@@ -3,14 +3,18 @@ package de.datenkraken.datenkrake.surveillance.background;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
+import de.datenkraken.datenkrake.R;
 import de.datenkraken.datenkrake.surveillance.ProcessedDataCollector;
 import de.datenkraken.datenkrake.surveillance.ProcessorProvider;
 
 import java.lang.ref.WeakReference;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import timber.log.Timber;
 
@@ -66,13 +70,30 @@ public class BackgroundSupervisor extends Worker {
         }
         dataCollector.flush();
 
+
+        WorkManager workManager = WorkManager.getInstance(context.get());
+
+        enqueueNextTask(workManager, context.get());
         try {
             Thread.sleep(keepAliveTime);
         } catch (InterruptedException e) {
             Timber.e(e);
         }
         dataCollector.flush();
+
         return Result.success();
+    }
+
+    private void enqueueNextTask(WorkManager workManager, Context context) {
+
+        OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(BackgroundSupervisor.class)
+            .setInitialDelay(1200000L - (System.currentTimeMillis() % 1200000L), TimeUnit.MILLISECONDS)
+            .addTag(context.getResources().getString(R.string.background_service_supervisor))
+            .build();
+
+        Timber.i("Supervisor queried, set to %s",
+            new Date(1200000L - (System.currentTimeMillis() % 1200000L) + System.currentTimeMillis()).toString());
+        workManager.enqueue(request);
     }
 
 
