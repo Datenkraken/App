@@ -16,4 +16,6 @@ public interface IBackgroundProcessor {
      * @param collector {@link ProcessedDataCollector} collector for the processed data.
      */
     void process(Context context, ProcessedDataCollector collector);
+
+    int keepAlive();
 }

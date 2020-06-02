@@ -33,6 +33,7 @@ public class GPSLocationProcessor implements IBackgroundProcessor {
         }
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         if (locationManager == null) {
+            Timber.d("location manager is null!");
             return;
         }
 
@@ -45,10 +46,11 @@ public class GPSLocationProcessor implements IBackgroundProcessor {
         } else if (networkEnabled) {
             provider = LocationManager.NETWORK_PROVIDER;
         } else {
+            Timber.d("no provider?");
             return;
         }
 
-        locationManager.requestLocationUpdates(provider, 5000, 1, new LocationListener() {
+        locationManager.requestLocationUpdates(provider, 20000, 1, new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
                 if (location != null) {
@@ -61,7 +63,6 @@ public class GPSLocationProcessor implements IBackgroundProcessor {
                     packet.putFloat("accuracy", location.getAccuracy());
                     packet.putString("provider", provider);
                     collector.addPacket(packet);
-                    collector.flush(); // TODO: workaround atm. because the background supervisor is unable to wait for this request to finish
                 }
                 locationManager.removeUpdates(this);
             }
@@ -81,6 +82,11 @@ public class GPSLocationProcessor implements IBackgroundProcessor {
                 locationManager.removeUpdates(this);
             }
         }, Looper.getMainLooper());
+    }
+
+    @Override
+    public int keepAlive() {
+        return 30000; // keep the Background task 30s alive to give gps time to get accurate and save it's position
     }
 
 }

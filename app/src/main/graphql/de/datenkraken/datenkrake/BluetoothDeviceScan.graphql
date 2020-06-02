@@ -1,0 +1,5 @@
+mutation submitBluetoothDeviceScan($list: [createBluetoothDeviceScan!]!) {
+    submitBluetoothDeviceScan(input: $list) {
+        timestamp
+    }
+}

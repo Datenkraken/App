@@ -7,10 +7,10 @@ import androidx.lifecycle.LiveData;
 
 import de.datenkraken.datenkrake.controller.feedupdater.FeedUpdateManager;
 import de.datenkraken.datenkrake.controller.feedupdater.FeedUpdater;
+import de.datenkraken.datenkrake.controller.feedupdater.rss.OkHttpFeed;
 import de.datenkraken.datenkrake.db.AppDatabase;
 import de.datenkraken.datenkrake.model.Article;
 import de.datenkraken.datenkrake.model.Source;
-import de.datenkraken.datenkrake.controller.feedupdater.rss.OkHttpFeed;
 import de.datenkraken.datenkrake.surveillance.DataCollectionEvent;
 import de.datenkraken.datenkrake.surveillance.DataCollectionEventType;
 import de.datenkraken.datenkrake.surveillance.EventCollector;

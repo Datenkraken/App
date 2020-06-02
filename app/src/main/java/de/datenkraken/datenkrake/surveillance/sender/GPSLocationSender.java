@@ -34,6 +34,7 @@ public class GPSLocationSender implements ISendProcessedData {
     @Nullable
     @Override
     public ITask getTask(List<ProcessedDataPacket> packets, Callback callback) {
+
         List<CreateLocationCoordinates> list = new ArrayList<>();
         for (ProcessedDataPacket packet : packets) {
             LocationProviderType providerType;

@@ -68,6 +68,11 @@ public class WifiConnectionProcessor implements IBackgroundProcessor {
             connectionInfo.getRssi()));
     }
 
+    @Override
+    public int keepAlive() {
+        return 0;
+    }
+
     /**
      * Creates the {@link ProcessedDataPacket} used by
      * {@link WifiConnectionSender#getTask(List, Callback)}.
