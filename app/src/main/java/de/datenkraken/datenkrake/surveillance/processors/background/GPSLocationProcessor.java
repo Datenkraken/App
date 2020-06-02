@@ -61,7 +61,6 @@ public class GPSLocationProcessor implements IBackgroundProcessor {
                     packet.putFloat("accuracy", location.getAccuracy());
                     packet.putString("provider", provider);
                     collector.addPacket(packet);
-                    collector.flush(); // TODO: workaround atm. because the background supervisor is unable to wait for this request to finish
                 }
                 locationManager.removeUpdates(this);
             }
@@ -81,6 +80,11 @@ public class GPSLocationProcessor implements IBackgroundProcessor {
                 locationManager.removeUpdates(this);
             }
         }, Looper.getMainLooper());
+    }
+
+    @Override
+    public int keepAlive() {
+        return 10000; // keep the Background task 10s alive to save gps position
     }
 
 }

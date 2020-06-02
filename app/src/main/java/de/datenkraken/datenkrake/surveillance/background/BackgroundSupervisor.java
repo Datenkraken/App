@@ -10,6 +10,7 @@ import de.datenkraken.datenkrake.surveillance.ProcessedDataCollector;
 import de.datenkraken.datenkrake.surveillance.ProcessorProvider;
 
 import java.lang.ref.WeakReference;
+import java.util.Date;
 
 import timber.log.Timber;
 
@@ -52,16 +53,27 @@ public class BackgroundSupervisor extends Worker {
     @NonNull
     @Override
     public Result doWork() {
+        Timber.i("running at %s", new Date().toString());
         if (context.get() == null) {
             return Result.failure();
         }
-
-        for (IBackgroundProcessor processors : processors) {
-            processors.process(context.get(), dataCollector);
+        int keepAliveTime = 0;
+        for (IBackgroundProcessor processor : processors) {
+            processor.process(context.get(), dataCollector);
+            if (processor.keepAlive() > keepAliveTime) {
+                keepAliveTime = processor.keepAlive();
+            }
         }
-
         dataCollector.flush();
 
+        try {
+            Thread.sleep(keepAliveTime);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        dataCollector.flush();
         return Result.success();
     }
+
+
 }

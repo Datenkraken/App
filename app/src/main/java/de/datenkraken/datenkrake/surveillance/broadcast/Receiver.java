@@ -12,13 +12,25 @@ import java.lang.ref.WeakReference;
 
 public abstract class Receiver extends BroadcastReceiver {
 
+    ProcessedDataCollector collector;
+
+    public Receiver() {
+
+    }
+
+    public Receiver(ProcessedDataCollector collector) {
+        this.collector = collector;
+    }
+
     abstract void receive(Context context, Intent intent, ProcessedDataCollector collector);
 
     public abstract IntentFilter getNonManifestIntentsFilter();
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        ProcessedDataCollector collector = new ProcessedDataCollector(new WeakReference<>(context));
+        if (collector == null) {
+            collector = new ProcessedDataCollector(new WeakReference<>(context));
+        }
         receive(context, intent, collector);
         collector.flush();
     }

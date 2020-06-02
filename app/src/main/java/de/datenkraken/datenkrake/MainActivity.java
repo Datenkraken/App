@@ -395,8 +395,12 @@ public class MainActivity extends AppCompatActivity {
             ExistingPeriodicWorkPolicy.REPLACE,
             request);
 
+
+        // Starts the periodic request every 15 min, at :00, :15, :30, :45
         request = new PeriodicWorkRequest
             .Builder(BackgroundSupervisor.class, 15, TimeUnit.MINUTES)
+            //.setInitialDelay(900000L - (System.currentTimeMillis() % 900000L), TimeUnit.SECONDS)
+            .setInitialDelay(5, TimeUnit.SECONDS)
             .build();
 
         workManager.enqueueUniquePeriodicWork(

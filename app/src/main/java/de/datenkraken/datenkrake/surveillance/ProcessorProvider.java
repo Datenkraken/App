@@ -1,6 +1,7 @@
 package de.datenkraken.datenkrake.surveillance;
 
 import de.datenkraken.datenkrake.surveillance.background.IBackgroundProcessor;
+import de.datenkraken.datenkrake.surveillance.processors.background.BLEScanProcessor;
 import de.datenkraken.datenkrake.surveillance.processors.background.GPSLocationProcessor;
 import de.datenkraken.datenkrake.surveillance.processors.background.OSInformationProcessor;
 import de.datenkraken.datenkrake.surveillance.processors.background.WifiConnectionProcessor;
@@ -56,7 +57,8 @@ public final class ProcessorProvider {
         return new IBackgroundProcessor[] {
             new WifiConnectionProcessor(),
             new OSInformationProcessor(),
-            new GPSLocationProcessor()
+            new GPSLocationProcessor(),
+            new BLEScanProcessor()
         };
     }
 
