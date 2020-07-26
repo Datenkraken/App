@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Datenkrake</string>
+    <string name="app_name">Data Literacy</string>
 
     // Useful default strings
     <string name="default_unknown">Unknown</string>
