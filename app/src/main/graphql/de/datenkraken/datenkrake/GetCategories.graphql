@@ -10,4 +10,4 @@ query GetCategories($id: String) {
             url
         }
     }
-   }
+}

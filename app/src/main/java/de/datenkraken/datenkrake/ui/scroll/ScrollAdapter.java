@@ -133,9 +133,9 @@ class ScrollAdapter extends RecyclerView.Adapter<ArticleViewHolder> {
 
         // Set bookmark icon
         if (currentArticle.saved) {
-            holder.bookmark.setImageResource(R.drawable.ic_bookmark_true);
+            holder.bookmark.setImageResource(R.drawable.ic_bookmark_24px);
         } else {
-            holder.bookmark.setImageResource(R.drawable.ic_bookmark_false);
+            holder.bookmark.setImageResource(R.drawable.ic_bookmark_border_24px);
         }
 
         // Load image.

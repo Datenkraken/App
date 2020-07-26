@@ -12,9 +12,9 @@ android {
     defaultConfig {
         applicationId "de.datenkraken.datenkrake"
         minSdkVersion 24
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 1
-        versionName "0.1"
+        versionName "0.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         android {
             defaultConfig {

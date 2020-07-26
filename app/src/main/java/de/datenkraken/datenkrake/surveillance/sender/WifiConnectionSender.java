@@ -6,7 +6,6 @@ import com.apollographql.apollo.api.Mutation;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
 
-import de.datenkraken.datenkrake.SubmitWifiDataMutation;
 import de.datenkraken.datenkrake.WifiDataMutation;
 import de.datenkraken.datenkrake.network.ITask;
 import de.datenkraken.datenkrake.network.clients.apollo.ApolloMutation;
@@ -41,11 +40,11 @@ public class WifiConnectionSender implements ISendProcessedData {
                 .build());
         }
 
-        SubmitWifiDataMutation mutation = SubmitWifiDataMutation.builder()
+        WifiDataMutation mutation = WifiDataMutation.builder()
             .list(createWifiDataList)
             .build();
 
-        return new ApolloMutation<SubmitWifiDataMutation.Data>() {
+        return new ApolloMutation<WifiDataMutation.Data>() {
             @Override
             public Mutation getMutation() {
                 return mutation;

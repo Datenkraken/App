@@ -380,9 +380,9 @@ public class ArticleViewFragment extends Fragment {
         }
 
         if (currentArticle.saved) {
-            bookmark.setImageResource(R.drawable.ic_bookmark_true);
+            bookmark.setImageResource(R.drawable.ic_bookmark_24px);
         } else {
-            bookmark.setImageResource(R.drawable.ic_bookmark_false);
+            bookmark.setImageResource(R.drawable.ic_bookmark_border_24px);
         }
     }
 

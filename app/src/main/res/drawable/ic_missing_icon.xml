@@ -13,17 +13,15 @@
             <aapt:attr
                 name="android:fillColor">
                 <gradient
-                    android:startX="-1051.936"
-                    android:startY="-150.6984"
-                    android:endX="-1051.936"
-                    android:endY="327.657"
+                    android:type="linear"
+                    android:startX="-900.936"
+                    android:startY="100.6984"
+                    android:endX="-900.936"
+                    android:endY="399.657"
                     android:tileMode="clamp">
                     <item
-                        android:color="#00000000"
+                        android:color="@color/colorPrimary"
                         android:offset="0" />
-                    <item
-                        android:color="#67000000"
-                        android:offset="0.5" />
                     <item
                         android:color="#00000000"
                         android:offset="1" />
@@ -47,7 +45,7 @@
                     android:gradientRadius="325.0004"
                     android:tileMode="clamp">
                     <item
-                        android:color="#67000000"
+                        android:color="@color/colorPrimary"
                         android:offset="0" />
                     <item
                         android:color="#00000000"
@@ -72,7 +70,7 @@
                     android:gradientRadius="325.0004"
                     android:tileMode="clamp">
                     <item
-                        android:color="#67000000"
+                        android:color="@color/colorPrimary"
                         android:offset="0" />
                     <item
                         android:color="#00000000"
@@ -102,7 +100,7 @@
                         android:color="#D2D2D2"
                         android:offset="0" />
                     <item
-                        android:color="#EDEDED"
+                        android:color="@color/colorPrimary"
                         android:offset="1" />
                 </gradient>
             </aapt:attr>
@@ -125,7 +123,7 @@
                     android:gradientRadius="33.13621"
                     android:tileMode="clamp">
                     <item
-                        android:color="#F2F2F2"
+                        android:color="@color/colorPrimary"
                         android:offset="0" />
                     <item
                         android:color="#D0D0D0"
@@ -141,7 +139,7 @@
                     android:endY="10.75"
                     android:tileMode="clamp">
                     <item
-                        android:color="#9DFFFFFF"
+                        android:color="@color/colorPrimary"
                         android:offset="0" />
                     <item
                         android:color="#9D939393"
@@ -157,7 +155,7 @@
         android:translateY="0.09">
         <path
             android:pathData="M44.480104 39.32848C44.480104 41.187964 43.499604 42.345241 41.640121 42.345241L6.6160507 42.345241C4.7565677 42.345241 3.6876787 41.276353 3.6876787 39.416869L3.6876787 7.5970548C3.6876787 5.737571 5.1985087 4.403517 7.0579927 4.403517L41.198179 4.403517C43.057662 4.403517 44.480104 5.737571 44.480104 7.5970548L44.480104 38.974927L44.480104 39.32848z"
-            android:strokeColor="#FFFFFF"
+            android:strokeColor="@color/colorPrimary"
             android:strokeAlpha="0.86"
             android:strokeWidth="0.997" />
     </group>
