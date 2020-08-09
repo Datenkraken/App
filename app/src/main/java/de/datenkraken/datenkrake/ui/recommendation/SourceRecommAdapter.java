@@ -1,4 +1,4 @@
-package de.datenkraken.datenkrake.ui.recommendation.source;
+package de.datenkraken.datenkrake.ui.recommendation;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,14 +12,11 @@ import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
 
-import de.datenkraken.datenkrake.GetCategoriesQuery;
 import de.datenkraken.datenkrake.R;
-import de.datenkraken.datenkrake.ui.recommendation.RecommViewModel;
-import de.datenkraken.datenkrake.ui.recommendation.source.singlecat.SingleCategoryAdapter;
+import de.datenkraken.datenkrake.model.Category;
+import de.datenkraken.datenkrake.ui.recommendation.singlecat.SingleCategoryAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import timber.log.Timber;
 
@@ -31,7 +28,7 @@ import timber.log.Timber;
  */
 class SourceRecommAdapter extends RecyclerView.Adapter<SourceRecommViewHolder> {
 
-    private List<GetCategoriesQuery.Category> selectedCategories;
+    private List<Category> selectedCategories;
     private final RecommViewModel recommModel;
     private final Context context;
 
@@ -63,8 +60,8 @@ class SourceRecommAdapter extends RecyclerView.Adapter<SourceRecommViewHolder> {
 
     /**
      * Loads Content into the ViewHolders of the {@link SourceRecommFragment}. <br>
-     * Fills the ViewHolders with the name of {@link GetCategoriesQuery.Category}s and initializes
-     * the {@link SingleCategoryAdapter} for showing sources of a particular {@link GetCategoriesQuery.Category}.
+     * Fills the ViewHolders with the name of {@link Category}s and initializes
+     * the {@link SingleCategoryAdapter} for showing sources of a particular {@link Category}.
      *
      * @param holder   to be filled.
      * @param position of Holder.
@@ -72,25 +69,16 @@ class SourceRecommAdapter extends RecyclerView.Adapter<SourceRecommViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull SourceRecommViewHolder holder, int position) {
 
-        GetCategoriesQuery.Category currentCategory = selectedCategories.get(position);
-        holder.category.setText(currentCategory.name());
+        Category currentCategory = selectedCategories.get(position);
+        holder.category.setText(currentCategory.name);
 
 
         //  initialize the recycler adapter
         SingleCategoryAdapter singlesourceAdapter = new SingleCategoryAdapter(recommModel, context);
 
-        // in the nested view only the sources that the user does not already have in the DB should be shown
-        // therefore only non existing sources will be added to the adapters list
 
-        for (GetCategoriesQuery.RssSource c : Objects.requireNonNull(currentCategory.rssSources())) {
-
-            // check if source does already exist in DB
-
-            if (!recommModel.existingSources.contains(c.url())) {
-                // adding source to singleSourceAdapters list
-                singlesourceAdapter.associatedSources.add(c);
-            }
-        }
+        // adding source to singleSourceAdapters list
+        singlesourceAdapter.associatedSources.addAll(currentCategory.sources);
 
         // if there is no new sources associated with this category
         if (singlesourceAdapter.associatedSources.size() != 0) {
@@ -111,18 +99,13 @@ class SourceRecommAdapter extends RecyclerView.Adapter<SourceRecommViewHolder> {
     }
 
     /**
-     * Sets the selected {@link GetCategoriesQuery.Category}s.
+     * Sets the selected {@link Category}s.
      *
-     * @param categories List of type {@link GetCategoriesQuery.Category}
+     * @param categories List of type {@link Category}
      */
-    void setSelectedCategories(List<GetCategoriesQuery.Category> categories) {
-        List<GetCategoriesQuery.Category> list = new ArrayList<>();
-        for (GetCategoriesQuery.Category category : categories) {
-            if (recommModel.selectedCategories.containsKey(category.name())) {
-                list.add(category);
-            }
-        }
-        this.selectedCategories = list;
+    void setCategories(List<Category> categories) {
+        this.selectedCategories = categories;
+        this.notifyDataSetChanged();
     }
 
     /**

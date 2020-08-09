@@ -1,4 +1,4 @@
-package de.datenkraken.datenkrake.ui.recommendation.category;
+package de.datenkraken.datenkrake.ui.recommendation.singlecat;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,28 +13,27 @@ import butterknife.ButterKnife;
 import com.google.android.flexbox.FlexboxLayoutManager;
 
 import de.datenkraken.datenkrake.R;
-
 import timber.log.Timber;
 
 /**
- * Class contains the ViewHolder for showing a {@link de.datenkraken.datenkrake.GetCategoriesOnlyQuery.Category}
- * in the category recommendation view.
+ * Class contains the ViewHolder for showing a single
+ * {@link de.datenkraken.datenkrake.GetCategoriesQuery.RssSource} field within the recyclerview.
  *
  * @author Simon Schmalfuß - simon.schmalfuss@stud.tu-darmstadt.de
  */
-class CategoryRecommViewHolder extends RecyclerView.ViewHolder {
+class SingleCategoryViewHolder extends RecyclerView.ViewHolder {
 
-    @BindView(R.id.category_name)
-    TextView category;
+    @BindView(R.id.source_n)
+    TextView source;
 
     /**
      * Binds ButterKnife to the view.
      *
-     * @param itemView of an {@link de.datenkraken.datenkrake.GetCategoriesOnlyQuery.Category} in the RecyclerView.
+     * @param itemView of an {@link de.datenkraken.datenkrake.GetCategoriesQuery.RssSource} in the RecyclerView.
      */
-    CategoryRecommViewHolder(@NonNull View itemView) {
+    SingleCategoryViewHolder(@NonNull View itemView) {
         super(itemView);
-        Timber.tag("CategoryRecomm");
+        Timber.tag("SingleCategoryVHolder");
         ButterKnife.bind(this, itemView);
         ViewGroup.LayoutParams lp = itemView.getLayoutParams();
         if (lp instanceof FlexboxLayoutManager.LayoutParams) {

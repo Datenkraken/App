@@ -96,7 +96,7 @@
     <string name="toast_no_cat_selected">No Categories selected!</string>
 
     //Strings for Source RecommendationPage
-    <string name="toast_sources_successfully_added">"Sources added!   "</string>
+    <string name="toast_sources_successfully_edited">"Set Sources!"</string>
     <string name="toast_sources__added_error">There was an issue with adding your sources</string>
     <string name="cat_recommendation">Add Sources</string>
     <string name="button_submit_sources">Submit Sources</string>

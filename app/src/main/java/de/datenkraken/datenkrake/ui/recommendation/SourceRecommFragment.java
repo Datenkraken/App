@@ -1,4 +1,4 @@
-package de.datenkraken.datenkrake.ui.recommendation.source;
+package de.datenkraken.datenkrake.ui.recommendation;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -23,11 +23,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import de.datenkraken.datenkrake.R;
-import de.datenkraken.datenkrake.ui.recommendation.RecommViewModel;
-
-import java.net.MalformedURLException;
-import java.util.HashMap;
-import java.util.HashSet;
 
 import timber.log.Timber;
 
@@ -47,8 +42,6 @@ public class SourceRecommFragment extends Fragment {
     RecyclerView recycler;
     @BindView(R.id.submit_sources)
     Button submit;
-    @BindView(R.id.categories_back)
-    Button categoriesBack;
     @BindView(R.id.sources_cancel)
     Button cancel;
 
@@ -56,8 +49,7 @@ public class SourceRecommFragment extends Fragment {
     /**
      * Called on the creation of the view. <br>
      * Sets the {@link SourceRecommAdapter} of the recyclerview and sets the LayoutManager. <br>
-     * Sets the listeners for submitting {@Source}s, skipping and going back to the
-     * {@link de.datenkraken.datenkrake.ui.recommendation.category.CategoryRecommFragment}. <br>
+     * Sets the listeners for submitting {@Source}s and skipping. <br>
      * Hides the toolbar.
      *
      * @param inflater           to inflate the view.
@@ -82,48 +74,35 @@ public class SourceRecommFragment extends Fragment {
             }
         }
 
-        // get already saved sources from DB in order to find out what not to display again for recommendaiton
-        recommModel.getSavedSources().observe(getViewLifecycleOwner(), recommModel::setSources);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
         recycler.setLayoutManager(layoutManager);
         recycler.setHasFixedSize(true);
 
         //  initialize the adapter
         SourceRecommAdapter recomadapter = new SourceRecommAdapter(recommModel, getContext());
-        recommModel.fetchCategorySources().observe(getViewLifecycleOwner(), recomadapter::setSelectedCategories);
+        recommModel.fetchCategories();
 
+        recommModel.sourceStatus.observe(getViewLifecycleOwner(), sourceBooleanMap -> {
+            if (sourceBooleanMap != null && !sourceBooleanMap.isEmpty()) {
+                recomadapter.setCategories(recommModel.getCategories().getValue());
+            }
+        });
         recycler.setAdapter(recomadapter);
 
         // listener for submitting the selected sources
         submit.setOnClickListener(v -> {
-            // overwrite old selected categories on onCreate
-            recommModel.selectedCategories = new HashMap<>();
+            recommModel.editSources();
+            Toast.makeText(context, getString(R.string.toast_sources_successfully_edited),
+                Toast.LENGTH_SHORT).show();
+
             NavController controller = Navigation.findNavController(v);
             controller.navigate(R.id.nav_scroll);
             // only add sources if any have been added
-            if (recommModel.storedSources.size() != 0) {
-                try {
-                    recommModel.addSources();
-                    Toast.makeText(context, getString(R.string.toast_sources_successfully_added),
-                        Toast.LENGTH_SHORT).show();
-
-                } catch (MalformedURLException e) {
-                    Toast.makeText(context, getString(R.string.toast_sources__added_error), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        // listener for going back to categories
-        categoriesBack.setOnClickListener(v -> {
-            NavController controller = Navigation.findNavController(v);
-            controller.navigate(R.id.nav_cat_recomm);
         });
 
         // listener for canceling and going to scroll view
         cancel.setOnClickListener(v -> {
             // overwrite old selected categories on onCreate
-            recommModel.selectedCategories = new HashMap<>();
             NavController controller = Navigation.findNavController(v);
             controller.navigate(R.id.nav_scroll);
         });
@@ -144,12 +123,7 @@ public class SourceRecommFragment extends Fragment {
 
 
         context = requireContext();
-        recommModel = new ViewModelProvider(requireActivity(),
-            new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication()))
-            .get(RecommViewModel.class);
-
-        recommModel.storedSources = new HashSet<>();
-
+        recommModel = new ViewModelProvider(requireActivity()).get(RecommViewModel.class);
     }
 
 

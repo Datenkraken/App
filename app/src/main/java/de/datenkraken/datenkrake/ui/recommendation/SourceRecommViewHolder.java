@@ -1,4 +1,4 @@
-package de.datenkraken.datenkrake.ui.recommendation.source;
+package de.datenkraken.datenkrake.ui.recommendation;
 
 import android.view.View;
 import android.widget.TextView;

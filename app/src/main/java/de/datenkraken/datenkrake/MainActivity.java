@@ -450,7 +450,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences settings = getSharedPreferences(key, MODE_PRIVATE);
         if (!settings.contains(key)) {
             // user is logging in for first time, show him category picking view
-            navController.navigate(R.id.nav_cat_recomm);
+            navController.navigate(R.id.nav_recomm);
             // record the fact that the app has been started at least once
             settings.edit().putBoolean(key, false).apply();
         }

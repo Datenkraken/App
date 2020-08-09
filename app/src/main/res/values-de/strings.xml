@@ -64,7 +64,7 @@
     <string name="button_submit_sources">Füge Quellen hinzu</string>
     <string name="pick_sources">Wähle Quellen aus</string>
     <string name="notification_no_sources">Keine neuen Quellen in dieser Kategorie</string>
-    <string name="toast_sources_successfully_added">"Quellen hinzugefügt!  "</string>
+    <string name="toast_sources_successfully_edited">"Quellen hinzugefügt!  "</string>
     <string name="toast_sources__added_error">Fehler aufgetreten beim Hinzufügen der Quellen</string>
     <string name="article_no_website_found">Es wurde keine Webseite gefunden</string>
     <string name="login_dik_content_description">DiK Logo</string>

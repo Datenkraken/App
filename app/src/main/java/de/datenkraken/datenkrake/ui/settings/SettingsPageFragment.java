@@ -155,7 +155,7 @@ public class SettingsPageFragment extends PreferenceFragmentCompat {
 
         Objects.requireNonNull(choseCategories).setOnPreferenceClickListener(preference -> {
             NavController controller = Navigation.findNavController(Objects.requireNonNull(getView()));
-            controller.navigate(R.id.nav_cat_recomm);
+            controller.navigate(R.id.nav_recomm);
             return true;
         });
 
