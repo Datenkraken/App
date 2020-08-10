@@ -1,6 +1,7 @@
 package de.datenkraken.datenkrake.surveillance.background;
 
 import android.content.Context;
+import android.os.BatteryManager;
 
 import androidx.annotation.NonNull;
 import androidx.work.Worker;
@@ -67,9 +68,14 @@ public class BackgroundPacketSender extends Worker {
             return Result.failure();
         }
 
+        if (!((BatteryManager) context.get().getSystemService(Context.BATTERY_SERVICE)).isCharging()) {
+            Timber.i("Don't sending data to preserve Battery life");
+            return Result.success();
+        }
+
         if (!NetworkUtil.isWifiEnabled(context.get())) {
             Timber.e("wifi is %s", NetworkUtil.isWifiEnabled(context.get()));
-            return Result.failure();
+            return Result.success();
         }
 
         PacketLoader packetLoader;

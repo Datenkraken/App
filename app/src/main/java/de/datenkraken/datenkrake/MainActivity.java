@@ -389,7 +389,7 @@ public class MainActivity extends AppCompatActivity {
             .build();
 
         PeriodicWorkRequest request = new PeriodicWorkRequest
-            .Builder(BackgroundPacketSender.class, 15, TimeUnit.MINUTES)
+            .Builder(BackgroundPacketSender.class, 30, TimeUnit.MINUTES)
             .setConstraints(constraints)
             .build();
 

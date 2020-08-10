@@ -32,6 +32,9 @@ public abstract class Receiver extends BroadcastReceiver {
             collector = new ProcessedDataCollector(new WeakReference<>(context));
         }
         receive(context, intent, collector);
+    }
+
+    void flush() {
         collector.flush();
     }
 }

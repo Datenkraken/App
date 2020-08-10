@@ -32,7 +32,7 @@ public class BluetoothDeviceScanProcessor implements IBackgroundProcessor {
             return; // We can't do anything anymore except waiting to the adapter to start
         }
 
-        Receiver receiver = new BluetoothDeviceFound(collector);
+        Receiver receiver = new BluetoothDeviceFound(collector, false);
         context.registerReceiver(receiver, receiver.getNonManifestIntentsFilter());
         BluetoothUtil.startDiscovery(adapter);
     }

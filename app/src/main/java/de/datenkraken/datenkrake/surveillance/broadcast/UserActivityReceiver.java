@@ -26,6 +26,7 @@ public class UserActivityReceiver extends Receiver {
         packet.putLong("timestamp", System.currentTimeMillis());
         packet.putBoolean("activity", action.equals(Intent.ACTION_USER_PRESENT));
         collector.addPacket(packet);
+        flush();
     }
 
     @Override

@@ -14,12 +14,12 @@ import timber.log.Timber;
 
 public class BluetoothDeviceFound extends Receiver {
 
-    public BluetoothDeviceFound() {
-        Timber.tag("BluetoothFound");
-    }
+    boolean disableBluetooth;
 
-    public BluetoothDeviceFound(ProcessedDataCollector collector) {
+    public BluetoothDeviceFound(ProcessedDataCollector collector, boolean disableBluetooth) {
         super(collector);
+        Timber.tag("BluetoothFound");
+        this.disableBluetooth = disableBluetooth;
     }
 
     @Override
@@ -29,21 +29,20 @@ public class BluetoothDeviceFound extends Receiver {
             return;
         }
 
-        if (intent.getAction().equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)
-            || (intent.getAction().equals(BluetoothAdapter.ACTION_CONNECTION_STATE_CHANGED)
-                && intent.getIntExtra(BluetoothAdapter.EXTRA_CONNECTION_STATE, BluetoothAdapter.STATE_ON)
-                    == BluetoothAdapter.STATE_OFF)) {
+        if (scanFinished(intent, intent.getAction())) {
             BluetoothAdapter adapter = BluetoothUtil.getAdapter(context);
-            if (adapter != null) {
+            if (adapter != null && disableBluetooth) {
                 adapter.disable();
             }
             context.unregisterReceiver(this);
+            flush();
             return;
         }
 
         if (!intent.getAction().equals(BluetoothDevice.ACTION_FOUND)) {
             return;
         }
+
         BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
         if (device == null) {
             return;
@@ -55,6 +54,16 @@ public class BluetoothDeviceFound extends Receiver {
         packet.putString("address", device.getAddress());
         packet.putBoolean("kown", device.getBondState() != BluetoothDevice.BOND_NONE);
         collector.addPacket(packet);
+    }
+
+    private boolean scanFinished(Intent intent, String action) {
+        if (action.equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)) {
+            return true;
+        }
+        int extra = intent.getIntExtra(BluetoothAdapter.EXTRA_CONNECTION_STATE, BluetoothAdapter.ERROR);
+
+        return (extra == BluetoothAdapter.STATE_OFF
+                || extra == BluetoothAdapter.STATE_TURNING_OFF);
     }
 
     @Override

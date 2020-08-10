@@ -32,7 +32,7 @@ public class BluetoothScanInitiator extends Receiver {
             return;
         }
 
-        Receiver receiver = new BluetoothDeviceFound(collector);
+        Receiver receiver = new BluetoothDeviceFound(collector, true);
         context.registerReceiver(receiver, receiver.getNonManifestIntentsFilter());
         context.unregisterReceiver(this);
         BluetoothUtil.startDiscovery(adapter);
