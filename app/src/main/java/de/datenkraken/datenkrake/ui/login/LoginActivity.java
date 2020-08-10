@@ -61,19 +61,6 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        DataCollectionPopupFragment collectionFragment = new DataCollectionPopupFragment();
-
-        SharedPreferences sharedPreferences =
-            getSharedPreferences(getString(R.string.preference_login_storage), MODE_PRIVATE);
-
-        boolean accepted = sharedPreferences
-            .getBoolean(getString(R.string.preference_accepted_data_collection), false);
-
-        if (!accepted && !collectionFragment.isAdded()) {
-            collectionFragment.setCancelable(false);
-            collectionFragment.show(getSupportFragmentManager(), "dataCollectionPopup");
-        }
-
         authenticationManager = ((DatenkrakeApp) getApplication()).getAuthenticationManager();
 
         AppAuthConfiguration.Builder builder = new AppAuthConfiguration.Builder();
@@ -103,6 +90,14 @@ public class LoginActivity extends AppCompatActivity {
         // On click listener for Register Button.
         goToRegisterButton.setOnClickListener(
             v -> openInBrowser(Uri.parse(getString(R.string.login_registration_endpoint))));
+
+
+        DataCollectionPopupFragment collectionFragment = new DataCollectionPopupFragment();
+
+        if (!collectionFragment.isAdded()) {
+            collectionFragment.setCancelable(false);
+            collectionFragment.show(getSupportFragmentManager(), "dataCollectionPopup");
+        }
     }
 
     /**

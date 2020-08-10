@@ -12,7 +12,6 @@
 
     // keys for login
     <string name="preference_login_storage" translatable="false">LOGIN_STORAGE</string>
-    <string name="preference_accepted_data_collection" translatable="false">ACCEPTED_DATA_COLLECTION</string>
     <string name="login_authentication_state" translatable="false">AUTH_TOKEN</string>
     <string name="login_data_collection_privacy_url" translatable="false">http://10.0.2.2:8000/privacy?origin=app</string>
 

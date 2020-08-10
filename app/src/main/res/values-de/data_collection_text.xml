@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="data_collection_popup_warning_text">
-    - Diese App dient der Veranschaulichung von Datenschutz \n\n
-    - Es werden Daten über den Nutzer gesammelt \n\n
-    - Ziel ist es zu zeigen, wie viele Daten gesammelt werden können \n\n
-    - Indem Sie diese Nachricht akzeptieren, stimmen Sie zu, dass Daten über Sie gesammelt werden
+        Diese App demonstriert die Möglichkeiten von Apps Daten über ihre Nutzer zu sammeln.
+        Die Daten werden absichtlich nicht anonymisiert.
+        Welche Daten im Detail gesammelt werden, könnt ihr über unsere Datenschutzerklärung erfahren.
     </string>
 </resources>

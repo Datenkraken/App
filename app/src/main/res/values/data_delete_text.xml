@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="data_delete_warning_text">
-        This will delete any Data saved about you.
-        Your data could still appear in anonymously in statistics.
-        Your Account will be deleted.
+        This will delete all data we saved about you.
+        Your data may still be included in anonymized statistics.
+        Your account will also be deleted.
     </string>
 </resources>

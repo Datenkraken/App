@@ -40,14 +40,10 @@ public class DataCollectionPopupFragment extends DialogFragment {
     @BindView(R.id.data_collection_browser_button)
     Button browserButton;
 
-    private final DataCollectionPopupViewModel dataCollectionViewModel = new DataCollectionPopupViewModel();
-
     /**
      * Called on the creation of the dialog. <br>
      * Inflates the layout and sets the text of the popup. <br>
      * Also sets on click listeners to the buttons.
-     * On accept, it will call {@link DataCollectionPopupViewModel#saveAccept(Context)}, on cancel,
-     * it will display a toast message.
      *
      * @param savedInstanceState bundle of saved instance sent to function.
      * @return Dialog that was build in this function.
@@ -79,7 +75,6 @@ public class DataCollectionPopupFragment extends DialogFragment {
         dataCollectionText.setText(R.string.data_collection_popup_warning_text);
         // Set Buttons
         acceptButton.setOnClickListener(v -> {
-            dataCollectionViewModel.saveAccept(requireContext());
             dismiss();
         });
         browserButton.setOnClickListener(v -> {

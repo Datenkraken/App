@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="data_collection_popup_warning_text">
-        - This App is used to display Datasecurity \n\n
-        - This App will collect Data about you \n\n
-        - Goal is to demonstrate, how much Data can be collected about the Users \n\n
-        - If you press Accept, you agree that Data will be collected about you
+        This app demonstrates the possibilities of apps to collect data about their users.
+        The data is intentionally not anonymized.
+        You can find out what data is collected in our privacy policy.
     </string>
 </resources>
