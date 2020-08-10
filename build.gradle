@@ -7,11 +7,10 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.0'
-
+        classpath 'com.android.tools.build:gradle:4.0.1'
 
         // Android Safe Args gradle plugin (https://developer.android.com/guide/navigation/navigation-pass-data#Safe-args)
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.2.1"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.3.0"
 
         // Apollo gradle plugin
         classpath 'com.apollographql.apollo:apollo-gradle-plugin:1.3.0'
