@@ -1,32 +1,38 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar.Bridge">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@color/mainBackground</item>
-        <item name="android:listDivider">@color/colorPrimary</item>
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="preferenceTheme">@style/SettingsFragmentStyle</item>
+        <item name="alertDialogTheme">@style/settingsDialog</item>
+        <item name="android:textColorSecondary">@color/button_text</item>
+        <item name="android:colorAccent">@color/text_view</item>
+        <item name="aboutLibrariesStyle">@style/AboutLibrariesCustomStyle</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="SettingsFragmentStyle" parent="Theme.AppCompat">
+        <item name="android:textColor">@color/button_text</item>
+    </style>
+
+    <style name="AboutLibrariesCustomStyle">
+        <item name="aboutLibrariesWindowBackground">@android:color/transparent</item>
+        <item name="aboutLibrariesDescriptionTitle">@color/text_view</item>
+        <item name="aboutLibrariesDescriptionText">@color/text_view</item>
+        <item name="aboutLibrariesDescriptionDivider">@color/text_view</item>
+        <item name="aboutLibrariesOpenSourceTitle">@color/text_view</item>
+        <item name="aboutLibrariesOpenSourceText">@color/text_view</item>
+        <item name="aboutLibrariesSpecialButtonText">@color/text_view</item>
+        <item name="aboutLibrariesOpenSourceDivider">@color/text_view</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="DialogTheme" parent="Theme.AppCompat.Dialog.Alert">
-        <item name="android:background">@color/colorPrimary</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textStyle">normal</item>
-        <item name="android:backgroundDimEnabled">true</item>
-        <item name="dialogCornerRadius">8dp</item>
-        <item name="android:layout_marginStart">2dp</item>
-        <item name="android:layout_marginEnd">4dp</item>
+    <style name="settingsDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@drawable/custom_dialog</item>
+        <item name="buttonBarButtonStyle">@style/preferenceButton</item>
     </style>
-
+    <style name="preferenceButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/button_text</item>
+    </style>
 </resources>

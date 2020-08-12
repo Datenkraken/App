@@ -1,12 +1,12 @@
 package de.datenkraken.datenkrake.ui.recommendation.singlecat;
 
 import android.content.Context;
-import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,6 +16,7 @@ import de.datenkraken.datenkrake.ui.recommendation.RecommViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import timber.log.Timber;
 
@@ -43,8 +44,8 @@ public class SingleCategoryAdapter extends RecyclerView.Adapter<SingleCategoryVi
         Timber.tag("SingleCategoryAdapter");
         this.recommModel = recommModel;
         associatedSources = new ArrayList<>();
-        HIGHLIGHTED = ContextCompat.getColor(context, R.color.highlightedBlue);
-        BLUE = ContextCompat.getColor(context, R.color.colorPrimaryLight);
+        HIGHLIGHTED = ContextCompat.getColor(context, R.color.button_text);
+        BLUE = ContextCompat.getColor(context, R.color.text_view);
 
     }
 
@@ -75,7 +76,8 @@ public class SingleCategoryAdapter extends RecyclerView.Adapter<SingleCategoryVi
         // reuse categories holder but this time with source names
         Source currentSource = associatedSources.get(position);
         holder.source.setText(currentSource.name);
-        colorHolder(holder, recommModel.sourceStatus.getValue().getOrDefault(currentSource.url.toString(), false));
+        colorHolder(holder, Objects.requireNonNull(recommModel.sourceStatus.getValue())
+            .getOrDefault(currentSource.url.toString(), false));
 
         holder.itemView.setOnClickListener(v ->
             colorHolder(holder, recommModel.toggleSelection(currentSource.url.toString())));
@@ -83,9 +85,13 @@ public class SingleCategoryAdapter extends RecyclerView.Adapter<SingleCategoryVi
 
     private void colorHolder(SingleCategoryViewHolder holder, boolean picked) {
         if (picked) {
-            holder.source.getBackground().setColorFilter(HIGHLIGHTED, PorterDuff.Mode.SRC_IN);
+            holder.source.setTextColor(HIGHLIGHTED);
+            holder.source.setShadowLayer(10, 0, 0, HIGHLIGHTED);
+            holder.itemView.setBackgroundResource(R.drawable.category_holder_highlighted);
         } else {
-            holder.source.getBackground().setColorFilter(BLUE, PorterDuff.Mode.SRC_IN);
+            holder.source.setTextColor(BLUE);
+            holder.source.setShadowLayer(0, 0, 0, BLUE);
+            holder.itemView.setBackgroundResource(R.drawable.category_holder);
         }
     }
 

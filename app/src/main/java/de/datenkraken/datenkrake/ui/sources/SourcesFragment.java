@@ -74,21 +74,25 @@ public class SourcesFragment extends Fragment {
             DividerItemDecoration.HORIZONTAL
         ));
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         recycler.setLayoutManager(layoutManager);
         recycler.setHasFixedSize(true);
 
-
         //  initialize the recycler adapter
-        SourcesAdapter sourcesAdapter = new SourcesAdapter(sourceModel, getContext());
+        SourcesAdapter sourcesAdapter = new SourcesAdapter(sourceModel, getContext(), requireActivity());
         sourceModel.getSavedSources().observe(getViewLifecycleOwner(), sourcesAdapter::setSources);
         recycler.setAdapter(sourcesAdapter);
 
-        AddSourcesDialogFragment addFragment =
-            new AddSourcesDialogFragment(sourceModel);
 
-        buttonNewSource.setOnClickListener(v ->
-            addFragment.show(getChildFragmentManager(), "addSource"));
+
+        buttonNewSource.setOnClickListener(v -> {
+                AddSourcesDialogFragment addFragment =
+                    new AddSourcesDialogFragment(
+                        sourceModel,
+                        (ViewGroup) requireView().getRootView());
+
+            addFragment.show(getChildFragmentManager(), "addSource");
+            });
 
         return view;
     }

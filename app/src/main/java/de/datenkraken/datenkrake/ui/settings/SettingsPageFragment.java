@@ -102,9 +102,14 @@ public class SettingsPageFragment extends PreferenceFragmentCompat {
             }
         });
 
-        setUpOnClickListener();
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        if (view != null) {
+            view.setBackgroundResource(R.drawable.rectangle_gradient_bg);
+        }
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+        setUpOnClickListener();
+        return view;
+
     }
 
     /**
@@ -154,7 +159,7 @@ public class SettingsPageFragment extends PreferenceFragmentCompat {
         Preference choseCategories = findPreference("categories_button");
 
         Objects.requireNonNull(choseCategories).setOnPreferenceClickListener(preference -> {
-            NavController controller = Navigation.findNavController(Objects.requireNonNull(getView()));
+            NavController controller = Navigation.findNavController(requireView());
             controller.navigate(R.id.nav_recomm);
             return true;
         });
@@ -190,9 +195,10 @@ public class SettingsPageFragment extends PreferenceFragmentCompat {
             findPreference(getString(R.string.preference_settings_delete_data_button_key));
         Objects.requireNonNull(deleteData).setOnPreferenceClickListener(preference -> {
             DataDeletePopupFragment dataDeletePopupFragment =
-                new DataDeletePopupFragment(settingsModel);
-            dataDeletePopupFragment.show(Objects.requireNonNull(
-                getActivity()).getSupportFragmentManager(), "dataDelete"
+                new DataDeletePopupFragment(
+                    settingsModel,
+                    (ViewGroup) requireView().getRootView());
+            dataDeletePopupFragment.show(requireActivity().getSupportFragmentManager(), "dataDelete"
             );
             return true;
         });

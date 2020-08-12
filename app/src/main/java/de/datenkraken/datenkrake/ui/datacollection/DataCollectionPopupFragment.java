@@ -22,6 +22,7 @@ import androidx.fragment.app.DialogFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.datenkraken.datenkrake.R;
+import jp.wasabeef.blurry.Blurry;
 
 import java.util.Objects;
 
@@ -40,6 +41,12 @@ public class DataCollectionPopupFragment extends DialogFragment {
     @BindView(R.id.data_collection_browser_button)
     Button browserButton;
 
+    final ViewGroup root;
+
+    public DataCollectionPopupFragment(ViewGroup root) {
+        this.root = root;
+    }
+
     /**
      * Called on the creation of the dialog. <br>
      * Inflates the layout and sets the text of the popup. <br>
@@ -53,7 +60,8 @@ public class DataCollectionPopupFragment extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         Window window = Objects.requireNonNull(getDialog()).getWindow();
-        Objects.requireNonNull(window).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        window.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        window.setDimAmount(0);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -74,6 +82,7 @@ public class DataCollectionPopupFragment extends DialogFragment {
         // Set DialogFragment Text
         dataCollectionText.setText(R.string.data_collection_popup_warning_text);
         // Set Buttons
+
         acceptButton.setOnClickListener(v -> {
             dismiss();
         });
@@ -83,8 +92,15 @@ public class DataCollectionPopupFragment extends DialogFragment {
             customTabsIntent.launchUrl(requireActivity(),
                 Uri.parse(getString(R.string.login_data_collection_privacy_url)));
         });
+        root.post(() -> Blurry.with(view.getContext()).radius(10).sampling(1).animate(500).async().onto(root));
         // Set Builder and Buttons
         return builder.setView(view)
             .show();
+    }
+
+    @Override
+    public void onDestroyView() {
+        Blurry.delete(root);
+        super.onDestroyView();
     }
 }

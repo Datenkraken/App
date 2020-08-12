@@ -5,18 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    app:cardBackgroundColor="@color/mainBackground"
     app:cardCornerRadius="10dp"
     app:cardElevation="6dp"
     app:cardPreventCornerOverlap="false"
     app:cardUseCompatPadding="true"
-    app:contentPadding="-10dp" >
+    app:contentPadding="-10dp">
 
 
     <LinearLayout
+        android:id="@+id/scroll_overlay"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_rowWeight="9" >
+        android:layout_rowWeight="9"
+        android:background="@drawable/rectangle_gradient">
 
 
         <ImageView
@@ -25,6 +26,7 @@
             android:layout_height="match_parent"
             android:layout_weight="7"
             android:contentDescription="@string/article_image_content_description"
+            android:background="@android:color/transparent"
             android:scaleType="centerCrop" />
 
         <RelativeLayout
@@ -50,6 +52,7 @@
                     android:ellipsize="end"
                     android:textSize="21sp"
                     android:textStyle="bold"
+                    android:textColor="@color/text_view"
                     tools:text="@tools:sample/lorem" />
 
 
@@ -61,10 +64,11 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="-5dp"
                     android:layout_marginEnd="13dp"
-                    android:background="#00FFFFFF"
+                    android:background="#00000000"
                     android:contentDescription="@string/button_bookmark_description"
                     android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/ic_bookmark_border_24px" />
+                    app:srcCompat="@drawable/ic_bookmark_border_24px"
+                    android:tint="@color/button_text" />
             </RelativeLayout>
 
             <View
@@ -91,6 +95,7 @@
                 android:scrollHorizontally="true"
                 android:ellipsize="end"
                 android:textSize="18sp"
+                android:textColor="@color/text_view"
                 tools:text="@tools:sample/lorem/random" />
 
             <TextView
@@ -105,6 +110,7 @@
                 android:lines="1"
                 android:scrollHorizontally="true"
                 android:ellipsize="end"
+                android:textColor="@color/text_view"
                 tools:text="@tools:sample/full_names" />
 
         </RelativeLayout>

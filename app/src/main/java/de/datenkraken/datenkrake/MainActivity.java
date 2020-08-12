@@ -262,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
         Transformations.map(sources, oldSources -> {
             List<Triple<Long, String, Uri>> list = new ArrayList<>();
             for (Source source : oldSources) {
-                list.add(new Triple<>(source.uid, source.name, source.getIcon()));
+                list.add(new Triple<>(source.uid, source.name.trim(), source.getIcon()));
             }
             return list;
         }).observe(this, s -> loadIntoNav(s, menu));
@@ -359,8 +359,6 @@ public class MainActivity extends AppCompatActivity {
         Glide.with(this)
             .load(image)
             .placeholder(R.drawable.ic_loading_icon)
-            .error(R.drawable.ic_missing_icon)
-            .fallback(R.drawable.ic_missing_icon)
             .into(new CustomTarget<Drawable>() {
                 @Override
                 public void onResourceReady(@NonNull Drawable resource,

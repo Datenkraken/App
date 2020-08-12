@@ -17,12 +17,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.appcompat.widget.SearchView;
 
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -85,15 +85,14 @@ public class ScrollFragment extends Fragment {
         inflater.inflate(R.menu.search_bar, menu);
         inflater.inflate(R.menu.main, menu);
         MenuItem menuItem = menu.findItem(R.id.action_search_bar);
-        menuItem.getIcon().setTint(ContextCompat.getColor(Objects.requireNonNull(getContext()),
-            R.color.white));
+        menuItem.getIcon().setTint(ContextCompat.getColor(requireContext(),
+            R.color.text_view));
         SearchView searchView = (SearchView) menuItem.getActionView();
         searchView.setMaxWidth(Integer.MAX_VALUE);
-        searchView.setBackgroundResource(R.drawable.search_round);
         EditText editText = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
-        editText.setTextColor(Color.BLACK);
+        editText.setTextColor(Color.WHITE);
         ImageView icon = searchView.findViewById(androidx.appcompat.R.id.search_close_btn);
-        icon.setColorFilter(Color.BLACK);
+        icon.setColorFilter(Color.WHITE);
 
         // Reload Query into SearchView
         String query = scrollModel.searchQuery.getValue();

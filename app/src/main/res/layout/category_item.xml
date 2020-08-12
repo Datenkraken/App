@@ -15,12 +15,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/custom_light_layout"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/custom_light_layout">
 
         <TextView
             android:id="@+id/category_tag"
-            android:textColor="@color/white"
+            android:textColor="@color/text_view"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
             android:layout_width="match_parent"
@@ -33,7 +33,7 @@
             android:layout_marginBottom="3dp"
             android:id="@+id/category_divider"
             app:layout_constraintStart_toStartOf="parent"
-            android:background="@color/white"/>
+            android:background="@color/text_view"/>
 
         <TextView
             android:id="@+id/no_new_sources"
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
-            android:textColor="@color/white"
+            android:textColor="@color/text_view"
             android:layout_marginBottom="3dp"
             android:visibility="gone"/>
 
@@ -54,7 +54,8 @@
             android:layout_marginEnd="4dp"
             android:layout_marginBottom="3dp"
             android:layout_marginTop="3dp"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"/>
 
     </LinearLayout>
 

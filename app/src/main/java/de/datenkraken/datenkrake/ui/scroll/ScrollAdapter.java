@@ -48,8 +48,8 @@ class ScrollAdapter extends RecyclerView.Adapter<ArticleViewHolder> {
 
     // colors for setting the viewholder depending on whether
     // articles has been read or not
-    private final int COLOR_GREY;
-    private final int COLOR_WHITE;
+    private final int status_read;
+    private final int status_unread;
 
     /**
      * Constructor for the class, initializing it.
@@ -60,8 +60,8 @@ class ScrollAdapter extends RecyclerView.Adapter<ArticleViewHolder> {
     ScrollAdapter(ScrollViewModel scrollViewModel, Context context) {
         this.scrollViewModel = scrollViewModel;
         this.context = context;
-        COLOR_GREY = ContextCompat.getColor(context, R.color.mainBackgroundDark);
-        COLOR_WHITE = ContextCompat.getColor(context, R.color.mainBackground);
+        status_read = R.drawable.rectangle_gradient_dimmed;
+        status_unread = R.drawable.rectangle_gradient;
     }
 
     /**
@@ -74,7 +74,7 @@ class ScrollAdapter extends RecyclerView.Adapter<ArticleViewHolder> {
     @NonNull
     @Override
     public ArticleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.scroll_item, parent, false);
         return new ArticleViewHolder(v);
     }
 
@@ -124,11 +124,9 @@ class ScrollAdapter extends RecyclerView.Adapter<ArticleViewHolder> {
         // Decide on color, if there is no image.
         int articleFallbackColor;
         if (currentArticle.read) {
-            articleFallbackColor = R.color.mainBackgroundDark;
-            ((CardView) holder.itemView).setCardBackgroundColor(COLOR_GREY);
+            holder.itemView.findViewById(R.id.scroll_overlay).setBackgroundResource(status_read);
         } else {
-            articleFallbackColor = R.color.mainBackground;
-            ((CardView) holder.itemView).setCardBackgroundColor(COLOR_WHITE);
+            holder.itemView.findViewById(R.id.scroll_overlay).setBackgroundResource(status_unread);
         }
 
         // Set bookmark icon
@@ -141,8 +139,7 @@ class ScrollAdapter extends RecyclerView.Adapter<ArticleViewHolder> {
         // Load image.
         Glide.with(holder.image.getContext())
             .load(currentArticle.imageUrl)
-            .error(R.drawable.ic_missing_icon)
-            .fallback(articleFallbackColor)
+            .placeholder(R.drawable.ic_loading_icon)
             .into(holder.image);
 
 
@@ -357,7 +354,7 @@ class ScrollAdapter extends RecyclerView.Adapter<ArticleViewHolder> {
      */
     @NonNull
     private String getSource(final Article article) {
-        return article.source.name != null ? article.source.name : "";
+        return article.source.name != null ? article.source.name.trim() : "";
     }
 
     /**

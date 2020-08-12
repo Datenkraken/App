@@ -15,10 +15,10 @@
         android:layout_marginStart="9dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="2dp"
-        android:textSize="30sp"
+        android:textSize="24sp"
         android:gravity="center"
         android:text="@string/default_unknown"
-        android:textColor="@color/white" />
+        android:textColor="@color/text_view" />
 
     <Button
         android:id="@+id/delete_cancel_button"
@@ -26,12 +26,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_marginTop="8dp"
-        android:background="@drawable/custom_button_left"
         android:text="@string/button_cancel"
-        android:textColor="@color/white"
+        android:textColor="@color/button_text"
         app:layout_constraintEnd_toStartOf="@id/delete_accept_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/delete_source_title" />
+        app:layout_constraintTop_toBottomOf="@id/delete_source_title"
+        style="@style/Widget.MaterialComponents.Button.TextButton" />
 
     <Button
         android:id="@+id/delete_accept_button"
@@ -39,11 +39,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="8dp"
-        android:background="@drawable/custom_button_right"
         android:text="@string/button_confirm"
-        android:textColor="@color/white"
+        android:textColor="@color/button_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/delete_cancel_button"
-        app:layout_constraintTop_toBottomOf="@id/delete_source_title" />
+        app:layout_constraintTop_toBottomOf="@id/delete_source_title"
+        style="@style/Widget.MaterialComponents.Button.TextButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

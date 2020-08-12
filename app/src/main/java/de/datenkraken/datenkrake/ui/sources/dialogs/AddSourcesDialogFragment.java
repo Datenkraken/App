@@ -21,6 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.datenkraken.datenkrake.R;
 import de.datenkraken.datenkrake.ui.sources.SourcesViewModel;
+import jp.wasabeef.blurry.Blurry;
 
 import java.net.MalformedURLException;
 import java.util.Objects;
@@ -40,6 +41,7 @@ public class AddSourcesDialogFragment extends DialogFragment {
     @BindView(R.id.add_source_edittext)
     EditText input;
     private final SourcesViewModel sourceModel;
+    private final ViewGroup root;
 
     /**
      * Constructor for AddSourcesFragment, initializing it.
@@ -47,8 +49,9 @@ public class AddSourcesDialogFragment extends DialogFragment {
      * @param sourceModel {@link SourcesViewModel} to be used to save the
      * {@link de.datenkraken.datenkrake.model.Source}s entered.
      */
-    public AddSourcesDialogFragment(SourcesViewModel sourceModel) {
+    public AddSourcesDialogFragment(SourcesViewModel sourceModel, ViewGroup root) {
         this.sourceModel = sourceModel;
+        this.root = root;
     }
 
     /**
@@ -66,6 +69,8 @@ public class AddSourcesDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_add_source_dialog, null, false);
         ButterKnife.bind(this, view);
 
+        root.post(() -> Blurry.with(view.getContext()).radius(10).sampling(1).animate(500).async().onto(root));
+
         // Set Builder and Buttons
         acceptButton.setOnClickListener(v -> {
             try {
@@ -77,7 +82,10 @@ public class AddSourcesDialogFragment extends DialogFragment {
                     Toast.LENGTH_LONG).show();
             }
         });
-        cancelButton.setOnClickListener(v -> dismiss());
+        cancelButton.setOnClickListener(v -> {
+            Blurry.delete(root);
+            dismiss();
+        });
         return builder.setView(view).show();
     }
 
@@ -98,5 +106,11 @@ public class AddSourcesDialogFragment extends DialogFragment {
         Window window = Objects.requireNonNull(getDialog()).getWindow();
         Objects.requireNonNull(window).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onDestroyView() {
+        Blurry.delete(root);
+        super.onDestroyView();
     }
 }

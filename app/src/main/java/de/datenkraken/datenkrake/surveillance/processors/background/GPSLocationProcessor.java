@@ -21,7 +21,7 @@ import timber.log.Timber;
 public class GPSLocationProcessor implements IBackgroundProcessor {
 
     public GPSLocationProcessor() {
-        Timber.d("GPS Processor");
+        Timber.tag("GPS Processor");
     }
 
     @Override

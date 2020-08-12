@@ -130,8 +130,8 @@ public class ArticleViewFragment extends Fragment {
         inflater.inflate(R.menu.main, menu);
         // Set menu item color.
         MenuItem menuItem = menu.findItem(R.id.action_share_button);
-        menuItem.getIcon().setTint(ContextCompat.getColor(Objects.requireNonNull(getContext()),
-            R.color.white));
+        menuItem.getIcon().setTint(ContextCompat.getColor(requireContext(),
+            R.color.text_view));
         // Set menu item on click listener.
         menuItem.setOnMenuItemClickListener(v -> {
             // Send share information to backend.

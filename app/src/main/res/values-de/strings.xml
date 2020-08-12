@@ -40,6 +40,7 @@
     <string name="login_screen_login_failure">Login nicht möglich</string>
     <string name="login_screen_login_success">Login erfolgreich</string>
     <string name="search_bar_title">Suchen</string>
+    <string name="search_bar_hint">Search article</string>
     <string name="settings_cache_article_lifetime_title">Feeds Lebenszeit</string>
     <string name="settings_network_title">Netzwerk Einstellungen</string>
     <string name="settings_network_update_interval_title">Update Intervall</string>
@@ -69,6 +70,7 @@
     <string name="article_no_website_found">Es wurde keine Webseite gefunden</string>
     <string name="login_dik_content_description">DiK Logo</string>
     <string name="login_tud_content_description">TUD Logo</string>
+    <string name="login_icon_content_description">App Logo</string>
     <string name="settings_data_delete_failure">Die Daten konnten nicht gelöscht werden</string>
     <string name="settings_data_delete_success">Die Daten und der Account wurden erfolgreich gelöscht</string>
     <string name="privacy_policy_button">Datenschutzerklärung</string>
