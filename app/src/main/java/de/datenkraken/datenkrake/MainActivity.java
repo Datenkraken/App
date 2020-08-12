@@ -434,6 +434,11 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(receiver, receiver.getNonManifestIntentsFilter());
     }
 
+    public void killWorker() {
+        WorkManager workManager = WorkManager.getInstance(this);
+        workManager.cancelAllWork();
+    }
+
     /**
      * Navigates the user to the category recommendation page once after a new registration.
      * This happens only, when the key "NEWLY_REGISTERED" is not contained in the SharedPreferences.

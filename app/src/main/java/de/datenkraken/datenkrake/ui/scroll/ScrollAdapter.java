@@ -11,8 +11,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 
 import androidx.browser.customtabs.CustomTabsIntent;
-import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.core.text.HtmlCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -48,8 +46,8 @@ class ScrollAdapter extends RecyclerView.Adapter<ArticleViewHolder> {
 
     // colors for setting the viewholder depending on whether
     // articles has been read or not
-    private final int status_read;
-    private final int status_unread;
+    private final int STATUS_READ;
+    private final int STATUS_UNREAD;
 
     /**
      * Constructor for the class, initializing it.
@@ -60,8 +58,8 @@ class ScrollAdapter extends RecyclerView.Adapter<ArticleViewHolder> {
     ScrollAdapter(ScrollViewModel scrollViewModel, Context context) {
         this.scrollViewModel = scrollViewModel;
         this.context = context;
-        status_read = R.drawable.rectangle_gradient_dimmed;
-        status_unread = R.drawable.rectangle_gradient;
+        STATUS_READ = R.drawable.rectangle_gradient_dimmed;
+        STATUS_UNREAD = R.drawable.rectangle_gradient;
     }
 
     /**
@@ -120,13 +118,11 @@ class ScrollAdapter extends RecyclerView.Adapter<ArticleViewHolder> {
                                             getFormattedDate(currentArticle),
                                             getSource(currentArticle)));
 
-        // if the article has been read, make the itemView grey
-        // Decide on color, if there is no image.
-        int articleFallbackColor;
+        // if the article has been read, make the itemView dark
         if (currentArticle.read) {
-            holder.itemView.findViewById(R.id.scroll_overlay).setBackgroundResource(status_read);
+            holder.itemView.findViewById(R.id.scroll_overlay).setBackgroundResource(STATUS_READ);
         } else {
-            holder.itemView.findViewById(R.id.scroll_overlay).setBackgroundResource(status_unread);
+            holder.itemView.findViewById(R.id.scroll_overlay).setBackgroundResource(STATUS_UNREAD);
         }
 
         // Set bookmark icon

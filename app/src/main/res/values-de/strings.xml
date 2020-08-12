@@ -20,6 +20,7 @@
     <string name="source_add">Quelle hinzufügen</string>
     <string name="source_name_loading">Wird geladen…</string>
     <string name="source_url_wrong_format">Falsches Format, bitte geben Sie eine gültige URL an.</string>
+    <string name="source_url_no_https">Bitte benutz eine URL mit Https.</string>
     <string name="settings_cache_clear_summary">Löscht den Cache der App</string>
     <string name="button_delete">Löschen</string>
     <string name="article_share_button_description">Teile den Artikel</string>

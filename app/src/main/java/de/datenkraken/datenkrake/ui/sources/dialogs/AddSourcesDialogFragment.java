@@ -21,10 +21,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.datenkraken.datenkrake.R;
 import de.datenkraken.datenkrake.ui.sources.SourcesViewModel;
-import jp.wasabeef.blurry.Blurry;
 
 import java.net.MalformedURLException;
 import java.util.Objects;
+
+import jp.wasabeef.blurry.Blurry;
 
 /**
  * Dialog Popup Fragment for adding {@link de.datenkraken.datenkrake.model.Source}s.
@@ -48,6 +49,7 @@ public class AddSourcesDialogFragment extends DialogFragment {
      *
      * @param sourceModel {@link SourcesViewModel} to be used to save the
      * {@link de.datenkraken.datenkrake.model.Source}s entered.
+     * @param root root view, which gets blurred
      */
     public AddSourcesDialogFragment(SourcesViewModel sourceModel, ViewGroup root) {
         this.sourceModel = sourceModel;
@@ -79,6 +81,9 @@ public class AddSourcesDialogFragment extends DialogFragment {
                 dismiss();
             } catch (MalformedURLException e) {
                 Toast.makeText(getContext(), getText(R.string.source_url_wrong_format),
+                    Toast.LENGTH_LONG).show();
+            } catch (NoHttpsException e) {
+                Toast.makeText(getContext(), getText(R.string.source_url_no_https),
                     Toast.LENGTH_LONG).show();
             }
         });

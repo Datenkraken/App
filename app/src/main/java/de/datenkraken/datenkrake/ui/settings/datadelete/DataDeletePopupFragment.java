@@ -19,11 +19,13 @@ import androidx.fragment.app.DialogFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import de.datenkraken.datenkrake.MainActivity;
 import de.datenkraken.datenkrake.R;
 import de.datenkraken.datenkrake.ui.settings.SettingsPageViewModel;
-import jp.wasabeef.blurry.Blurry;
 
 import java.util.Objects;
+
+import jp.wasabeef.blurry.Blurry;
 
 /**
  * Popup that sends a request to delete the userdata and account when accept is pressed.
@@ -44,6 +46,7 @@ public class DataDeletePopupFragment extends DialogFragment {
      * Constructor for the DataDeletePopupFragment, initializing it.
      *
      * @param settingsPageViewModel {@link SettingsPageViewModel} to be called to delete the data.
+     * @param root root view, which gets blurred
      */
     public DataDeletePopupFragment(SettingsPageViewModel settingsPageViewModel, ViewGroup root) {
         this.settingsPageViewModel = settingsPageViewModel;
@@ -94,7 +97,7 @@ public class DataDeletePopupFragment extends DialogFragment {
 
         // Set Buttons.
         acceptButton.setOnClickListener(v -> {
-            settingsPageViewModel.deleteData();
+            settingsPageViewModel.deleteData((MainActivity) requireActivity());
             dismiss();
         });
         cancelButton.setOnClickListener(v -> {

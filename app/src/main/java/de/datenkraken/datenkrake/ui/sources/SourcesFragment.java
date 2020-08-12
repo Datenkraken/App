@@ -86,13 +86,13 @@ public class SourcesFragment extends Fragment {
 
 
         buttonNewSource.setOnClickListener(v -> {
-                AddSourcesDialogFragment addFragment =
-                    new AddSourcesDialogFragment(
-                        sourceModel,
-                        (ViewGroup) requireView().getRootView());
+            AddSourcesDialogFragment addFragment =
+                new AddSourcesDialogFragment(
+                    sourceModel,
+                    (ViewGroup) requireView().getRootView());
 
             addFragment.show(getChildFragmentManager(), "addSource");
-            });
+        });
 
         return view;
     }

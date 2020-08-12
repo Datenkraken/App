@@ -35,6 +35,7 @@
     <string name="source_add">Add Source</string>
     <string name="source_name_loading">Loading…</string>
     <string name="source_url_wrong_format">Wrong format, please enter a valid URL.</string>
+    <string name="source_url_no_https">Please use a Https-URL.</string>
     <string name="source_icon_description">Icon of the source</string>
     <string name="source_delete_before">"Delete "</string>
     <string name="source_delete_after">"?"</string>

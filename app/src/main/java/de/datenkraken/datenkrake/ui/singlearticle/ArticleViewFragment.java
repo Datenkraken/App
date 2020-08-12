@@ -55,7 +55,6 @@ import de.datenkraken.datenkrake.ui.util.HtmlDefaultTagHandler;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 import kotlin.Triple;
 

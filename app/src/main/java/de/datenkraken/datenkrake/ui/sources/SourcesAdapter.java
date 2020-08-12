@@ -43,7 +43,7 @@ class SourcesAdapter extends RecyclerView.Adapter<SourcesViewHolder> {
      * Constructor for this class.
      *  @param sourcesViewModel {@link SourcesViewModel}, needed to delete {@link Source}s.
      * @param context used for the {@link DeleteSourceDialogFragment}.
-     * @param activity
+     * @param activity required to get root view
      */
     SourcesAdapter(SourcesViewModel sourcesViewModel, Context context, FragmentActivity activity) {
         Timber.tag("SourceAdapter");

@@ -2,8 +2,6 @@ package de.datenkraken.datenkrake.ui.datacollection;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,10 +20,10 @@ import androidx.fragment.app.DialogFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.datenkraken.datenkrake.R;
-import jp.wasabeef.blurry.Blurry;
 
 import java.util.Objects;
 
+import jp.wasabeef.blurry.Blurry;
 /**
  * DialogFragment asking for data collection permission. <br>
  * User can accept or decline. If he declines, he can not use the app.

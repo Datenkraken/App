@@ -1,6 +1,8 @@
 package de.datenkraken.datenkrake.ui.settings;
 
+import android.app.ActivityManager;
 import android.app.Application;
+import android.content.Context;
 import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
@@ -8,9 +10,11 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import de.datenkraken.datenkrake.DatenkrakeApp;
+import de.datenkraken.datenkrake.MainActivity;
 import de.datenkraken.datenkrake.R;
 import de.datenkraken.datenkrake.model.Article;
 import de.datenkraken.datenkrake.network.clients.okhttp.OkHttpTask;
+import de.datenkraken.datenkrake.surveillance.EventManager;
 import de.datenkraken.datenkrake.util.Event;
 
 import java.io.File;
@@ -185,8 +189,13 @@ public class SettingsPageViewModel extends AndroidViewModel {
      * Sends a request to delete the data and account of the user by calling {@link DeleteOkHttp}. <br>
      * Sets deleteState to display status of the delete. <br>
      * Also clears cache when called.
+     * @param activity required to kill workers and clear user data via system service
      */
-    public void deleteData() {
+    public void deleteData(MainActivity activity) {
+        deleteCache();
+        activity.killWorker();
+        EventManager.getInstance().cleanCache(activity.getBaseContext());
+
         // Get Auth State and Service.
         AuthState authState =
             ((DatenkrakeApp) application).getAuthenticationManager().getAuthState();
@@ -195,11 +204,13 @@ public class SettingsPageViewModel extends AndroidViewModel {
 
         // Send delete request.
         authState.performActionWithFreshTokens(authorizationService, (accessToken, idToken, ex) -> {
-            DeleteOkHttp task = new DeleteOkHttp(accessToken);
+            DeleteOkHttp task = new DeleteOkHttp(
+                accessToken,
+                ((ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE)));
             task.request();
-            deleteCache();
             authorizationService.dispose();
         });
+
     }
 
     /**
@@ -210,11 +221,16 @@ public class SettingsPageViewModel extends AndroidViewModel {
         ((DatenkrakeApp) application).getAuthenticationManager().clearAuthState();
     }
 
+    void clearRemainingData(ActivityManager manager) {
+        manager.clearApplicationUserData();
+    }
+
     /**
      * Requests a delete of the data and the account.
      */
     private class DeleteOkHttp extends OkHttpTask {
         private final String accessToken;
+        private final ActivityManager manager;
 
         /**
          * Constructor for DeleteOkHttp, initializing it. <br>
@@ -222,8 +238,9 @@ public class SettingsPageViewModel extends AndroidViewModel {
          *
          * @param token access token of user.
          */
-        DeleteOkHttp(String token) {
+        DeleteOkHttp(String token, ActivityManager manager) {
             this.accessToken = token;
+            this.manager = manager;
         }
 
         /**
@@ -282,15 +299,8 @@ public class SettingsPageViewModel extends AndroidViewModel {
          */
         @Override
         public void onResponse(@NotNull Call call, @NotNull Response response) {
-            int code = response.code();
-            Timber.d("Response code: %d", code);
-            if (300 > code && 200 <= code) {
-                // Delete Success.
-                logoutUser();
-                deleteState.postValue(DeleteState.SUCCESS);
-            } else {
-                deleteState.postValue(DeleteState.FAILURE);
-            }
+            clearRemainingData(manager);
+            deleteState.postValue(DeleteState.SUCCESS);
         }
     }
 

@@ -21,10 +21,10 @@ import butterknife.ButterKnife;
 import de.datenkraken.datenkrake.R;
 import de.datenkraken.datenkrake.model.Source;
 import de.datenkraken.datenkrake.ui.sources.SourcesViewModel;
-import jp.wasabeef.blurry.Blurry;
 
 import java.util.Objects;
 
+import jp.wasabeef.blurry.Blurry;
 
 /**
  * Dialog Fragment used for deleting {@link Source}s. <br>
@@ -50,6 +50,7 @@ public class DeleteSourceDialogFragment extends DialogFragment {
      *
      * @param source {@link Source} to possibly be deleted.
      * @param sourcesViewModel {@link SourcesViewModel} to delete the source.
+     * @param root root view, which gets blurred
      */
     public DeleteSourceDialogFragment(Source source, SourcesViewModel sourcesViewModel, ViewGroup root) {
         this.source = source;
