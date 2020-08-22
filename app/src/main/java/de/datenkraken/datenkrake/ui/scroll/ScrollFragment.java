@@ -37,8 +37,8 @@ import de.datenkraken.datenkrake.model.Article;
 import de.datenkraken.datenkrake.surveillance.DataCollectionEvent;
 import de.datenkraken.datenkrake.surveillance.DataCollectionEventType;
 import de.datenkraken.datenkrake.surveillance.EventCollector;
-import de.datenkraken.datenkrake.surveillance.actions.ApplicationAction;
-import de.datenkraken.datenkrake.surveillance.actions.SourceAction;
+import de.datenkraken.datenkrake.surveillance.graphqladapter.ApplicationAction;
+import de.datenkraken.datenkrake.surveillance.graphqladapter.SourceAction;
 import de.datenkraken.datenkrake.ui.permission.LocationPermissionPopupFragment;
 
 import java.lang.ref.WeakReference;
@@ -206,13 +206,19 @@ public class ScrollFragment extends Fragment {
         EventCollector.raiseEvent(new DataCollectionEvent<>(DataCollectionEventType.APPLICATIONACTION)
             .with(ApplicationAction.SCROLL));
 
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         SharedPreferences preference =
-            getActivity().getSharedPreferences(getString(R.string.preference_permission), Context.MODE_PRIVATE);
+            requireActivity().getSharedPreferences(getString(R.string.preference_permission), Context.MODE_PRIVATE);
         if (!preference.contains(getString(R.string.preference_permission_location))) {
-            new LocationPermissionPopupFragment().show(getActivity().getSupportFragmentManager(),
+            new LocationPermissionPopupFragment((ViewGroup) requireView().getRootView()).show(getActivity().getSupportFragmentManager(),
                 "location_permission_request");
         }
-        return view;
+
+        super.onViewCreated(view, savedInstanceState);
     }
 
     /**

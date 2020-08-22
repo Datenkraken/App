@@ -9,7 +9,7 @@ import de.datenkraken.datenkrake.model.Article;
 import de.datenkraken.datenkrake.surveillance.DataCollectionEvent;
 import de.datenkraken.datenkrake.surveillance.DataCollectionEventType;
 import de.datenkraken.datenkrake.surveillance.EventCollector;
-import de.datenkraken.datenkrake.surveillance.actions.ArticleAction;
+import de.datenkraken.datenkrake.surveillance.graphqladapter.ArticleAction;
 
 import java.lang.ref.WeakReference;
 import java.util.List;

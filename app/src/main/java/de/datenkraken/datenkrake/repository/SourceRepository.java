@@ -14,7 +14,7 @@ import de.datenkraken.datenkrake.model.Source;
 import de.datenkraken.datenkrake.surveillance.DataCollectionEvent;
 import de.datenkraken.datenkrake.surveillance.DataCollectionEventType;
 import de.datenkraken.datenkrake.surveillance.EventCollector;
-import de.datenkraken.datenkrake.surveillance.actions.SourceAction;
+import de.datenkraken.datenkrake.surveillance.graphqladapter.SourceAction;
 import de.datenkraken.datenkrake.util.Helper;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package de.datenkraken.datenkrake.surveillance.actions;
+package de.datenkraken.datenkrake.surveillance.graphqladapter;
 
 import de.datenkraken.datenkrake.type.SourceEventType;
 

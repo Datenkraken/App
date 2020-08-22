@@ -24,6 +24,7 @@ import de.datenkraken.datenkrake.R;
 import java.util.Objects;
 
 import jp.wasabeef.blurry.Blurry;
+
 /**
  * DialogFragment asking for data collection permission. <br>
  * User can accept or decline. If he declines, he can not use the app.

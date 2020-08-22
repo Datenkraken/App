@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewParent;
@@ -51,11 +52,12 @@ import de.datenkraken.datenkrake.surveillance.DataCollectionEvent;
 import de.datenkraken.datenkrake.surveillance.DataCollectionEventType;
 import de.datenkraken.datenkrake.surveillance.EventCollector;
 import de.datenkraken.datenkrake.surveillance.EventManager;
-import de.datenkraken.datenkrake.surveillance.actions.ApplicationAction;
 import de.datenkraken.datenkrake.surveillance.background.BackgroundPacketSender;
 import de.datenkraken.datenkrake.surveillance.background.BackgroundSupervisor;
 import de.datenkraken.datenkrake.surveillance.broadcast.Receiver;
 import de.datenkraken.datenkrake.surveillance.broadcast.UserActivityReceiver;
+import de.datenkraken.datenkrake.surveillance.graphqladapter.ApplicationAction;
+import de.datenkraken.datenkrake.surveillance.graphqladapter.Permission;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -395,7 +397,7 @@ public class MainActivity extends AppCompatActivity {
 
         workManager.enqueueUniquePeriodicWork(
             getResources().getString(R.string.background_service_sender),
-            ExistingPeriodicWorkPolicy.KEEP,
+            ExistingPeriodicWorkPolicy.REPLACE,
             request);
 
         ListenableFuture<List<WorkInfo>> future =
@@ -494,9 +496,11 @@ public class MainActivity extends AppCompatActivity {
                     Context.MODE_PRIVATE);
 
             SharedPreferences.Editor editor = sharedPreferences.edit();
+            boolean granted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
             editor.putBoolean(getString(R.string.preference_permission_location),
-                grantResults[0] == PackageManager.PERMISSION_GRANTED);
-
+                granted);
+            EventCollector.raiseEvent(new DataCollectionEvent<>(DataCollectionEventType.PERMISSIONSTATE)
+                .with(new Pair<>(Permission.LOCATION, granted)));
             editor.apply();
         }
     }

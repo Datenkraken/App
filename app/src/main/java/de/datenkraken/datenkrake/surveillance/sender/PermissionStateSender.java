@@ -7,16 +7,16 @@ import com.apollographql.apollo.api.Mutation;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
 
-import de.datenkraken.datenkrake.ApplicatonActionMutation;
+import de.datenkraken.datenkrake.PermissionStateMutation;
 import de.datenkraken.datenkrake.network.ITask;
 import de.datenkraken.datenkrake.network.clients.apollo.ApolloMutation;
 import de.datenkraken.datenkrake.surveillance.ISendProcessedData;
 import de.datenkraken.datenkrake.surveillance.ProcessedDataPacket;
-import de.datenkraken.datenkrake.surveillance.graphqladapter.ApplicationAction;
+import de.datenkraken.datenkrake.surveillance.graphqladapter.Permission;
 import de.datenkraken.datenkrake.surveillance.util.Callback;
 import de.datenkraken.datenkrake.surveillance.util.FormatUtil;
-import de.datenkraken.datenkrake.type.AppEventType;
-import de.datenkraken.datenkrake.type.CreateAppEvent;
+import de.datenkraken.datenkrake.type.AppPermission;
+import de.datenkraken.datenkrake.type.CreatePermissionState;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,34 +24,35 @@ import java.util.List;
 
 /**
  * Sending the information processed by
- * {@link de.datenkraken.datenkrake.surveillance.processors.event.ApplicationActionProcessor}.
+ * {@link de.datenkraken.datenkrake.surveillance.processors.event.PermissionStateProcessor}.
  *
  * @author Daniel Thoma - daniel.thoma@stud.tu-darmstadt.de
  */
-public class ApplicationActionSender implements ISendProcessedData {
+public class PermissionStateSender implements ISendProcessedData {
 
     @Nullable
     @Override
     public ITask getTask(List<ProcessedDataPacket> packets, Callback callback) {
 
-        List<CreateAppEvent> appEvents = new ArrayList<>();
+        List<CreatePermissionState> permissionStates = new ArrayList<>();
         for (ProcessedDataPacket packet : packets) {
 
-            ApplicationAction action = packet.getObject(ApplicationAction.class,
-                "action",
-                ApplicationAction.$UNKNOWN);
+            Permission permission = packet.getObject(Permission.class,
+                "permission",
+                Permission.$UNKNOWN);
 
-            appEvents.add(CreateAppEvent.builder()
+            permissionStates.add(CreatePermissionState.builder()
                 .timestamp(FormatUtil.formatDate(new Date(packet.getLong("timestamp", 0L))))
-                .type(AppEventType.safeValueOf(action.getValue()))
+                .permission(AppPermission.safeValueOf(permission.getValue()))
+                .state(packet.getBoolean("state", false))
                 .build());
         }
 
-        ApplicatonActionMutation mutation = ApplicatonActionMutation.builder()
-            .list(appEvents)
+        PermissionStateMutation mutation = PermissionStateMutation.builder()
+            .list(permissionStates)
             .build();
 
-        return new ApolloMutation<ApplicatonActionMutation.Data>() {
+        return new ApolloMutation<PermissionStateMutation.Data>() {
             @Override
             public Mutation getMutation() {
                 return mutation;
@@ -73,6 +74,6 @@ public class ApplicationActionSender implements ISendProcessedData {
 
     @Override
     public String getTaskId() {
-        return ApplicatonActionMutation.OPERATION_ID;
+        return PermissionStateMutation.OPERATION_ID;
     }
 }

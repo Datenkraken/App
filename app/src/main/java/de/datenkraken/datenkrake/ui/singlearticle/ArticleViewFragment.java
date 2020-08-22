@@ -47,7 +47,7 @@ import de.datenkraken.datenkrake.model.Source;
 import de.datenkraken.datenkrake.surveillance.DataCollectionEvent;
 import de.datenkraken.datenkrake.surveillance.DataCollectionEventType;
 import de.datenkraken.datenkrake.surveillance.EventCollector;
-import de.datenkraken.datenkrake.surveillance.actions.ArticleAction;
+import de.datenkraken.datenkrake.surveillance.graphqladapter.ArticleAction;
 import de.datenkraken.datenkrake.ui.scroll.ScrollViewModel;
 import de.datenkraken.datenkrake.ui.util.GlideImageGetter;
 import de.datenkraken.datenkrake.ui.util.HtmlDefaultTagHandler;

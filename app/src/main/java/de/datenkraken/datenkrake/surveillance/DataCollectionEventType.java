@@ -13,7 +13,8 @@ public enum DataCollectionEventType {
     ARTICLEACTION(2),
     ARTICLEIDACTION(3),
     SOURCEACTION(4),
-    SOURCEIDACTION(5);
+    SOURCEIDACTION(5),
+    PERMISSIONSTATE(6);
 
     private int id;
 
