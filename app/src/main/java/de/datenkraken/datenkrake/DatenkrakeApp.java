@@ -5,6 +5,7 @@ import android.app.Application;
 import de.datenkraken.datenkrake.authentication.AuthenticationManager;
 import de.datenkraken.datenkrake.controller.feedupdater.FeedUpdateManager;
 import de.datenkraken.datenkrake.db.AppDatabase;
+import de.datenkraken.datenkrake.logging.L;
 import de.datenkraken.datenkrake.model.Source;
 import de.datenkraken.datenkrake.repository.ArticleRepository;
 import de.datenkraken.datenkrake.repository.SourceRepository;
@@ -29,7 +30,7 @@ public class DatenkrakeApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        L.init(this);
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }

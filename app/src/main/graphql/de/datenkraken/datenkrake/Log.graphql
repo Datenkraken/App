@@ -1,0 +1,5 @@
+mutation Log($list: [createLogEntry!]!) {
+    submitLog(input: $list) {
+        type
+    }
+}

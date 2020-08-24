@@ -58,6 +58,9 @@
     <string name="settings_delete_data_summary">Deletes all saved Data</string>
     <string name="settings_data_delete_failure">Data could not be deleted</string>
     <string name="settings_data_delete_success">Data and Account were successfully deleted</string>
+    <string name="settings_upload_logs_button_title">Upload Logs</string>
+    <string name="settings_upload_logs_success">Uploaded Logs successful.</string>
+    <string name="settings_upload_logs_failure">Uploading Logs failed.</string>
 
     // Single article view
     <string name="article_from_author">"by: "</string>

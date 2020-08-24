@@ -11,7 +11,7 @@ import de.datenkraken.datenkrake.surveillance.ProcessedDataCollector;
 import de.datenkraken.datenkrake.surveillance.ProcessedDataPacket;
 import de.datenkraken.datenkrake.surveillance.background.IBackgroundProcessor;
 import de.datenkraken.datenkrake.surveillance.sender.WifiConnectionSender;
-import de.datenkraken.datenkrake.surveillance.util.Callback;
+import de.datenkraken.datenkrake.util.Callback;
 
 import java.util.Date;
 import java.util.List;

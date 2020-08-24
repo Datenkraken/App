@@ -9,6 +9,7 @@
     <string name="preference_settings_delete_data_button_key" translatable="false">delete_data_button</string>
     <string name="preference_settings_data_delete_target_url" translatable="false">http://10.0.2.2:8000/api/auth/delete</string>
     <string name="preference_settings_privacy_policy_button" translatable="false">privacy_policy_button</string>
+    <string name="preference_settings_upload_logs" translatable="false">upload_logs</string>
 
     // keys for login
     <string name="preference_login_storage" translatable="false">LOGIN_STORAGE</string>

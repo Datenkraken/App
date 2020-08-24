@@ -3,7 +3,7 @@ package de.datenkraken.datenkrake.surveillance;
 import androidx.annotation.Nullable;
 import de.datenkraken.datenkrake.network.ITask;
 import de.datenkraken.datenkrake.surveillance.background.BackgroundPacketSender;
-import de.datenkraken.datenkrake.surveillance.util.Callback;
+import de.datenkraken.datenkrake.util.Callback;
 
 import java.util.List;
 

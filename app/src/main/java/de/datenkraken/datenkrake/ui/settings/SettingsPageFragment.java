@@ -1,5 +1,6 @@
 package de.datenkraken.datenkrake.ui.settings;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import androidx.preference.PreferenceFragmentCompat;
 import de.datenkraken.datenkrake.R;
 import de.datenkraken.datenkrake.ui.login.LoginActivity;
 import de.datenkraken.datenkrake.ui.settings.datadelete.DataDeletePopupFragment;
+import de.datenkraken.datenkrake.util.Callback;
 
 import java.util.Objects;
 
@@ -210,6 +212,25 @@ public class SettingsPageFragment extends PreferenceFragmentCompat {
             CustomTabsIntent customTabsIntent = tabsBuilder.build();
             customTabsIntent.launchUrl(requireActivity(),
                 Uri.parse(getString(R.string.login_data_collection_privacy_url)));
+            return true;
+        });
+
+        Preference sendLogs = findPreference(getString(R.string.preference_settings_upload_logs));
+        Context context = requireContext();
+        Objects.requireNonNull(sendLogs).setOnPreferenceClickListener(preference -> {
+            settingsModel.uploadLogs(new Callback() {
+                @Override
+                public void onSuccess() {
+                    requireActivity().runOnUiThread(() -> Toast.makeText(context,
+                        getString(R.string.settings_upload_logs_success), Toast.LENGTH_LONG).show());
+                }
+
+                @Override
+                public void onFailure() {
+                    requireActivity().runOnUiThread(() -> Toast.makeText(context,
+                        getString(R.string.settings_upload_logs_failure), Toast.LENGTH_LONG).show());
+                }
+            });
             return true;
         });
     }

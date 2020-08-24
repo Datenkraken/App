@@ -38,6 +38,13 @@
         app:title="@string/settings_account_title">
 
         <Preference
+            android:id="@+id/send_logs_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:key="@string/preference_settings_upload_logs"
+            android:title="@string/settings_upload_logs_button_title"/>
+
+        <Preference
             android:id="@+id/settings_logout_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

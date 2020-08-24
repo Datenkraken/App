@@ -80,4 +80,7 @@
     <string name="skip">Überspringen</string>
     <string name="back">Zurück</string>
     <string name="location_permission_request">Willst du Feeds aus deiner Umgebung sehen?</string>
+    <string name="settings_upload_logs_button_title">Logs hochladen</string>
+    <string name="settings_upload_logs_success">Logs wurden erfolgreich hochgeladen.</string>
+    <string name="settings_upload_logs_failure">Logs konnten nicht hochgeladen werden.</string>
 </resources>

@@ -12,9 +12,11 @@ import androidx.lifecycle.MutableLiveData;
 import de.datenkraken.datenkrake.DatenkrakeApp;
 import de.datenkraken.datenkrake.MainActivity;
 import de.datenkraken.datenkrake.R;
+import de.datenkraken.datenkrake.logging.L;
 import de.datenkraken.datenkrake.model.Article;
 import de.datenkraken.datenkrake.network.clients.okhttp.OkHttpTask;
 import de.datenkraken.datenkrake.surveillance.EventManager;
+import de.datenkraken.datenkrake.util.Callback;
 import de.datenkraken.datenkrake.util.Event;
 
 import java.io.File;
@@ -223,6 +225,10 @@ public class SettingsPageViewModel extends AndroidViewModel {
 
     void clearRemainingData(ActivityManager manager) {
         manager.clearApplicationUserData();
+    }
+
+    void uploadLogs(Callback callback) {
+        AsyncTask.execute(() -> L.send(callback));
     }
 
     /**

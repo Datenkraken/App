@@ -12,10 +12,10 @@ import de.datenkraken.datenkrake.network.ITask;
 import de.datenkraken.datenkrake.network.clients.apollo.ApolloMutation;
 import de.datenkraken.datenkrake.surveillance.ISendProcessedData;
 import de.datenkraken.datenkrake.surveillance.ProcessedDataPacket;
-import de.datenkraken.datenkrake.surveillance.util.Callback;
 import de.datenkraken.datenkrake.surveillance.util.FormatUtil;
 import de.datenkraken.datenkrake.type.Activity;
 import de.datenkraken.datenkrake.type.CreateUserActivity;
+import de.datenkraken.datenkrake.util.Callback;
 
 import java.util.ArrayList;
 import java.util.Date;
