@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // On click listener for Login Button.
         loginButton.setOnClickListener(v -> {
-            if(!performAuth()) {
+            if (!performAuth()) {
                 Toast.makeText(getApplicationContext(), R.string.login_screen_login_failure, Toast.LENGTH_SHORT).show();
             }
         });

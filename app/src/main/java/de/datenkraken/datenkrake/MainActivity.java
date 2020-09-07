@@ -416,11 +416,21 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     }
                 }
+                long initialDelay = 1200000L - (System.currentTimeMillis() % 1200000L);
+                if (BuildConfig.DEBUG) {
+                    Timber.i("We are in Debug, replacing Supervisor");
+                    if (active) {
+                        Timber.i("Supervisor was active, canceled him.");
+                        workManager.cancelAllWorkByTag(getResources().getString(R.string.background_service_supervisor));
+                    }
+                    initialDelay = 0;
+                    active = false;
+                }
 
                 if (!active) { // Seems like the worker is not running
                     // Starts the periodic request every 20 min, at :00, :20, :40
                     OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(BackgroundSupervisor.class)
-                        .setInitialDelay(1200000L - (System.currentTimeMillis() % 1200000L), TimeUnit.MILLISECONDS)
+                        .setInitialDelay(initialDelay, TimeUnit.MILLISECONDS)
                         .addTag(getResources().getString(R.string.background_service_supervisor))
                         .build();
 
