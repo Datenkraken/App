@@ -45,6 +45,7 @@ import com.mikepenz.aboutlibraries.LibsBuilder;
 import com.mikepenz.aboutlibraries.ui.LibsSupportFragmentArgs;
 
 import de.datenkraken.datenkrake.controller.feedupdater.FeedUpdateManager;
+import de.datenkraken.datenkrake.logging.L;
 import de.datenkraken.datenkrake.model.Source;
 import de.datenkraken.datenkrake.network.TaskDistributor;
 import de.datenkraken.datenkrake.repository.SourceRepository;
@@ -407,6 +408,8 @@ public class MainActivity extends AppCompatActivity {
                 boolean active = false;
                 for (WorkInfo info : future.get()) {
                     if (info.getState() == WorkInfo.State.ENQUEUED || info.getState() == WorkInfo.State.RUNNING)  {
+                        L.i("Supervisor Workinfo: %s, %s",
+                            info.getId().toString(), info.getState().toString());
                         Timber.i("Supervisor Workinfo: %s, %s",
                             info.getId().toString(), info.getState().toString());
                         active = true;
@@ -428,6 +431,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             } catch (ExecutionException | InterruptedException e) {
                 Timber.e(e);
+                L.e(e, "Got error while trying to access WorkInfo");
             }
         }, Runnable::run);
 
