@@ -18,5 +18,5 @@
     <integer name="packet_cache_files_per_mutation">5</integer>
 
     // permission request codes
-    <integer name="permission_fine_location">1</integer>
+    <integer name="permission_location">1</integer>
 </resources>

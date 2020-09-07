@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModel;
@@ -23,8 +24,18 @@ class LocationPermissionPopupViewModel extends ViewModel {
 
     void openSystemPermissionHandler(Activity activity) {
         ActivityCompat.requestPermissions(activity,
-            new String[] {Manifest.permission.ACCESS_FINE_LOCATION},
-            activity.getResources().getInteger(R.integer.permission_fine_location));
+            permissionToRequest(),
+            activity.getResources().getInteger(R.integer.permission_location));
+    }
 
+    String[] permissionToRequest() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            return new String[] {
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+            };
+        } else {
+            return new String[] {Manifest.permission.ACCESS_FINE_LOCATION};
+        }
     }
 }

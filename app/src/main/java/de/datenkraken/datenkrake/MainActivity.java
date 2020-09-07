@@ -491,7 +491,7 @@ public class MainActivity extends AppCompatActivity {
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
 
-        if (requestCode == getResources().getInteger(R.integer.permission_fine_location)
+        if (requestCode == getResources().getInteger(R.integer.permission_location)
             && grantResults.length > 0) {
 
             SharedPreferences sharedPreferences =
