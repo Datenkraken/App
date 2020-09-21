@@ -49,7 +49,9 @@ public class PacketListStream {
         }
         byte[] bytes;
         try {
-            bytes = new byte[getInteger()];
+            int size = getInteger();
+            Timber.d("trying to allocate %s kb", ((double) size) / 1000);
+            bytes = new byte[size];
             Timber.d("remaining: %d", fileInputStream.available());
             int read = fileInputStream.read(bytes);
             Timber.d("read %d bytes!", read);
@@ -63,9 +65,13 @@ public class PacketListStream {
             return null;
         }
 
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(decompress(bytes));
-
         List<ProcessedDataPacket> list = new ArrayList<>();
+        byte[] decompressedBytes = decompress(bytes);
+        if (decompressedBytes == null) {
+
+            return list;
+        }
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(decompress(bytes));
         ProcessedDataPacket packet;
         try (ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream)) {
             while (true) {

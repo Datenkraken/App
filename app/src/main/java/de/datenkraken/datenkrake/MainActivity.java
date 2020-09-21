@@ -64,6 +64,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
@@ -394,7 +395,6 @@ public class MainActivity extends AppCompatActivity {
             .build();
 
         WorkManager workManager = WorkManager.getInstance(this);
-
         workManager.enqueueUniquePeriodicWork(
             getResources().getString(R.string.background_service_sender),
             ExistingPeriodicWorkPolicy.REPLACE,
@@ -406,28 +406,39 @@ public class MainActivity extends AppCompatActivity {
         future.addListener(() -> {
             try {
                 boolean active = false;
+                StringJoiner tags = null;
                 for (WorkInfo info : future.get()) {
-                    if (info.getState() == WorkInfo.State.ENQUEUED || info.getState() == WorkInfo.State.RUNNING)  {
-                        L.i("Supervisor Workinfo: %s, %s",
-                            info.getId().toString(), info.getState().toString());
-                        Timber.i("Supervisor Workinfo: %s, %s",
-                            info.getId().toString(), info.getState().toString());
-                        active = true;
+                    tags = new StringJoiner(",", "[", "]");
+                    for (String tag : info.getTags()) {
+                        tags.add(tag);
+                    }
+
+                    L.i("Got workinfo: id: %s, state: %s, tags: %s",
+                        info.getId().toString(),
+                        info.getState().toString(),
+                        tags.toString());
+
+                    if (info.getTags().contains(getResources().getString(R.string.background_service_supervisor))) {
+                        active = (info.getState() == WorkInfo.State.RUNNING);
                         break;
                     }
                 }
                 long initialDelay = 1200000L - (System.currentTimeMillis() % 1200000L);
                 if (BuildConfig.DEBUG) {
-                    Timber.i("We are in Debug, replacing Supervisor");
+                    Timber.d("We are in Debug, replacing Supervisor");
                     if (active) {
-                        Timber.i("Supervisor was active, canceled him.");
+                        Timber.d("Supervisor was active, canceled him.");
                         workManager.cancelAllWorkByTag(getResources().getString(R.string.background_service_supervisor));
                     }
                     initialDelay = 0;
                     active = false;
                 }
 
-                if (!active) { // Seems like the worker is not running
+                if (!active) {
+                    // Seems like the worker is not running at the moment, so we can cancel and restart him
+                    // to prevent inconsistencies.
+
+
                     // Starts the periodic request every 20 min, at :00, :20, :40
                     OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(BackgroundSupervisor.class)
                         .setInitialDelay(initialDelay, TimeUnit.MILLISECONDS)
@@ -435,7 +446,7 @@ public class MainActivity extends AppCompatActivity {
                         .build();
 
                     workManager.enqueue(oneTimeWorkRequest);
-                    Timber.i("Supervisor queried, set to %s",
+                    L.i("Supervisor queried, set to %s",
                         new Date(1200000L - (System.currentTimeMillis() % 360000L)
                             + System.currentTimeMillis()).toString());
                 }

@@ -9,6 +9,7 @@ import android.os.Build;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModel;
 import de.datenkraken.datenkrake.R;
+import timber.log.Timber;
 
 class LocationPermissionPopupViewModel extends ViewModel {
 

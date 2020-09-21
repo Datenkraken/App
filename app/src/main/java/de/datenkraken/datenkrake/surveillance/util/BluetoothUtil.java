@@ -6,7 +6,6 @@ import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
 import android.content.Context;
 import android.os.Handler;
-import android.os.Looper;
 
 import de.datenkraken.datenkrake.logging.L;
 
@@ -35,10 +34,10 @@ public final class BluetoothUtil {
         return adapter;
     }
 
-    public static void scanLeDevices(ScanCallback callback, Runnable stoppedCallback, long scanPeriod)  {
+    public static void scanLeDevices(ScanCallback callback, Runnable stoppedCallback, long scanPeriod, Context context)  {
         BluetoothLeScanner bluetoothLeScanner =
             BluetoothAdapter.getDefaultAdapter().getBluetoothLeScanner();
-        Handler handler = new Handler(Looper.getMainLooper());
+        Handler handler = new Handler(context.getMainLooper());
         handler.postDelayed(() -> {
             L.i("stopping bluetooth scan at %s", new Date());
             bluetoothLeScanner.stopScan(callback);

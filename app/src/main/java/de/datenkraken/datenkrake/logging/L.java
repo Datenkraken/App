@@ -16,6 +16,7 @@ import de.datenkraken.datenkrake.logging.db.LogEntry;
 import de.datenkraken.datenkrake.network.clients.apollo.ApolloMutation;
 import de.datenkraken.datenkrake.type.CreateLogEntry;
 import de.datenkraken.datenkrake.util.Callback;
+import timber.log.Timber;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public final class L {
     private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.GERMANY);
 
     private L() {
+        Timber.tag("L");
     }
 
     public static void init(Context context) {
@@ -38,27 +40,32 @@ public final class L {
     public static void i(String s, Object... args) {
         AsyncTask.execute(() ->
             logDatabase.daoLog().insertOne(new LogEntry("i", format(s, args))));
+        Timber.i(s, args);
     }
 
     public static void w(String s, Object... args) {
         AsyncTask.execute(() ->
             logDatabase.daoLog().insertOne(new LogEntry("w", format(s, args))));
+        Timber.w(s, args);
     }
 
     public static void e(String s, Object... args) {
         AsyncTask.execute(() ->
             logDatabase.daoLog().insertOne(new LogEntry("e", format(s, args))));
+        Timber.e(s, args);
     }
 
     public static void e(Throwable e, String s, Object... args) {
         AsyncTask.execute(() ->
         logDatabase.daoLog().insertOne(new LogEntry("e",
             format(s + "\n" + Log.getStackTraceString(e), args))));
+        Timber.e(e, s, args);
     }
 
     public static void e(Exception e) {
         AsyncTask.execute(() ->
         logDatabase.daoLog().insertOne(new LogEntry("e", Log.getStackTraceString(e))));
+        Timber.e(e);
     }
 
     private static String format(String s, Object... args) {

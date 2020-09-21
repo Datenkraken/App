@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="data_collection_popup_warning_text">
-        This app demonstrates the possibilities of apps to collect data about their users.
-        The data is intentionally not anonymized.
-        You can find out what data is collected in our privacy policy.
+The DiK of the Technische Universität Darmstadt uses this app to demonstrate to students of the lecture Information and Communication Technology in Mechanical Engineering which possibilities modern apps have to gather information about their users.\n
+In our privacy policy you will find in detail which data we collect and use.
     </string>
 </resources>

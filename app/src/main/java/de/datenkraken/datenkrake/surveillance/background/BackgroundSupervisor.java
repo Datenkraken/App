@@ -9,6 +9,7 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import de.datenkraken.datenkrake.R;
+import de.datenkraken.datenkrake.logging.L;
 import de.datenkraken.datenkrake.surveillance.ProcessedDataCollector;
 import de.datenkraken.datenkrake.surveillance.ProcessorProvider;
 
@@ -57,8 +58,9 @@ public class BackgroundSupervisor extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        Timber.i("running at %s", new Date().toString());
+        L.i("running at %s", new Date().toString());
         if (context.get() == null) {
+            L.e("BackgroundSupervisor: could not run, context is null!");
             return Result.failure();
         }
         int keepAliveTime = 0;
@@ -77,7 +79,7 @@ public class BackgroundSupervisor extends Worker {
         try {
             Thread.sleep(keepAliveTime);
         } catch (InterruptedException e) {
-            Timber.e(e);
+            L.e(e, "Supervisor got interrupted in waiting for Threads");
         }
         dataCollector.flush();
 
@@ -91,7 +93,7 @@ public class BackgroundSupervisor extends Worker {
             .addTag(context.getResources().getString(R.string.background_service_supervisor))
             .build();
 
-        Timber.i("Supervisor queried, set to %s",
+        L.i("Supervisor queried, set to %s",
             new Date(1200000L - (System.currentTimeMillis() % 1200000L) + System.currentTimeMillis()).toString());
         workManager.enqueue(request);
     }

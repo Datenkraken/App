@@ -61,7 +61,7 @@ public class BluetoothScanInitiator extends Receiver {
                     collector.addPacket(packet);
                 }
             }
-        }, adapter::disable, 30000);
+        }, adapter::disable, 30000, context);
         context.unregisterReceiver(this);
     }
 

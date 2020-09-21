@@ -64,7 +64,7 @@ public class BluetoothDeviceScanProcessor implements IBackgroundProcessor {
                     collector.addPacket(packet);
                 }
             }
-        }, null, 30000);
+        }, null, 30000, context);
     }
 
     @Override
