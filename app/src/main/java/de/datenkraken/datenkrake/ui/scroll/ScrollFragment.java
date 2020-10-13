@@ -1,5 +1,7 @@
 package de.datenkraken.datenkrake.ui.scroll;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -35,8 +37,9 @@ import de.datenkraken.datenkrake.model.Article;
 import de.datenkraken.datenkrake.surveillance.DataCollectionEvent;
 import de.datenkraken.datenkrake.surveillance.DataCollectionEventType;
 import de.datenkraken.datenkrake.surveillance.EventCollector;
-import de.datenkraken.datenkrake.surveillance.actions.ApplicationAction;
-import de.datenkraken.datenkrake.surveillance.actions.SourceAction;
+import de.datenkraken.datenkrake.surveillance.graphqladapter.ApplicationAction;
+import de.datenkraken.datenkrake.surveillance.graphqladapter.SourceAction;
+import de.datenkraken.datenkrake.ui.permission.LocationPermissionPopupFragment;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -82,15 +85,14 @@ public class ScrollFragment extends Fragment {
         inflater.inflate(R.menu.search_bar, menu);
         inflater.inflate(R.menu.main, menu);
         MenuItem menuItem = menu.findItem(R.id.action_search_bar);
-        menuItem.getIcon().setTint(ContextCompat.getColor(Objects.requireNonNull(getContext()),
-            R.color.white));
+        menuItem.getIcon().setTint(ContextCompat.getColor(requireContext(),
+            R.color.text_view));
         SearchView searchView = (SearchView) menuItem.getActionView();
         searchView.setMaxWidth(Integer.MAX_VALUE);
-        searchView.setBackgroundResource(R.drawable.search_round);
         EditText editText = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
-        editText.setTextColor(Color.BLACK);
+        editText.setTextColor(Color.WHITE);
         ImageView icon = searchView.findViewById(androidx.appcompat.R.id.search_close_btn);
-        icon.setColorFilter(Color.BLACK);
+        icon.setColorFilter(Color.WHITE);
 
         // Reload Query into SearchView
         String query = scrollModel.searchQuery.getValue();
@@ -205,6 +207,18 @@ public class ScrollFragment extends Fragment {
             .with(ApplicationAction.SCROLL));
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        SharedPreferences preference =
+            requireActivity().getSharedPreferences(getString(R.string.preference_permission), Context.MODE_PRIVATE);
+        if (!preference.contains(getString(R.string.preference_permission_location))) {
+            new LocationPermissionPopupFragment((ViewGroup) requireView().getRootView()).show(getActivity().getSupportFragmentManager(),
+                "location_permission_request");
+        }
+
+        super.onViewCreated(view, savedInstanceState);
     }
 
     /**

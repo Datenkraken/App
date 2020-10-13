@@ -3,7 +3,6 @@
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 xmlns:app="http://schemas.android.com/apk/res-auto"
-android:background="@color/colorPrimary"
 app:layout_constraintHorizontal_weight="10"
 android:orientation="vertical">
 
@@ -15,46 +14,42 @@ android:orientation="vertical">
         android:layout_marginTop="30dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="3dp"
-        android:layout_weight="8"
-        android:background="@drawable/custom_recyclerview" />
+        android:layout_weight="8" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_weight="1"
+        android:background="@drawable/rectangle_gradient"
         android:layout_height="wrap_content" >
 
         <Button
             android:id="@+id/submit_sources"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:text="@string/button_confirm"
+            android:textColor="@color/button_text"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/categories_back"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:background="@drawable/custom_button"
-            android:textColor="@color/white"
-            android:text="@string/button_confirm" />
-
-        <Button
-            android:id="@+id/categories_back"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@id/submit_sources"
-            app:layout_constraintStart_toEndOf="@id/sources_cancel"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:background="@drawable/custom_button"
-            android:textColor="@color/white"
-            android:text="@string/back" />
+            app:layout_constraintStart_toStartOf="@+id/guideline" />
 
         <Button
             android:id="@+id/sources_cancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:text="@string/skip"
+            android:textColor="@color/button_text"
+            android:background="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/categories_back"
-            app:layout_constraintStart_toStartOf="parent"
-            android:background="@drawable/custom_button"
-            android:textColor="@color/white"
-            android:text="@string/skip" />
+            app:layout_constraintEnd_toStartOf="@+id/submit_sources"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="205dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

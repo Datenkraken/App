@@ -16,4 +16,7 @@
     <integer name="packet_cache_max_path_length">117</integer>
     <integer name="packet_cache_limit_bytes">1048576</integer> // 100 MB
     <integer name="packet_cache_files_per_mutation">5</integer>
+
+    // permission request codes
+    <integer name="permission_location">1</integer>
 </resources>

@@ -24,6 +24,8 @@ import timber.log.Timber;
  */
 public class PacketListStream {
 
+    private static int MAX_VALID_SIZE = 10 * 1024 * 1024; //no packet batch should be bigger than 10 MB
+
     private final FileInputStream fileInputStream;
 
     /**
@@ -49,7 +51,13 @@ public class PacketListStream {
         }
         byte[] bytes;
         try {
-            bytes = new byte[getInteger()];
+            int size = getInteger();
+            if (size > MAX_VALID_SIZE) { //quickfix
+                fileInputStream.close();
+                return null;
+            }
+            Timber.d("trying to allocate %s kb", ((double) size) / 1000);
+            bytes = new byte[size];
             Timber.d("remaining: %d", fileInputStream.available());
             int read = fileInputStream.read(bytes);
             Timber.d("read %d bytes!", read);
@@ -63,9 +71,13 @@ public class PacketListStream {
             return null;
         }
 
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(decompress(bytes));
-
         List<ProcessedDataPacket> list = new ArrayList<>();
+        byte[] decompressedBytes = decompress(bytes);
+        if (decompressedBytes == null) {
+
+            return list;
+        }
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(decompress(bytes));
         ProcessedDataPacket packet;
         try (ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream)) {
             while (true) {

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="data_collection_popup_warning_text">
-    - Diese App dient der Veranschaulichung von Datenschutz \n\n
-    - Es werden Daten über den Nutzer gesammelt \n\n
-    - Ziel ist es zu zeigen, wie viele Daten gesammelt werden können \n\n
-    - Indem Sie diese Nachricht akzeptieren, stimmen Sie zu, dass Daten über Sie gesammelt werden
+Diese App wird vom DiK der Technischen Universität Darmstadt verwendet, um Studenten der Vorlesung Informations- und Kommunikationstechnologie im Maschinenbau zu demonstrieren welche Möglichkeit moderne Apps besitzen, Informationen über ihre Nutzer zu erhalten.\n
+In unserer Datenschutzerklärung finden Sie im Detail welche Daten wir sammeln und erheben.
     </string>
 </resources>

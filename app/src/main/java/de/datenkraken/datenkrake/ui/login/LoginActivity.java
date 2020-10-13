@@ -1,7 +1,7 @@
 package de.datenkraken.datenkrake.ui.login;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
@@ -61,19 +61,6 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        DataCollectionPopupFragment collectionFragment = new DataCollectionPopupFragment();
-
-        SharedPreferences sharedPreferences =
-            getSharedPreferences(getString(R.string.preference_login_storage), MODE_PRIVATE);
-
-        boolean accepted = sharedPreferences
-            .getBoolean(getString(R.string.preference_accepted_data_collection), false);
-
-        if (!accepted && !collectionFragment.isAdded()) {
-            collectionFragment.setCancelable(false);
-            collectionFragment.show(getSupportFragmentManager(), "dataCollectionPopup");
-        }
-
         authenticationManager = ((DatenkrakeApp) getApplication()).getAuthenticationManager();
 
         AppAuthConfiguration.Builder builder = new AppAuthConfiguration.Builder();
@@ -98,11 +85,23 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         // On click listener for Login Button.
-        loginButton.setOnClickListener(v -> performAuth());
+        loginButton.setOnClickListener(v -> {
+            if (!performAuth()) {
+                Toast.makeText(getApplicationContext(), R.string.login_screen_login_failure, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // On click listener for Register Button.
         goToRegisterButton.setOnClickListener(
             v -> openInBrowser(Uri.parse(getString(R.string.login_registration_endpoint))));
+
+        DataCollectionPopupFragment collectionFragment = new DataCollectionPopupFragment(findViewById(R.id.login));
+
+        if (!collectionFragment.isAdded()) {
+
+            collectionFragment.setCancelable(false);
+            collectionFragment.show(getSupportFragmentManager(), "dataCollectionPopup");
+        }
     }
 
     /**
@@ -151,11 +150,16 @@ public class LoginActivity extends AppCompatActivity {
      * Starts an activity waiting for a result, with the request code ACTIVITY_RESULT_AUTH. <br>
      * This has to be called on another thread.
      */
-    private void performAuth() {
-        AuthorizationRequest request = authenticationManager.getAuthorizationRequest();
-
-        Intent requestAuthIntent = authorizationService.getAuthorizationRequestIntent(request);
-        startActivityForResult(requestAuthIntent, ACTIVITY_RESULT_AUTH);
+    private boolean performAuth() {
+        try {
+            AuthorizationRequest request = authenticationManager.getAuthorizationRequest();
+            Intent requestAuthIntent = authorizationService.getAuthorizationRequestIntent(request);
+            startActivityForResult(requestAuthIntent, ACTIVITY_RESULT_AUTH);
+            return true;
+        } catch (ActivityNotFoundException e) {
+            Timber.e(e, "No browser found.");
+            return false;
+        }
     }
 
     /**

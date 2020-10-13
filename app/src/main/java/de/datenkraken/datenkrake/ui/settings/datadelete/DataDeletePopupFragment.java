@@ -19,10 +19,13 @@ import androidx.fragment.app.DialogFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import de.datenkraken.datenkrake.MainActivity;
 import de.datenkraken.datenkrake.R;
 import de.datenkraken.datenkrake.ui.settings.SettingsPageViewModel;
 
 import java.util.Objects;
+
+import jp.wasabeef.blurry.Blurry;
 
 /**
  * Popup that sends a request to delete the userdata and account when accept is pressed.
@@ -35,15 +38,19 @@ public class DataDeletePopupFragment extends DialogFragment {
     @BindView(R.id.data_delete_popup_text) TextView dataDelete;
     @BindView(R.id.data_delete_accept_button) Button acceptButton;
     @BindView(R.id.data_delete_cancel_button) Button cancelButton;
+
     private final SettingsPageViewModel settingsPageViewModel;
+    private final ViewGroup root;
 
     /**
      * Constructor for the DataDeletePopupFragment, initializing it.
      *
      * @param settingsPageViewModel {@link SettingsPageViewModel} to be called to delete the data.
+     * @param root root view, which gets blurred
      */
-    public DataDeletePopupFragment(SettingsPageViewModel settingsPageViewModel) {
+    public DataDeletePopupFragment(SettingsPageViewModel settingsPageViewModel, ViewGroup root) {
         this.settingsPageViewModel = settingsPageViewModel;
+        this.root = root;
     }
 
     /**
@@ -83,16 +90,27 @@ public class DataDeletePopupFragment extends DialogFragment {
 
         ButterKnife.bind(this, view);
 
+        root.post(() -> Blurry.with(view.getContext()).radius(10).sampling(1).animate(500).async().onto(root));
+
         // Set DialogFragment Text
         dataDelete.setText(R.string.data_delete_warning_text);
 
         // Set Buttons.
         acceptButton.setOnClickListener(v -> {
-            settingsPageViewModel.deleteData();
+            settingsPageViewModel.deleteData((MainActivity) requireActivity());
             dismiss();
         });
-        cancelButton.setOnClickListener(v -> dismiss());
+        cancelButton.setOnClickListener(v -> {
+            Blurry.delete(root);
+            dismiss();
+        });
         // Set Builder and Buttons
         return builder.setView(view).show();
+    }
+
+    @Override
+    public void onDestroyView() {
+        Blurry.delete(root);
+        super.onDestroyView();
     }
 }

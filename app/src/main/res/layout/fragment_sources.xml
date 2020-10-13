@@ -1,5 +1,6 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/source_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,13 +12,12 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addSource"
         android:layout_width="wrap_content"
-        android:layout_height="124dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:layout_marginBottom="659dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:src="@android:drawable/ic_input_add"
-        android:tint="#FFFFFF"
+        android:src="@drawable/custom_floating_button_plus"
+        android:tint="@android:color/transparent"
+        app:tint="@null"
         android:visibility="visible" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

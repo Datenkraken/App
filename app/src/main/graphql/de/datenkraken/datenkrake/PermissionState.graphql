@@ -1,0 +1,7 @@
+mutation PermissionState($list: [createPermissionState!]!) {
+    submitPermissionState(input: $list) {
+        timestamp,
+        permission,
+        state
+    }
+}

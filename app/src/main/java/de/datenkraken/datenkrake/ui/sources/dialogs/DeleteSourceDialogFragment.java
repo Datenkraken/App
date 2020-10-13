@@ -24,6 +24,7 @@ import de.datenkraken.datenkrake.ui.sources.SourcesViewModel;
 
 import java.util.Objects;
 
+import jp.wasabeef.blurry.Blurry;
 
 /**
  * Dialog Fragment used for deleting {@link Source}s. <br>
@@ -39,18 +40,22 @@ public class DeleteSourceDialogFragment extends DialogFragment {
     Button cancelButton;
     @BindView(R.id.delete_source_title)
     TextView title;
+
     private final Source source;
     private final SourcesViewModel sourcesViewModel;
+    private final ViewGroup root;
 
     /**
      * Constructor of the class, initializing it.
      *
      * @param source {@link Source} to possibly be deleted.
      * @param sourcesViewModel {@link SourcesViewModel} to delete the source.
+     * @param root root view, which gets blurred
      */
-    public DeleteSourceDialogFragment(Source source, SourcesViewModel sourcesViewModel) {
+    public DeleteSourceDialogFragment(Source source, SourcesViewModel sourcesViewModel, ViewGroup root) {
         this.source = source;
         this.sourcesViewModel = sourcesViewModel;
+        this.root = root;
     }
 
     /**
@@ -68,17 +73,23 @@ public class DeleteSourceDialogFragment extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_delete_source_dialog, null, false);
         ButterKnife.bind(this, view);
+
+        root.post(() -> Blurry.with(view.getContext()).radius(10).sampling(1).animate(500).async().onto(root));
+
         String titleText =
-            Objects.requireNonNull(getContext()).getString(R.string.source_delete_before)
+            requireContext().getString(R.string.source_delete_before)
             + source.name
-            + getContext().getString(R.string.source_delete_after);
+            + requireContext().getString(R.string.source_delete_after);
         title.setText(titleText);
         // Set Builder and Buttons
         acceptButton.setOnClickListener(v -> {
             sourcesViewModel.deleteSource(source);
             dismiss();
         });
-        cancelButton.setOnClickListener(v -> dismiss());
+        cancelButton.setOnClickListener(v -> {
+            Blurry.delete(root);
+            dismiss();
+        });
         return builder.setView(view).show();
     }
 
@@ -99,5 +110,11 @@ public class DeleteSourceDialogFragment extends DialogFragment {
         Window window = Objects.requireNonNull(getDialog()).getWindow();
         Objects.requireNonNull(window).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onDestroyView() {
+        Blurry.delete(root);
+        super.onDestroyView();
     }
 }

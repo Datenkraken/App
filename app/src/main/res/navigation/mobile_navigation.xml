@@ -73,15 +73,9 @@
 
     <fragment
         android:id="@+id/nav_recomm"
-        android:name="de.datenkraken.datenkrake.ui.recommendation.source.SourceRecommFragment"
+        android:name="de.datenkraken.datenkrake.ui.recommendation.SourceRecommFragment"
         android:label="@string/cat_recommendation"
         tools:layout="@layout/source_recomm_fragment" />
-
-    <fragment
-        android:id="@+id/nav_cat_recomm"
-        android:name="de.datenkraken.datenkrake.ui.recommendation.category.CategoryRecommFragment"
-        android:label="@string/menu_recommendation"
-        tools:layout="@layout/category_recomm_fragment" />
 
     <fragment
         android:id="@+id/nav_about"

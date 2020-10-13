@@ -47,7 +47,7 @@ import de.datenkraken.datenkrake.model.Source;
 import de.datenkraken.datenkrake.surveillance.DataCollectionEvent;
 import de.datenkraken.datenkrake.surveillance.DataCollectionEventType;
 import de.datenkraken.datenkrake.surveillance.EventCollector;
-import de.datenkraken.datenkrake.surveillance.actions.ArticleAction;
+import de.datenkraken.datenkrake.surveillance.graphqladapter.ArticleAction;
 import de.datenkraken.datenkrake.ui.scroll.ScrollViewModel;
 import de.datenkraken.datenkrake.ui.util.GlideImageGetter;
 import de.datenkraken.datenkrake.ui.util.HtmlDefaultTagHandler;
@@ -55,7 +55,6 @@ import de.datenkraken.datenkrake.ui.util.HtmlDefaultTagHandler;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 import kotlin.Triple;
 
@@ -130,8 +129,8 @@ public class ArticleViewFragment extends Fragment {
         inflater.inflate(R.menu.main, menu);
         // Set menu item color.
         MenuItem menuItem = menu.findItem(R.id.action_share_button);
-        menuItem.getIcon().setTint(ContextCompat.getColor(Objects.requireNonNull(getContext()),
-            R.color.white));
+        menuItem.getIcon().setTint(ContextCompat.getColor(requireContext(),
+            R.color.text_view));
         // Set menu item on click listener.
         menuItem.setOnMenuItemClickListener(v -> {
             // Send share information to backend.
@@ -380,9 +379,9 @@ public class ArticleViewFragment extends Fragment {
         }
 
         if (currentArticle.saved) {
-            bookmark.setImageResource(R.drawable.ic_bookmark_true);
+            bookmark.setImageResource(R.drawable.ic_bookmark_24px);
         } else {
-            bookmark.setImageResource(R.drawable.ic_bookmark_false);
+            bookmark.setImageResource(R.drawable.ic_bookmark_border_24px);
         }
     }
 

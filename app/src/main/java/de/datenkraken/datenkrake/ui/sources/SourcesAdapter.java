@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,18 +36,20 @@ class SourcesAdapter extends RecyclerView.Adapter<SourcesViewHolder> {
 
     private final SourcesViewModel sourcesViewModel;
     private final Context context;
+    private final FragmentActivity activity;
     protected List<Source> sources;
 
     /**
      * Constructor for this class.
-     *
-     * @param sourcesViewModel {@link SourcesViewModel}, needed to delete {@link Source}s.
+     *  @param sourcesViewModel {@link SourcesViewModel}, needed to delete {@link Source}s.
      * @param context used for the {@link DeleteSourceDialogFragment}.
+     * @param activity required to get root view
      */
-    SourcesAdapter(SourcesViewModel sourcesViewModel, Context context) {
+    SourcesAdapter(SourcesViewModel sourcesViewModel, Context context, FragmentActivity activity) {
         Timber.tag("SourceAdapter");
         this.sourcesViewModel = sourcesViewModel;
         this.context = context;
+        this.activity = activity;
     }
 
     /**
@@ -143,7 +146,7 @@ class SourcesAdapter extends RecyclerView.Adapter<SourcesViewHolder> {
         Source source = sources.get(position);
 
         if (source.name != null) {
-            holder.sourceName.setText(source.name);
+            holder.sourceName.setText(source.name.trim());
         } else {
             holder.sourceName.setText(R.string.source_name_loading);
         }
@@ -156,13 +159,13 @@ class SourcesAdapter extends RecyclerView.Adapter<SourcesViewHolder> {
         Glide.with(holder.icon)
             .load(source.getIcon())
             .placeholder(R.drawable.ic_loading_icon)
-            .error(R.drawable.ic_missing_icon)
-            .fallback(R.drawable.ic_missing_icon)
             .apply(requestOptions)
             .into(holder.icon);
 
         DeleteSourceDialogFragment deleteSource =
-            new DeleteSourceDialogFragment(source, sourcesViewModel);
+            new DeleteSourceDialogFragment(source,
+                sourcesViewModel,
+                (ViewGroup) activity.findViewById(R.id.source_root).getRootView());
 
         holder.itemView.setOnClickListener(v ->
             deleteSource.show(((AppCompatActivity) context).getSupportFragmentManager(),

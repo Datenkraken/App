@@ -30,7 +30,7 @@ public class Source {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "uid")
-    public long uid = 0;
+    public long uid = -1;
 
     @ColumnInfo(name = "name")
     public String name;

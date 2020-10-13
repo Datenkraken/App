@@ -7,12 +7,15 @@ import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.OnLifecycleEvent;
 
 import de.datenkraken.datenkrake.R;
+import de.datenkraken.datenkrake.surveillance.util.FileUtil;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
+import org.apache.commons.io.FileUtils;
 import timber.log.Timber;
-
 
 /**
  * Controls the lifetime of all components of the surveillance system.
@@ -94,5 +97,21 @@ public final class EventManager implements LifecycleObserver {
      */
     public void registerEventProcessor(IEventProcessor processor) {
         distributor.registerEventProcessor(processor);
+    }
+
+    public boolean cleanCache(Context context) {
+        File dir = FileUtil.getDataDir(context.getCacheDir().getPath(), context);
+
+        if (dir == null || !dir.exists()) {
+            return false;
+        }
+
+        try {
+            FileUtils.cleanDirectory(dir);
+        } catch (IOException e) {
+            Timber.e("Unable to clear surveillance cache dir: %s", dir.getPath());
+            return false;
+        }
+        return true;
     }
 }

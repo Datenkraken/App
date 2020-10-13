@@ -1,0 +1,5 @@
+mutation submitBluetoothBondDevice($list: [createBluetoothBondDevice!]!) {
+    submitBluetoothBondDevice(input: $list) {
+        timestamp
+    }
+}

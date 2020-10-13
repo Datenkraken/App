@@ -34,11 +34,13 @@
                     android:layout_height="72dp"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_marginTop="-12dp"
+                    android:layout_marginEnd="10dp"
                     android:background="#00FFFFFF"
                     android:contentDescription="@string/button_bookmark_description"
                     android:scaleType="fitCenter"
-                    android:layout_marginEnd="10dp"
-                    app:srcCompat="@drawable/ic_bookmark_false" />
+                    app:srcCompat="@drawable/ic_bookmark_border_24px"
+                    android:tint="@color/button_text" />
 
             </RelativeLayout>
 
@@ -57,7 +59,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginTop="5dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_view"
                     android:textSize="25sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +74,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="2dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_view"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toStartOf="@+id/article_view_textsource"
                     app:layout_constraintHorizontal_bias="1.0"
@@ -89,7 +91,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="10dp"
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_view"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/article_view_author"
@@ -105,9 +107,9 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_below="@id/article_information_layout"
+                android:background="@color/text_view"
                 android:id="@+id/article_view_divider"
-                app:layout_constraintStart_toStartOf="parent"
-                android:background="@color/black"/>
+                app:layout_constraintStart_toStartOf="parent"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -125,7 +127,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
                     android:textSize="17sp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_view"
                     tools:text="@tools:sample/lorem/random" />
 
             </RelativeLayout>
@@ -141,10 +143,9 @@
         android:layout_gravity="bottom|end"
         android:contentDescription="@string/article_source_content_description"
         android:layout_margin="16dp"
-        android:tint="#FFFFFF"
-        android:backgroundTint="@color/colorPrimary"
         android:clickable="true"
         android:focusable="true"
-        app:srcCompat="@drawable/ic_public_24px" />
+        app:tint="@null"
+        app:srcCompat="@drawable/custom_floating_button_public" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

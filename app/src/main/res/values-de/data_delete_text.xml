@@ -2,7 +2,7 @@
 <resources>
     <string name="data_delete_warning_text">
         Hiermit wirst du alle Daten, die über dich gesammelt wurden, löschen.
-        Deine Daten könnten jedoch immer noch anonym in Statistiken auftauchen.
-        Dein Account wird gelöscht.
+        Deine Daten könnten jedoch immer noch anonymisiert in Statistiken auftauchen.
+        Deint Account wird ebenfalls gelöscht.
     </string>
 </resources>

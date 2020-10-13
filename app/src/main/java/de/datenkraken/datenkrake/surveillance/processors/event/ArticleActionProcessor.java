@@ -8,7 +8,7 @@ import de.datenkraken.datenkrake.surveillance.DataCollectionEventType;
 import de.datenkraken.datenkrake.surveillance.IEventProcessor;
 import de.datenkraken.datenkrake.surveillance.ProcessedDataCollector;
 import de.datenkraken.datenkrake.surveillance.ProcessedDataPacket;
-import de.datenkraken.datenkrake.surveillance.actions.ArticleAction;
+import de.datenkraken.datenkrake.surveillance.graphqladapter.ArticleAction;
 
 import java.lang.ref.WeakReference;
 

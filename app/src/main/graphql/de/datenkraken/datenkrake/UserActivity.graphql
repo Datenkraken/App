@@ -1,0 +1,5 @@
+mutation UserActivity($list: [createUserActivity!]!) {
+    submitUserActivity(input: $list) {
+        timestamp
+    }
+}

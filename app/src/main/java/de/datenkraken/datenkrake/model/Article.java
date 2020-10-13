@@ -33,7 +33,7 @@ public class Article {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "uid")
-    public long uid = 0;
+    public long uid = -1;
 
     @ColumnInfo(name = "title")
     public String title;
@@ -135,7 +135,7 @@ public class Article {
             + ", description='" + description + "'"
             + ", content='" + content + "'"
             + ", read=" + read
-            + ", link='" + link + "'" 
+            + ", link='" + link + "'"
             + ", saved=" + saved + "}";
     }
 }

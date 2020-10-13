@@ -6,14 +6,14 @@ import com.apollographql.apollo.api.Mutation;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
 
-import de.datenkraken.datenkrake.SubmitWifiDataMutation;
+import de.datenkraken.datenkrake.WifiDataMutation;
 import de.datenkraken.datenkrake.network.ITask;
 import de.datenkraken.datenkrake.network.clients.apollo.ApolloMutation;
 import de.datenkraken.datenkrake.surveillance.ISendProcessedData;
 import de.datenkraken.datenkrake.surveillance.ProcessedDataPacket;
-import de.datenkraken.datenkrake.surveillance.util.Callback;
 import de.datenkraken.datenkrake.surveillance.util.FormatUtil;
 import de.datenkraken.datenkrake.type.CreateWifiData;
+import de.datenkraken.datenkrake.util.Callback;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,11 +40,11 @@ public class WifiConnectionSender implements ISendProcessedData {
                 .build());
         }
 
-        SubmitWifiDataMutation mutation = SubmitWifiDataMutation.builder()
+        WifiDataMutation mutation = WifiDataMutation.builder()
             .list(createWifiDataList)
             .build();
 
-        return new ApolloMutation<SubmitWifiDataMutation.Data>() {
+        return new ApolloMutation<WifiDataMutation.Data>() {
             @Override
             public Mutation getMutation() {
                 return mutation;
@@ -66,6 +66,6 @@ public class WifiConnectionSender implements ISendProcessedData {
 
     @Override
     public String getTaskId() {
-        return SubmitWifiDataMutation.OPERATION_ID;
+        return WifiDataMutation.OPERATION_ID;
     }
 }

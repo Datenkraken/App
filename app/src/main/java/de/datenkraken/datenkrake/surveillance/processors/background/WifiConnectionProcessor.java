@@ -6,12 +6,12 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
-import de.datenkraken.datenkrake.SubmitWifiDataMutation;
+import de.datenkraken.datenkrake.WifiDataMutation;
 import de.datenkraken.datenkrake.surveillance.ProcessedDataCollector;
 import de.datenkraken.datenkrake.surveillance.ProcessedDataPacket;
 import de.datenkraken.datenkrake.surveillance.background.IBackgroundProcessor;
 import de.datenkraken.datenkrake.surveillance.sender.WifiConnectionSender;
-import de.datenkraken.datenkrake.surveillance.util.Callback;
+import de.datenkraken.datenkrake.util.Callback;
 
 import java.util.Date;
 import java.util.List;
@@ -68,6 +68,11 @@ public class WifiConnectionProcessor implements IBackgroundProcessor {
             connectionInfo.getRssi()));
     }
 
+    @Override
+    public int keepAlive() {
+        return 0;
+    }
+
     /**
      * Creates the {@link ProcessedDataPacket} used by
      * {@link WifiConnectionSender#getTask(List, Callback)}.
@@ -78,7 +83,7 @@ public class WifiConnectionProcessor implements IBackgroundProcessor {
      * @return {@link ProcessedDataPacket}
      */
     private ProcessedDataPacket createPacket(Long time, String ssid, String bssid, int rssi) {
-        ProcessedDataPacket packet = new ProcessedDataPacket(SubmitWifiDataMutation.OPERATION_ID);
+        ProcessedDataPacket packet = new ProcessedDataPacket(WifiDataMutation.OPERATION_ID);
         packet.putLong("time", time);
         packet.putString("SSID", ssid);
         packet.putString("BSSID", bssid);

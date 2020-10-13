@@ -1,6 +1,7 @@
 package de.datenkraken.datenkrake.surveillance.background;
 
 import android.content.Context;
+import android.os.BatteryManager;
 
 import androidx.annotation.NonNull;
 import androidx.work.Worker;
@@ -12,8 +13,8 @@ import de.datenkraken.datenkrake.network.TaskDistributor;
 import de.datenkraken.datenkrake.surveillance.ISendProcessedData;
 import de.datenkraken.datenkrake.surveillance.ProcessedDataPacket;
 import de.datenkraken.datenkrake.surveillance.ProcessorProvider;
-import de.datenkraken.datenkrake.surveillance.util.Callback;
 import de.datenkraken.datenkrake.surveillance.util.NetworkUtil;
+import de.datenkraken.datenkrake.util.Callback;
 
 import java.io.File;
 import java.io.IOException;
@@ -69,7 +70,7 @@ public class BackgroundPacketSender extends Worker {
 
         if (!NetworkUtil.isWifiEnabled(context.get())) {
             Timber.e("wifi is %s", NetworkUtil.isWifiEnabled(context.get()));
-            return Result.failure();
+            return Result.success();
         }
 
         PacketLoader packetLoader;

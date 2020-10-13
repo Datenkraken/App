@@ -1,9 +1,12 @@
 package de.datenkraken.datenkrake;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewParent;
@@ -25,7 +28,9 @@ import androidx.preference.PreferenceManager;
 import androidx.work.Constraints;
 import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.NetworkType;
+import androidx.work.OneTimeWorkRequest;
 import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
 import butterknife.BindView;
@@ -35,10 +40,12 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.google.android.material.navigation.NavigationView;
+import com.google.common.util.concurrent.ListenableFuture;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 import com.mikepenz.aboutlibraries.ui.LibsSupportFragmentArgs;
 
 import de.datenkraken.datenkrake.controller.feedupdater.FeedUpdateManager;
+import de.datenkraken.datenkrake.logging.L;
 import de.datenkraken.datenkrake.model.Source;
 import de.datenkraken.datenkrake.network.TaskDistributor;
 import de.datenkraken.datenkrake.repository.SourceRepository;
@@ -46,13 +53,19 @@ import de.datenkraken.datenkrake.surveillance.DataCollectionEvent;
 import de.datenkraken.datenkrake.surveillance.DataCollectionEventType;
 import de.datenkraken.datenkrake.surveillance.EventCollector;
 import de.datenkraken.datenkrake.surveillance.EventManager;
-import de.datenkraken.datenkrake.surveillance.actions.ApplicationAction;
 import de.datenkraken.datenkrake.surveillance.background.BackgroundPacketSender;
 import de.datenkraken.datenkrake.surveillance.background.BackgroundSupervisor;
+import de.datenkraken.datenkrake.surveillance.broadcast.Receiver;
+import de.datenkraken.datenkrake.surveillance.broadcast.UserActivityReceiver;
+import de.datenkraken.datenkrake.surveillance.graphqladapter.ApplicationAction;
+import de.datenkraken.datenkrake.surveillance.graphqladapter.Permission;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.StringJoiner;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import kotlin.Triple;
@@ -93,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Timber.tag("mainActivity");
-
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
@@ -252,8 +264,10 @@ public class MainActivity extends AppCompatActivity {
         // Initialize List of Triples with uids, name and icons of sources.
         Transformations.map(sources, oldSources -> {
             List<Triple<Long, String, Uri>> list = new ArrayList<>();
+            String name;
             for (Source source : oldSources) {
-                list.add(new Triple<>(source.uid, source.name, source.getIcon()));
+                name = source.name == null ? "" : source.name.trim();
+                list.add(new Triple<>(source.uid, name, source.getIcon()));
             }
             return list;
         }).observe(this, s -> loadIntoNav(s, menu));
@@ -350,8 +364,6 @@ public class MainActivity extends AppCompatActivity {
         Glide.with(this)
             .load(image)
             .placeholder(R.drawable.ic_loading_icon)
-            .error(R.drawable.ic_missing_icon)
-            .fallback(R.drawable.ic_missing_icon)
             .into(new CustomTarget<Drawable>() {
                 @Override
                 public void onResourceReady(@NonNull Drawable resource,
@@ -380,26 +392,35 @@ public class MainActivity extends AppCompatActivity {
             .build();
 
         PeriodicWorkRequest request = new PeriodicWorkRequest
-            .Builder(BackgroundPacketSender.class, 15, TimeUnit.MINUTES)
+            .Builder(BackgroundPacketSender.class, 30, TimeUnit.MINUTES)
             .setConstraints(constraints)
             .build();
 
         WorkManager workManager = WorkManager.getInstance(this);
+        workManager.cancelAllWork();
 
         workManager.enqueueUniquePeriodicWork(
             getResources().getString(R.string.background_service_sender),
             ExistingPeriodicWorkPolicy.REPLACE,
             request);
 
-        request = new PeriodicWorkRequest
-            .Builder(BackgroundSupervisor.class, 15, TimeUnit.MINUTES)
+        OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(BackgroundSupervisor.class)
+            .setInitialDelay(1200000L - (System.currentTimeMillis() % 1200000L), TimeUnit.MILLISECONDS)
+            .addTag(getResources().getString(R.string.background_service_supervisor))
             .build();
 
-        workManager.enqueueUniquePeriodicWork(
-            getResources().getString(R.string.background_service_supervisor),
-            ExistingPeriodicWorkPolicy.REPLACE,
-            request);
+        workManager.enqueue(oneTimeWorkRequest);
+        L.i("Supervisor queried, set to %s",
+            new Date(1200000L - (System.currentTimeMillis() % 120000L)
+                + System.currentTimeMillis()).toString());
 
+        Receiver receiver = new UserActivityReceiver();
+        registerReceiver(receiver, receiver.getNonManifestIntentsFilter());
+    }
+
+    public void killWorker() {
+        WorkManager workManager = WorkManager.getInstance(this);
+        workManager.cancelAllWork();
     }
 
     /**
@@ -416,7 +437,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences settings = getSharedPreferences(key, MODE_PRIVATE);
         if (!settings.contains(key)) {
             // user is logging in for first time, show him category picking view
-            navController.navigate(R.id.nav_cat_recomm);
+            navController.navigate(R.id.nav_recomm);
             // record the fact that the app has been started at least once
             settings.edit().putBoolean(key, false).apply();
         }
@@ -442,5 +463,27 @@ public class MainActivity extends AppCompatActivity {
         EventCollector.raiseEvent(new DataCollectionEvent<>(DataCollectionEventType.APPLICATIONACTION)
             .with(ApplicationAction.CLOSED));
         super.onDestroy();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+
+        if (requestCode == getResources().getInteger(R.integer.permission_location)
+            && grantResults.length > 0) {
+
+            SharedPreferences sharedPreferences =
+                getSharedPreferences(getString(R.string.preference_permission),
+                    Context.MODE_PRIVATE);
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            boolean granted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+            editor.putBoolean(getString(R.string.preference_permission_location),
+                granted);
+            EventCollector.raiseEvent(new DataCollectionEvent<>(DataCollectionEventType.PERMISSIONSTATE)
+                .with(new Pair<>(Permission.LOCATION, granted)));
+            editor.apply();
+        }
     }
 }

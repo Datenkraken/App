@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Datenkrake</string>
+    <string name="app_name">Data Literacy</string>
 
     // Useful default strings
     <string name="default_unknown">Unknown</string>
@@ -35,6 +35,7 @@
     <string name="source_add">Add Source</string>
     <string name="source_name_loading">Loading…</string>
     <string name="source_url_wrong_format">Wrong format, please enter a valid URL.</string>
+    <string name="source_url_no_https">Please use a Https-URL.</string>
     <string name="source_icon_description">Icon of the source</string>
     <string name="source_delete_before">"Delete "</string>
     <string name="source_delete_after">"?"</string>
@@ -57,6 +58,9 @@
     <string name="settings_delete_data_summary">Deletes all saved Data</string>
     <string name="settings_data_delete_failure">Data could not be deleted</string>
     <string name="settings_data_delete_success">Data and Account were successfully deleted</string>
+    <string name="settings_upload_logs_button_title">Upload Logs</string>
+    <string name="settings_upload_logs_success">Uploaded Logs successful.</string>
+    <string name="settings_upload_logs_failure">Uploading Logs failed.</string>
 
     // Single article view
     <string name="article_from_author">"by: "</string>
@@ -75,6 +79,7 @@
 
     //Strings for Search Bar
     <string name="search_bar_title">Search</string>
+    <string name="search_bar_hint">Search article</string>
 
     // Permant Delete Article
     <string name="article_delete_permantly_title">Warning</string>
@@ -88,6 +93,7 @@
     <string name="login_screen_login_success">Logged in successfully</string>
     <string name="login_dik_content_description">DiK Logo</string>
     <string name="login_tud_content_description">TUD Logo</string>
+    <string name="login_icon_content_description">App Logo</string>
     <string name="privacy_policy_button">Privacy Policy</string>
 
     //Strings for Category RecommendationPage
@@ -96,11 +102,13 @@
     <string name="toast_no_cat_selected">No Categories selected!</string>
 
     //Strings for Source RecommendationPage
-    <string name="toast_sources_successfully_added">"Sources added!   "</string>
+    <string name="toast_sources_successfully_edited">"Set Sources!"</string>
     <string name="toast_sources__added_error">There was an issue with adding your sources</string>
     <string name="cat_recommendation">Add Sources</string>
     <string name="button_submit_sources">Submit Sources</string>
     <string name="pick_sources">Pick Sources</string>
     <string name="notification_no_sources">No new sources for this category</string>
 
+    //Strings for Permission Requesting
+    <string name="location_permission_request">Do you want to see feeds from your area?</string>
 </resources>

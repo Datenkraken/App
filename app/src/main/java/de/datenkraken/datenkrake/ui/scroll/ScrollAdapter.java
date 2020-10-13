@@ -11,8 +11,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 
 import androidx.browser.customtabs.CustomTabsIntent;
-import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.core.text.HtmlCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -48,8 +46,8 @@ class ScrollAdapter extends RecyclerView.Adapter<ArticleViewHolder> {
 
     // colors for setting the viewholder depending on whether
     // articles has been read or not
-    private final int COLOR_GREY;
-    private final int COLOR_WHITE;
+    private final int STATUS_READ;
+    private final int STATUS_UNREAD;
 
     /**
      * Constructor for the class, initializing it.
@@ -60,8 +58,8 @@ class ScrollAdapter extends RecyclerView.Adapter<ArticleViewHolder> {
     ScrollAdapter(ScrollViewModel scrollViewModel, Context context) {
         this.scrollViewModel = scrollViewModel;
         this.context = context;
-        COLOR_GREY = ContextCompat.getColor(context, R.color.mainBackgroundDark);
-        COLOR_WHITE = ContextCompat.getColor(context, R.color.mainBackground);
+        STATUS_READ = R.drawable.rectangle_gradient_dimmed;
+        STATUS_UNREAD = R.drawable.rectangle_gradient;
     }
 
     /**
@@ -74,7 +72,7 @@ class ScrollAdapter extends RecyclerView.Adapter<ArticleViewHolder> {
     @NonNull
     @Override
     public ArticleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.scroll_item, parent, false);
         return new ArticleViewHolder(v);
     }
 
@@ -120,29 +118,24 @@ class ScrollAdapter extends RecyclerView.Adapter<ArticleViewHolder> {
                                             getFormattedDate(currentArticle),
                                             getSource(currentArticle)));
 
-        // if the article has been read, make the itemView grey
-        // Decide on color, if there is no image.
-        int articleFallbackColor;
+        // if the article has been read, make the itemView dark
         if (currentArticle.read) {
-            articleFallbackColor = R.color.mainBackgroundDark;
-            ((CardView) holder.itemView).setCardBackgroundColor(COLOR_GREY);
+            holder.itemView.findViewById(R.id.scroll_overlay).setBackgroundResource(STATUS_READ);
         } else {
-            articleFallbackColor = R.color.mainBackground;
-            ((CardView) holder.itemView).setCardBackgroundColor(COLOR_WHITE);
+            holder.itemView.findViewById(R.id.scroll_overlay).setBackgroundResource(STATUS_UNREAD);
         }
 
         // Set bookmark icon
         if (currentArticle.saved) {
-            holder.bookmark.setImageResource(R.drawable.ic_bookmark_true);
+            holder.bookmark.setImageResource(R.drawable.ic_bookmark_24px);
         } else {
-            holder.bookmark.setImageResource(R.drawable.ic_bookmark_false);
+            holder.bookmark.setImageResource(R.drawable.ic_bookmark_border_24px);
         }
 
         // Load image.
         Glide.with(holder.image.getContext())
             .load(currentArticle.imageUrl)
-            .error(R.drawable.ic_missing_icon)
-            .fallback(articleFallbackColor)
+            .placeholder(R.drawable.ic_loading_icon)
             .into(holder.image);
 
 
@@ -357,7 +350,7 @@ class ScrollAdapter extends RecyclerView.Adapter<ArticleViewHolder> {
      */
     @NonNull
     private String getSource(final Article article) {
-        return article.source.name != null ? article.source.name : "";
+        return article.source.name != null ? article.source.name.trim() : "";
     }
 
     /**

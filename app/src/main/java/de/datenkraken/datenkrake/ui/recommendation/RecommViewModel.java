@@ -5,31 +5,28 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 
 import de.datenkraken.datenkrake.DatenkrakeApp;
-import de.datenkraken.datenkrake.GetCategoriesOnlyQuery;
-import de.datenkraken.datenkrake.GetCategoriesQuery;
+import de.datenkraken.datenkrake.model.Category;
 import de.datenkraken.datenkrake.model.Source;
 import de.datenkraken.datenkrake.repository.SourceRepository;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import timber.log.Timber;
 
 /**
- * This ViewModel is responsible for fetching {@link GetCategoriesOnlyQuery.Category}s
- * and {@link GetCategoriesQuery.RssSource}s from the server and providing them to the views. <br>
+ * This ViewModel is responsible for fetching {@link Source}s from the server
+ * and providing them to the view. <br>
  * It also retrieves {@link Source}s from the {@link androidx.room.Database}
  * that have already been added by the user to find out
  * which ones should be displayed in the recommendation page. <br>
- * It is also used to temporarily store added {@link GetCategoriesOnlyQuery.Category}s and
- * {@link GetCategoriesQuery.RssSource}s so the latter can be added after submission by the user.<br>
- * It is shared among the classes in the recommendation package.
  *
  * @author Simon Schmalfuß - simon.schmalfuss@stud.tu-darmstadt.de
  */
@@ -39,21 +36,12 @@ public class RecommViewModel extends AndroidViewModel {
     // which ones not to display again
     private final SourceRepository repository;
 
-    // set of categories that are temporarily added while user
-    // is still browsing the recommendation view
-    public Map<String, GetCategoriesOnlyQuery.Category> selectedCategories;
-
     // list of fetched categories with according sources
-    public List<GetCategoriesQuery.Category> categories;
-
-    // set that stores the sources that have already been stored in the DB
-    public Set<String> existingSources;
-
-    // set of sources that are temporarily added while user is still browsing the recommendation view
-    public Set<GetCategoriesQuery.RssSource> storedSources;
-
-    // used for fetching categories and sources from the server
-    private CategoryOnlyFetcher task;
+    private LiveData<List<Category>> categories;
+    public MediatorLiveData<Map<String, Boolean>> sourceStatus = new MediatorLiveData<>();
+    private LiveData<List<Source>> fetchedSources = new MutableLiveData<>();
+    private final LiveData<List<Source>>  databaseSources;
+    private final Map<String, Source> sourceMap = new HashMap<>();
 
     /**
      * Constructor for this class.
@@ -66,98 +54,117 @@ public class RecommViewModel extends AndroidViewModel {
         Timber.tag("SourcesViewModel");
 
         repository = ((DatenkrakeApp) application).getSourceRepository();
-        storedSources = new HashSet<>();
+        databaseSources = repository.getSources();
+        sourceStatus.addSource(fetchedSources, sources -> {});
+        sourceStatus.addSource(databaseSources, sources -> {
+            if (sources == null) {
+                return;
+            }
+
+            Map<String, Boolean> stati = new HashMap<>();
+            if (fetchedSources.getValue() == null) {
+                for (Source source : sources) {
+                    stati.put(source.url.toString(), true);
+                    sourceMap.put(source.url.toString(), source);
+                }
+                sourceStatus.postValue(stati);
+                return;
+            }
+
+            for (Source source : fetchedSources.getValue()) {
+                stati.put(source.url.toString(), false);
+            }
+
+            for (Source source : sources) {
+                if (stati.containsKey(source.url.toString())) {
+                    stati.replace(source.url.toString(), true);
+                    sourceMap.replace(source.url.toString(), source);
+                }
+            }
+            sourceStatus.postValue(stati);
+        });
+
 
     }
 
     /**
-     * Fetches the latest {@link GetCategoriesOnlyQuery.Category}s from the server.
-     * The according {@link GetCategoriesQuery.RssSource}s will be fetched afterwards for better response time.
-     *
-     * @return List of {@link GetCategoriesOnlyQuery.Category}s including their respective sources
-     fetched from the server
+     * Fetches the latest {@link GetCategoriesQuery.Category}s from the server.
      */
-    public LiveData<List<GetCategoriesOnlyQuery.Category>> fetchCategories() {
+    public void fetchCategories() {
         // fetch categories
-        task = new CategoryOnlyFetcher();
+        // used for fetching categories and sources from the server
+        CategoryFetcher task = new CategoryFetcher();
         task.request();
+        this.categories = task.categories;
+        this.sourceStatus.removeSource(this.fetchedSources);
+        this.fetchedSources = Transformations.map(task.categories, newCategories -> {
+            if (newCategories == null) {
+                return new ArrayList<>();
+            }
+            List<Source> sources = new ArrayList<>();
+            for (Category category : newCategories) {
+                sources.addAll(category.sources);
+            }
+            return sources;
+        });
+        sourceStatus.addSource(fetchedSources, sources -> {
+            if (sources == null) {
+                return;
+            }
+            Map<String, Boolean> stati = new HashMap<>();
+            for (Source source : sources) {
+                stati.put(source.url.toString(), false);
+                if (!sourceMap.containsKey(source.url.toString())) {
+                    sourceMap.put(source.url.toString(), source);
+                }
+            }
 
-        return task.getCategoryNames();
+            if (databaseSources.getValue() == null) {
+                sourceStatus.postValue(stati);
+                return;
+            }
+
+            for (Source source : databaseSources.getValue()) {
+                if (stati.containsKey(source.url.toString())) {
+                    stati.replace(source.url.toString(), true);
+                }
+            }
+            sourceStatus.postValue(stati);
+        });
+
     }
 
-    /**
-     * Temporarily stores {@link GetCategoriesQuery.RssSource}s in HashSet
-     * so they can be added all at once at submission.
-     *
-     * @param source of type GetCategoriesQuery.RssSource
-     */
-    public void pickSource(GetCategoriesQuery.RssSource source) {
-        storedSources.add(source);
-
+    public LiveData<List<Category>> getCategories() {
+        return categories;
     }
 
-    /**
-     * Deletes a {@link GetCategoriesQuery.RssSource} from the HashSet.
-     *
-     * @param source of type GetCategoriesQuery.RssSource
-     */
-    public void unpickSource(GetCategoriesQuery.RssSource source) {
-        storedSources.remove(source);
-    }
+    public boolean toggleSelection(String url) {
+        if (sourceStatus.getValue() == null) {
+            return false;
+        }
 
+        boolean status = !sourceStatus.getValue().get(url);
+        sourceStatus.getValue().replace(url, status);
+        return status;
+    }
 
     /**
      * When clicking the submit button all stored sources will be added to the
-     * {@link androidx.room.RoomDatabase} through the {@link SourceRepository}. <br>
-     * The temporarily stored {@link GetCategoriesQuery.RssSource}s then get cleared.
-     * @throws MalformedURLException thrown, if the url of the from server received source is invalid.
+     * {@link androidx.room.RoomDatabase} through the {@link SourceRepository}.
      */
-    public void addSources() throws MalformedURLException {
-
-        for (GetCategoriesQuery.RssSource source : storedSources) {
-            Source newSource = new Source();
-            newSource.name = source.name();
-            newSource.url = new URL(source.url());
-            repository.insertSource(newSource);
+    public void editSources() {
+        if (sourceStatus.getValue() == null) {
+            return;
         }
-        storedSources.clear();
-    }
-
-    /**
-     * Returns LiveData list of {@link Source}s in DB.
-     *
-     * @return LiveData list of type {@link Source}.
-     */
-    public LiveData<List<Source>> getSavedSources() {
-        return repository.getSources();
-    }
-
-
-    /**
-     * Returns LiveData list of {@link GetCategoriesQuery.Category} from server.
-     *
-     * @return LiveData list of type {@link GetCategoriesQuery.Category}
-     */
-    public LiveData<List<GetCategoriesQuery.Category>> fetchCategorySources() {
-
-        return task.getCategories();
-    }
-
-
-    /**
-     * Observer method to add already existing {@link Source}s to existingSources.
-     * It does not add them if the {@link Source} still exists but has been marked as deleted.
-     *
-     * @param sources List of type {@link Source}.
-     */
-    public void setSources(List<Source> sources) {
-        // check if source has been deleted?
-        for (Source s : sources) {
-            if (!s.deleted) {
-                existingSources.add(s.url.toString());
+        Source source;
+        for (Map.Entry<String, Boolean> entry : sourceStatus.getValue().entrySet()) {
+            source = sourceMap.get(entry.getKey());
+            Timber.d("processing source %s, with id: %d", source.name, source.uid);
+            if (entry.getValue() && source.uid == -1) {
+                repository.insertSource(source);
+            } else if (!entry.getValue() && source.uid != -1) {
+                repository.deleteSource(source);
             }
         }
-
     }
-
 }

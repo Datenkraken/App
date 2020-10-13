@@ -6,7 +6,7 @@ import de.datenkraken.datenkrake.surveillance.DataCollectionEventType;
 import de.datenkraken.datenkrake.surveillance.IEventProcessor;
 import de.datenkraken.datenkrake.surveillance.ProcessedDataCollector;
 import de.datenkraken.datenkrake.surveillance.ProcessedDataPacket;
-import de.datenkraken.datenkrake.surveillance.actions.ApplicationAction;
+import de.datenkraken.datenkrake.surveillance.graphqladapter.ApplicationAction;
 
 /**
  * Collects and process the events to general application navigation and behavior.

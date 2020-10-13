@@ -1,0 +1,5 @@
+mutation WifiData($list: [createWifiData!]!) {
+    submitWifiData(input: $list) {
+        timestamp
+    }
+}

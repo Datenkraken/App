@@ -25,6 +25,8 @@ import de.datenkraken.datenkrake.ui.sources.SourcesViewModel;
 import java.net.MalformedURLException;
 import java.util.Objects;
 
+import jp.wasabeef.blurry.Blurry;
+
 /**
  * Dialog Popup Fragment for adding {@link de.datenkraken.datenkrake.model.Source}s.
  * Using a custom dialog.
@@ -40,15 +42,18 @@ public class AddSourcesDialogFragment extends DialogFragment {
     @BindView(R.id.add_source_edittext)
     EditText input;
     private final SourcesViewModel sourceModel;
+    private final ViewGroup root;
 
     /**
      * Constructor for AddSourcesFragment, initializing it.
      *
      * @param sourceModel {@link SourcesViewModel} to be used to save the
      * {@link de.datenkraken.datenkrake.model.Source}s entered.
+     * @param root root view, which gets blurred
      */
-    public AddSourcesDialogFragment(SourcesViewModel sourceModel) {
+    public AddSourcesDialogFragment(SourcesViewModel sourceModel, ViewGroup root) {
         this.sourceModel = sourceModel;
+        this.root = root;
     }
 
     /**
@@ -66,6 +71,8 @@ public class AddSourcesDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_add_source_dialog, null, false);
         ButterKnife.bind(this, view);
 
+        root.post(() -> Blurry.with(view.getContext()).radius(10).sampling(1).animate(500).async().onto(root));
+
         // Set Builder and Buttons
         acceptButton.setOnClickListener(v -> {
             try {
@@ -75,9 +82,15 @@ public class AddSourcesDialogFragment extends DialogFragment {
             } catch (MalformedURLException e) {
                 Toast.makeText(getContext(), getText(R.string.source_url_wrong_format),
                     Toast.LENGTH_LONG).show();
+            } catch (NoHttpsException e) {
+                Toast.makeText(getContext(), getText(R.string.source_url_no_https),
+                    Toast.LENGTH_LONG).show();
             }
         });
-        cancelButton.setOnClickListener(v -> dismiss());
+        cancelButton.setOnClickListener(v -> {
+            Blurry.delete(root);
+            dismiss();
+        });
         return builder.setView(view).show();
     }
 
@@ -98,5 +111,11 @@ public class AddSourcesDialogFragment extends DialogFragment {
         Window window = Objects.requireNonNull(getDialog()).getWindow();
         Objects.requireNonNull(window).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    @Override
+    public void onDestroyView() {
+        Blurry.delete(root);
+        super.onDestroyView();
     }
 }

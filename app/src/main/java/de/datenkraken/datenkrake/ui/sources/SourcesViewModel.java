@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import de.datenkraken.datenkrake.DatenkrakeApp;
 import de.datenkraken.datenkrake.model.Source;
 import de.datenkraken.datenkrake.repository.SourceRepository;
+import de.datenkraken.datenkrake.ui.sources.dialogs.NoHttpsException;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -64,10 +65,14 @@ public class SourcesViewModel extends AndroidViewModel {
      *
      * @param sourceURL the url for the generated {@link Source}
      * @throws MalformedURLException throws exception if sourceURL could not be converted to URL
+     * @throws NoHttpsException throws exception if url doesn't start with "https"
      */
-    public void addSource(String sourceURL) throws MalformedURLException {
+    public void addSource(String sourceURL) throws MalformedURLException, NoHttpsException {
         Source newSource = new Source();
         newSource.url = new URL(sourceURL);
+        if (!sourceURL.toLowerCase().startsWith("https")) {
+            throw new NoHttpsException();
+        }
         repository.insertSource(newSource);
     }
 

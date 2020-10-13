@@ -1,13 +1,9 @@
-query GetCategories($id: String) {
-    categories(id: $id) {
-        id
+query GetCategories {
+    categories {
         name
-        description
         rssSources {
-            id
             name
-            description
             url
         }
     }
-   }
+}

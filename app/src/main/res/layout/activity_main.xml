@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:openDrawer="start">
+    tools:openDrawer="start"
+    android:background="@mipmap/background">
 
     <include
         layout="@layout/app_bar_main"
@@ -19,13 +20,11 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        android:background="@drawable/rectangle_gradient"
         app:headerLayout="@layout/nav_header_main"
-        app:itemIconTint="@color/colorPrimary"
-        app:itemTextColor="@color/colorPrimary"
-        android:background="@color/mainBackground"
         app:itemIconSize="30dp"
-        app:itemBackground="@drawable/nav_view_item_background"
         app:itemIconPadding="25dp"
+        app:itemTextColor="@color/text_view"
         app:menu="@menu/activity_main_drawer" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
