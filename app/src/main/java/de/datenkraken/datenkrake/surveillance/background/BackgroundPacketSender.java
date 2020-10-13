@@ -68,11 +68,6 @@ public class BackgroundPacketSender extends Worker {
             return Result.failure();
         }
 
-        if (!((BatteryManager) context.get().getSystemService(Context.BATTERY_SERVICE)).isCharging()) {
-            Timber.i("Don't sending data to preserve Battery life");
-            return Result.success();
-        }
-
         if (!NetworkUtil.isWifiEnabled(context.get())) {
             Timber.e("wifi is %s", NetworkUtil.isWifiEnabled(context.get()));
             return Result.success();

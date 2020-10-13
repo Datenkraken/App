@@ -397,66 +397,22 @@ public class MainActivity extends AppCompatActivity {
             .build();
 
         WorkManager workManager = WorkManager.getInstance(this);
+        workManager.cancelAllWork();
+
         workManager.enqueueUniquePeriodicWork(
             getResources().getString(R.string.background_service_sender),
             ExistingPeriodicWorkPolicy.REPLACE,
             request);
 
-        ListenableFuture<List<WorkInfo>> future =
-            workManager.getWorkInfosByTag(getResources().getString(R.string.background_service_supervisor));
+        OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(BackgroundSupervisor.class)
+            .setInitialDelay(1200000L - (System.currentTimeMillis() % 1200000L), TimeUnit.MILLISECONDS)
+            .addTag(getResources().getString(R.string.background_service_supervisor))
+            .build();
 
-        future.addListener(() -> {
-            try {
-                boolean active = false;
-                StringJoiner tags = null;
-                for (WorkInfo info : future.get()) {
-                    tags = new StringJoiner(",", "[", "]");
-                    for (String tag : info.getTags()) {
-                        tags.add(tag);
-                    }
-
-                    L.i("Got workinfo: id: %s, state: %s, tags: %s",
-                        info.getId().toString(),
-                        info.getState().toString(),
-                        tags.toString());
-
-                    if (info.getTags().contains(getResources().getString(R.string.background_service_supervisor))) {
-                        active = (info.getState() == WorkInfo.State.RUNNING);
-                        break;
-                    }
-                }
-                long initialDelay = 1200000L - (System.currentTimeMillis() % 1200000L);
-                if (BuildConfig.DEBUG) {
-                    Timber.d("We are in Debug, replacing Supervisor");
-                    if (active) {
-                        Timber.d("Supervisor was active, canceled him.");
-                        workManager.cancelAllWorkByTag(getResources().getString(R.string.background_service_supervisor));
-                    }
-                    initialDelay = 0;
-                    active = false;
-                }
-
-                if (!active) {
-                    // Seems like the worker is not running at the moment, so we can cancel and restart him
-                    // to prevent inconsistencies.
-
-
-                    // Starts the periodic request every 20 min, at :00, :20, :40
-                    OneTimeWorkRequest oneTimeWorkRequest = new OneTimeWorkRequest.Builder(BackgroundSupervisor.class)
-                        .setInitialDelay(initialDelay, TimeUnit.MILLISECONDS)
-                        .addTag(getResources().getString(R.string.background_service_supervisor))
-                        .build();
-
-                    workManager.enqueue(oneTimeWorkRequest);
-                    L.i("Supervisor queried, set to %s",
-                        new Date(1200000L - (System.currentTimeMillis() % 360000L)
-                            + System.currentTimeMillis()).toString());
-                }
-            } catch (ExecutionException | InterruptedException e) {
-                Timber.e(e);
-                L.e(e, "Got error while trying to access WorkInfo");
-            }
-        }, Runnable::run);
+        workManager.enqueue(oneTimeWorkRequest);
+        L.i("Supervisor queried, set to %s",
+            new Date(1200000L - (System.currentTimeMillis() % 120000L)
+                + System.currentTimeMillis()).toString());
 
         Receiver receiver = new UserActivityReceiver();
         registerReceiver(receiver, receiver.getNonManifestIntentsFilter());
