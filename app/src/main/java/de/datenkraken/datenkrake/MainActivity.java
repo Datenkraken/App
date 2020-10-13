@@ -264,8 +264,10 @@ public class MainActivity extends AppCompatActivity {
         // Initialize List of Triples with uids, name and icons of sources.
         Transformations.map(sources, oldSources -> {
             List<Triple<Long, String, Uri>> list = new ArrayList<>();
+            String name;
             for (Source source : oldSources) {
-                list.add(new Triple<>(source.uid, source.name.trim(), source.getIcon()));
+                name = source.name == null ? "" : source.name.trim();
+                list.add(new Triple<>(source.uid, name, source.getIcon()));
             }
             return list;
         }).observe(this, s -> loadIntoNav(s, menu));

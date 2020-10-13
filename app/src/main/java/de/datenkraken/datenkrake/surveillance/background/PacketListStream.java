@@ -24,6 +24,8 @@ import timber.log.Timber;
  */
 public class PacketListStream {
 
+    private static int MAX_VALID_SIZE = 10 * 1024 * 1024; //no packet batch should be bigger than 10 MB
+
     private final FileInputStream fileInputStream;
 
     /**
@@ -50,6 +52,10 @@ public class PacketListStream {
         byte[] bytes;
         try {
             int size = getInteger();
+            if (size > MAX_VALID_SIZE) { //quickfix
+                fileInputStream.close();
+                return null;
+            }
             Timber.d("trying to allocate %s kb", ((double) size) / 1000);
             bytes = new byte[size];
             Timber.d("remaining: %d", fileInputStream.available());
